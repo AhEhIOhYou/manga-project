@@ -7,12 +7,12 @@ import (
 )
 
 type Chapter struct {
-	ID           uint64
-	Title        string
-	LoaderUserID uint64
-	Translator   string
-	CreatedAt    time.Time
-	Pages        []Page
+	ID           uint64    `json:"id"`
+	Title        string    `json:"title"`
+	LoaderUserID uint64    `json:"loader_user_id"`
+	Translator   string    `json:"translator"`
+	CreatedAt    time.Time `json:"created_at"`
+	Pages        []Page    `json:"pages"`
 }
 
 func (c *Chapter) Prepare() {

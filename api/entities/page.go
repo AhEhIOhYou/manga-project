@@ -3,10 +3,10 @@ package entities
 import "time"
 
 type Page struct {
-	ID           uint64
-	Url          string
-	LoaderUserID uint64
-	CreatedAt    time.Time
+	ID           uint64    `json:"id"`
+	Url          string    `json:"url"`
+	LoaderUserID uint64    `json:"loader_user_id"`
+	CreatedAt    time.Time `json:"created_at"`
 }
 
 func (p *Page) Prepare() {

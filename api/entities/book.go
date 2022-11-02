@@ -7,17 +7,17 @@ import (
 )
 
 type Book struct {
-	ID           uint64
-	Title        string
-	AltTitle     string
-	Author       string
-	Type         string
-	Description  string
-	ReleaseDate  time.Time
-	Tags         []string
-	Chapters     []Chapter
-	LoaderUserID uint64
-	CreatedAt    time.Time
+	ID           uint64    `json:"id"`
+	Title        string    `json:"title"`
+	AltTitle     string    `json:"alt_title"`
+	Author       string    `json:"author"`
+	Type         string    `json:"type"`
+	Description  string    `json:"description"`
+	ReleaseDate  time.Time `json:"release_date"`
+	Tags         []string  `json:"tags"`
+	Chapters     []Chapter `json:"chapter"`
+	LoaderUserID uint64    `json:"loader_user_id"`
+	CreatedAt    time.Time `json:"created_at"`
 }
 
 func (b *Book) Prepare() {
