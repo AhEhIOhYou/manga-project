@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/AhEhIOhYou/manga-project/api/entities"
+import "github.com/AhEhIOhYou/manga-project/api/domain/entities"
 
 type PageRepository interface {
 	SavePage(*entities.Page) (*entities.Page, map[string]string)
