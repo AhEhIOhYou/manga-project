@@ -12,7 +12,14 @@ import (
 
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
+
+func init() {
+	if err := godotenv.Load("./.env"); err != nil {
+		log.Fatal("No .env file found")
+	}
+}
 
 func Serve() {
 	router := gin.Default()
