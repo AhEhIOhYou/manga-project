@@ -11,8 +11,9 @@ type Chapter struct {
 	Title        string    `json:"title"`
 	LoaderUserID uint64    `json:"loader_user_id"`
 	Translator   string    `json:"translator"`
-	CreatedAt    time.Time `json:"created_at"`
 	Pages        []Page    `json:"pages"`
+	BookId       uint64    `json:"book_id"`
+	CreatedAt    time.Time `json:"created_at"`
 }
 
 func (c *Chapter) Prepare() {

@@ -6,6 +6,7 @@ type Page struct {
 	ID           uint64    `json:"id"`
 	Url          string    `json:"url"`
 	LoaderUserID uint64    `json:"loader_user_id"`
+	ChapterId    uint64    `json:"chapter_id"`
 	CreatedAt    time.Time `json:"created_at"`
 }
 
