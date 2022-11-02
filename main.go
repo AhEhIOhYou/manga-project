@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/AhEhIOhYou/manga-project/backend"
+	"github.com/AhEhIOhYou/manga-project/api"
 	"github.com/gin-gonic/gin"
 )
 
 func main()  {
 	gin.SetMode(gin.DebugMode);
-	backend.Serve();
+	api.Serve();
 }
