@@ -12,6 +12,7 @@ type Book struct {
 	AltTitle     string    `json:"alt_title"`
 	Author       string    `json:"author"`
 	Type         string    `json:"type"`
+	Cover        string    `json:"cover"`
 	Description  string    `json:"description"`
 	ReleaseDate  time.Time `json:"release_date"`
 	Tags         []string  `json:"tags"`
