@@ -17,9 +17,9 @@ import (
 func Serve() {
 	router := gin.Default()
 
-	router.Use(static.Serve("/", static.LocalFile("./frontend/build", true)))
+	router.Use(static.Serve("/", static.LocalFile("./client/build", true)))
 	router.NoRoute(func(c *gin.Context) {
-		c.File("./frontend/build/index.html")
+		c.File("./client/build/index.html")
 	})
 
 	server := &http.Server{
