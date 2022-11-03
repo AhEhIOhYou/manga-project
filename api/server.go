@@ -10,7 +10,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gin-contrib/static"
+	"github.com/AhEhIOhYou/manga-project/api/infrastructure/persistence"
+	"github.com/AhEhIOhYou/manga-project/api/interfaces/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -21,10 +22,28 @@ func init() {
 	}
 }
 
-func Serve() {
-	router := gin.Default()
+func getServices() (*persistence.Repos, error) {
+	dbHost := os.Getenv("DB_HOST")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbUser := os.Getenv("DB_USER")
+	dbName := os.Getenv("DB_NAME")
+	dbPort := os.Getenv("DB_PORT")
 
-	router.Use(static.Serve("/", static.LocalFile("./client/build", true)))
+	return persistence.NewRepo(dbUser, dbPassword, dbPort, dbHost, dbName)
+}
+
+func Serve() {
+
+	services, err := getServices()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	router := gin.Default()
+	router.Use(middleware.CORSMiddleware())
+	router.Use(middleware.FrontStaticMiddleware())
+
+	
 	router.NoRoute(func(c *gin.Context) {
 		c.File("./client/build/index.html")
 	})
