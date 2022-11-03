@@ -9,10 +9,11 @@ import (
 type Chapter struct {
 	ID           uint64    `json:"id"`
 	Title        string    `json:"title"`
-	LoaderUserID uint64    `json:"loader_user_id"`
+	Number       uint64    `json:"number"`
 	Translator   string    `json:"translator"`
 	Pages        []Page    `json:"pages"`
 	BookId       uint64    `json:"book_id"`
+	LoaderUserID uint64    `json:"loader_user_id"`
 	CreatedAt    time.Time `json:"created_at"`
 }
 
