@@ -33,4 +33,8 @@
 		bottom: -5px;
 		z-index: 1;
 	}
+
+	:global(a) {
+		text-decoration: none;
+	}
 </style>

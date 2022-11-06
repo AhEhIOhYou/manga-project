@@ -1,15 +1,17 @@
 <script lang="ts">
 	import Page from '@/routes/+page.svelte';
+	import { clipText } from '@/lib/utils';
 
 	// Props
 	export let items: Array<any> = [...Array(10).keys()];
-	let scrollBy = 1;
+	let scrollBy: number = 1;
 
-	const paginationFactor = 175;
-	const totalPaginationPixels = scrollBy * paginationFactor;
+	const paginationFactor: number = 175;
+	const totalPaginationPixels: number = scrollBy * paginationFactor;
 
-	$: active = 1;
-	$: offset = 0;
+	let active: number = 1;
+	let offset: number = 0;
+
 	$: atStart = offset === paginationFactor;
 	$: atEnd = offset <= paginationFactor * (items.length - 1 - scrollBy) * -1;
 
@@ -30,74 +32,71 @@
 	};
 </script>
 
-<main>
-	{active}
+<div class="book-carousel">
 	<div class="items" style="transform: translateX({offset}px);">
 		{#each items as item, i}
-			<div
+			<a
+				href={item.url}
 				class="item"
 				class:active={active === i}
-				style="background-color: hsla({i * 25}deg, 75%, 55%);"
+				style="background-image: url({item.cover}), linear-gradient(45deg, #6e9e2f, #d6f3af);"
 			>
-				{item.title}
-			</div>
+				<div class="item__info">
+					<div class="item__info__chapter">
+						{item.chapter}
+					</div>
+					<div class="item__info__title">
+						{clipText(item.title)}
+					</div>
+				</div>
+			</a>
 		{/each}
 	</div>
-</main>
-
-<button on:click={() => move(-1)}>&lsaquo; Prev</button>
-<button on:click={() => move(1)}>Next &rsaquo;</button>
-
-<div class="details">
-	offset: {offset}px<br />
-	atStart: {atStart}<br />
-	atEnd: {atEnd}
+	<button on:click={() => move(-1)}>&lsaquo; Prev</button>
+	<button on:click={() => move(1)}>Next &rsaquo;</button>
 </div>
 
 <style lang="scss">
-	main {
+	.book-carousel {
 		width: 525px;
 		overflow: hidden;
-	}
 
-	.items {
-		display: flex;
-		transition: transform 0.4s ease-in-out;
-		transform: translateX(0px);
-	}
+		.items {
+			display: flex;
+			transition: transform 0.4s ease-in-out;
+			transform: translateX(0px);
 
-	.item {
-		min-width: 167px;
-		height: 100px;
-		margin: 0 4px;
-		background-color: #ef4322;
-		border-radius: 0.7rem;
-		color: white;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-weight: bold;
-		font-size: 10rem;
-		user-select: none;
-		overflow: hidden;
-		transform: scale(0.8);
-		transition: transform ease 0.3s;
-		&.active {
-			transform: scale(1);
+			.item {
+				min-width: 170px;
+				height: 250px;
+				margin: 0 4px;
+				border-radius: 0.7rem;
+				display: flex;
+				justify-content: end;
+				flex-direction: column;
+				color: white;
+				transform: scale(0.8);
+				transition: transform ease 0.3s;
+				overflow: hidden;
+				&.active {
+					transform: scale(1);
+				}
+
+				.item__info {
+					max-height: 100px;
+					min-height: 50px;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-around;
+					padding: 10px;
+					background: linear-gradient(0deg, black, 85%, rgba(255, 252, 252, 0));
+				}
+
+				.item__info__title {
+					padding-top: 5px;
+					text-overflow: clip;
+				}
+			}
 		}
-	}
-
-	.items .item:first-child {
-		margin-left: 0;
-	}
-
-	.items .item:last-child {
-		margin-right: 0;
-	}
-
-	.details {
-		margin-top: 20px;
-		font-style: italic;
-		color: #9f9f9f;
 	}
 </style>
