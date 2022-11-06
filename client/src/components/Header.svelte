@@ -6,10 +6,10 @@
 	<nav class="navbar">
 		<div class="navbar__item title">My Best App</div>
 		<a class="navbar__item" href="/">Home</a>
-		<a class="navbar__item" href="/about">About</a>
-		<a class="navbar__item" href="/cat-facts">Cat Facts</a>
-		<a class="navbar__item" href="/test">Test</a>
-		<a class="navbar__item" href="/login">Login</a>
+		<a class="navbar__item" href="/">Home</a>
+		<a class="navbar__item" href="/">Home</a>
+		<a class="navbar__item" href="/">Home</a>
+		<a class="navbar__item" href="/">Home</a>
 	</nav>
 </header>
 
