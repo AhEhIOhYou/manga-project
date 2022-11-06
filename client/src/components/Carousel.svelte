@@ -1,7 +1,5 @@
 <script lang="ts">
-	import Page from "@/routes/+page.svelte";
-
-
+	import Page from '@/routes/+page.svelte';
 
 	// Props
 	export let items: Array<any> = [...Array(10).keys()];
@@ -14,7 +12,6 @@
 	$: offset = 0;
 	$: atStart = offset === paginationFactor;
 	$: atEnd = offset <= paginationFactor * (items.length - 1 - scrollBy) * -1;
-	
 
 	const move = (direction: number) => {
 		if (direction > 0 && !atEnd) {
@@ -30,14 +27,20 @@
 			offset = paginationFactor * (items.length - 1 - scrollBy) * -1;
 			active = items.length - 1;
 		}
-	}
+	};
 </script>
 
 <main>
 	{active}
 	<div class="items" style="transform: translateX({offset}px);">
 		{#each items as item, i}
-			<div class="item" class:active={active === i} style="background-color: hsla({i * 25}deg, 75%, 55%);">{item.title}</div>
+			<div
+				class="item"
+				class:active={active === i}
+				style="background-color: hsla({i * 25}deg, 75%, 55%);"
+			>
+				{item.title}
+			</div>
 		{/each}
 	</div>
 </main>
@@ -78,10 +81,9 @@
 		user-select: none;
 		overflow: hidden;
 		transform: scale(0.8);
-		transition: transform ease .3s;
+		transition: transform ease 0.3s;
 		&.active {
-		transform: scale(1);
-
+			transform: scale(1);
 		}
 	}
 
