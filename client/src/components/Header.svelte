@@ -5,7 +5,7 @@
 <header class="global-header">
 	<nav class="navbar">
 		<div class="navbar__item title">My Best App</div>
-		<a class="navbar__item" href="/">Home</a>
+		<a class="navbar__item" href="/book">Book</a>
 		<a class="navbar__item" href="/">Home</a>
 		<a class="navbar__item" href="/">Home</a>
 		<a class="navbar__item" href="/">Home</a>
