@@ -2,29 +2,33 @@
 	<title>Wellcum!</title>
 </svelte:head>
 
-<header class="global-header">
-	<nav class="navbar">
-		<div class="navbar__item title">My Best App</div>
-		<a class="navbar__item" href="/book">Book</a>
-		<a class="navbar__item" href="/">Home</a>
-		<a class="navbar__item" href="/">Home</a>
-		<a class="navbar__item" href="/">Home</a>
-		<a class="navbar__item" href="/">Home</a>
+<header class="global-header w-100 p-fixed p-zero">
+	<nav class="size-ruler dp-flex align-center h-100 m-auto">
+		<a class="navbar__item title" href="/">
+			<span>
+				Manga Projcet
+			</span>
+		</a>
+		<a class="navbar__item" href="/"><span>Home</span></a>
+		<a class="navbar__item" href="/genre"><span>Genre</span></a>
+		<div class="navbar__item">
+			<input type="text">
+			<button>Search</button>
+		</div>
+		<a class="navbar__item" href="/login"><span>Login/Signup</span></a>
 	</nav>
 </header>
 
 <style lang="scss">
 	.global-header {
-		background-color: #313131;
-		height: 56px;
-		color: white;
-		padding: 15px;
-		box-sizing: border-box;
+		height: 50px;
+		background-color: #3c3c3c;
+		box-shadow: 0 0 5px 1px #26ff0080;
+		z-index: 10;
 
-		.navbar {
-			display: flex;
-			align-items: center;
-			height: 100%;
+		.size-ruler {
+			max-width: 1160px;
+			padding: 0 1.33333rem;
 
 			.logo {
 				height: 100%;

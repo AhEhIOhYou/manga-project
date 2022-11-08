@@ -32,7 +32,7 @@
 	};
 </script>
 
-<div class="carousel-container">
+<div class="carousel-wrapper dp-flex">
 	<div class="nav">
 		<button class="left" on:click={() => move(-1)} />
 	</div>
@@ -63,14 +63,9 @@
 </div>
 
 <style lang="scss">
-	.carousel-container {
-		display: flex;
+	.carousel-wrapper {
 		justify-content: center;
 		width: 620px;
-
-		@media screen and (max-width: 620px) {
-			width: 480px;
-		}
 
 		.nav {
 			display: flex;
