@@ -51,8 +51,9 @@
 
 	:global(a) {
 		text-decoration: none;
+		color: white;
 		&:visited {
-			color: $linkHover;
+			color: white;
 		}
 	}
 
@@ -68,6 +69,9 @@
 	}
 	:global(.dp-flex) {
 		display: flex;
+	}
+	:global(.dp-grid) {
+		display: grid;
 	}
 	:global(.w-100) {
 		width: 100%;
@@ -117,5 +121,8 @@
 	}
 	:global(.w-100) {
 		width: 100%;
+	}
+	:global(.mtb-10) {
+		margin: 10px 0;
 	}
 </style>

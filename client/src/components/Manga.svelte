@@ -104,34 +104,40 @@
 				</svg>
 			</span>
 		</div>
-		<div class="manga-detail__element">
-			Author:
-			{bookData.author}
-		</div>
-		<div class="manga-detail__element span-list">
-			Tags:
-			{#each bookData.tags as tag}
-				<span style="padding: 5px;">{tag}</span>
-			{/each}
-		</div>
-		<div class="manga-detail__element span-list">
-			Genres:
-			{#each bookData.genres as genre}
-				<span style="padding: 5px;">{genre}</span>
-			{/each}
-		</div>
-		<div class="manga-detail__element">
-			Release:
-			{bookData.release_date}
-		</div>
-		<div class="manga-detail__element">
-			Type:
-			{bookData.type}
-		</div>
-		<div class="manga-detail__element">
-			Upload by:
-			{bookData.loader_user.name}
-			{bookData.created_at}
+		<div class="manga-data">
+			<div class="manga-data__element dp-flex">
+				<div class="manga-data__header">Author:</div>
+				<div class="manga-data__content">{bookData.author}</div>
+			</div>
+			<div class="manga-data__element dp-flex">
+				<div class="manga-data__header">Release:</div>
+				<div class="manga-data__content">{bookData.release_date}</div>
+			</div>
+			<div class="manga-data__element dp-flex">
+				<div class="manga-data__header">Type:</div>
+				<div class="manga-data__content">{bookData.type}</div>
+			</div>
+			<div class="manga-data__element dp-flex">
+				<div class="manga-data__header">Upload by:</div>
+				<div class="manga-data__content">
+					{bookData.loader_user.name}
+					{bookData.created_at}
+				</div>
+			</div>
+			<div class="manga-data__element dp-flex">
+				<div class="manga-data__content  mtb-10">
+					{#each bookData.tags as tag}
+						<a class="manga-data__tag" href="#">{tag}</a>
+					{/each}
+				</div>
+			</div>
+			<div class="manga-data__element dp-flex">
+				<div class="manga-data__content  mtb-10">
+					{#each bookData.genres as genre}
+						<a class="manga-data__tag" href="#">{genre}</a>
+					{/each}
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -178,5 +184,21 @@
 		margin: 0 0 11px;
 		font-size: 25px;
 		font-weight: 400;
+	}
+
+	.manga-data__element {
+		margin: 10px 0;
+	}
+
+	.manga-data__header {
+		width: 140px;
+		font-weight: bold;
+	}
+
+	.manga-data__tag {
+		background-color: #b3b3b3;
+		padding: 5px 10px;
+		margin: 5px;
+		line-height: 14px;
 	}
 </style>
