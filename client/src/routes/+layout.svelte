@@ -6,9 +6,6 @@
 <Header />
 <main class="main-content">
 	<slot />
-	<slot />
-	<slot />
-	<slot />
 </main>
 <Footer />
 
