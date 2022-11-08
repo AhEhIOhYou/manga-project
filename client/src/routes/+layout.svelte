@@ -4,7 +4,7 @@
 </script>
 
 <Header />
-<main class="main-content">
+<main class="size-ruler 3 p-relative border-box">
 	<slot />
 </main>
 <Footer />
@@ -56,13 +56,11 @@
 		}
 	}
 
-	.main-content {
-		margin: 100px 20px 100px 20px;
-		padding: 30px 100px 30px;
-		background-color: $mainBGColor;
-		border-radius: 0.6em;
-		display: grid;
-		justify-content: center;
+	.size-ruler {
+		width: 1160px;
+		margin: 70px auto 60px;
+		border-radius: 2px;
+		min-height: calc(100vh - 228px);
 	}
 
 	:global(.m-auto) {
@@ -92,5 +90,32 @@
 	}
 	:global(.dp-flex.align-center) {
 		align-items: center;
+	}
+	:global(.dp-flex.fd-row) {
+		flex-direction: row;
+	}
+	:global(.dp-flex.fd-column) {
+		flex-direction: column;
+	}
+	:global(.t-no-wrap, .t-nowrap) {
+		white-space: nowrap;
+	}
+	:global(.b-radius-10) {
+		border-radius: 10px;
+	}
+	:global(.v-top) {
+		vertical-align: top;
+	}
+	:global(.dp-i-block) {
+		display: inline-block;
+	}
+	:global(.border-box) {
+		box-sizing: border-box;
+	}
+	:global(.bg-center) {
+		background-position: 50%;
+	}
+	:global(.w-100) {
+		width: 100%;
 	}
 </style>

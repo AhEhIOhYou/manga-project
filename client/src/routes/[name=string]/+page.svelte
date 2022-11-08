@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { PageData } from './$types';
+    import Manga from '@/components/Manga.svelte';
     
     export let data: PageData;
 </script>
@@ -8,6 +9,4 @@
     <title>Manga page!</title>
 </svelte:head>
 
-<h1>
-    Here manga page
-</h1>
+<Manga />
