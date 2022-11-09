@@ -65,7 +65,7 @@
 	<div class="manga-detail__cover dp-i-block v-top bg-cover bg-center p-relative">
 		<img class="w-100" alt="{bookData.title}" src="{bookData.cover}">
 	</div>
-	<div class="manga-detail__info dp-i-block p-relative v-top border-box">
+	<div class="manga-detail__info dp-i-block p-relative v-top">
 		<div class="manga-title-container">
 			<div class="manga-title__main">
 				{bookData.title}

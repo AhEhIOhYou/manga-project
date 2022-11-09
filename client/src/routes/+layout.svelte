@@ -4,7 +4,7 @@
 </script>
 
 <Header />
-<main class="size-ruler 3 p-relative border-box">
+<main class="size-ruler 3 p-relative">
 	<slot />
 </main>
 <Footer />
@@ -35,6 +35,10 @@
 		flex-direction: column;
 	}
 
+	:global(*, ::after, ::before) {
+		box-sizing: border-box;
+	}
+
 	:global(.title) {
 		margin: 0;
 		font-size: 20px;
@@ -56,6 +60,21 @@
 		&:visited {
 			color: white;
 		}
+	}
+
+	:global(input) {
+		background: $mainBGColor;
+		border: none;
+		color: white;
+	}
+
+	:global([contenteditable=true]:empty:before) {
+		content: attr(placeholder);
+		display: block;
+	}
+	
+	:global([contenteditable=true]:empty:focus:before) {
+		content: "";
 	}
 
 	.size-ruler {
@@ -114,9 +133,6 @@
 	:global(.dp-i-block) {
 		display: inline-block;
 	}
-	:global(.border-box) {
-		box-sizing: border-box;
-	}
 	:global(.bg-center) {
 		background-position: 50%;
 	}
@@ -125,5 +141,8 @@
 	}
 	:global(.mtb-10) {
 		margin: 10px 0;
+	}
+	:global(.mb-8) {
+		margin-bottom: 8px;
 	}
 </style>
