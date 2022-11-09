@@ -36,7 +36,8 @@
 	}
 
 	:global(.title) {
-		position: relative;
+		margin: 0;
+		font-size: 20px;
 	}
 
 	:global(.title__text::before) {

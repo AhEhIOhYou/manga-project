@@ -61,7 +61,7 @@
 	<title>{bookData.title}</title>
 </svelte:head>
 
-<div class="manga-detail  b-radius-10">
+<div class="manga-detail  b-radius-10 mtb-10">
 	<div class="manga-detail__cover dp-i-block v-top bg-cover bg-center p-relative">
 		<img class="w-100" alt="{bookData.title}" src="{bookData.cover}">
 	</div>
