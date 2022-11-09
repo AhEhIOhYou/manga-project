@@ -1,8 +1,29 @@
 <script lang="ts">
-	import type { CommentType } from '@/models/comment.model'
+	import type { CommentType } from '@/models/comment.model';
 	import CreateComment from '@/components/comment/CreateComment.svelte';
+
 	export let commentData: CommentType;
 	let showCreateComment = false;
+
+	let replies: Array<CommentType> = [];
+
+	const getReplies = () => {
+		var l = replies.length;
+		replies[l] = {
+			id: 124 + 2,
+			user: {
+				id: 1,
+				name: 'Ayaya',
+				avatar: 'http://dummyimage.com/50x50/c0c0c0'
+			},
+			message: 'cool manga!',
+			like_count: 0,
+			dislike_count: 0,
+			child_count: 1,
+			date: '09.10.2022'
+		};
+		console.log(replies);
+	};
 </script>
 
 <div id="comment-{commentData.id}" class="comment-list__item dp-flex">
@@ -23,63 +44,65 @@
 				{commentData.message}
 			</div>
 			<div class="comment-content__action">
-				<button on:click={() => showCreateComment = !showCreateComment}>{#if !showCreateComment}Reply{:else}Cancel{/if}</button> $Like
+				<button on:click={() => (showCreateComment = !showCreateComment)}
+					>{#if !showCreateComment}Reply{:else}Cancel{/if}</button
+				>
+				<button on:click={() => getReplies()} class="load-replies-btn dp-flex">
+					Load replies
+				</button>
+				$Like
 			</div>
 		</div>
 		<div class="comment-content__replies mtb-10">
 			{#if showCreateComment}
-				<svelte:component this={CreateComment} bookId={0} chapterId={-1} userId={1}/>
+				<svelte:component this={CreateComment} bookId={0} chapterId={-1} userId={1} />
 			{/if}
-			{#if commentData.child_count > 0}
-				<button class="load-replies-btn dp-flex">
-					<span>Load replies</span>
-					<span class="icon-more"></span>
-				</button>
-			{/if}
+			{#each replies as item}
+				<svelte:self commentData={item} />
+			{/each}
 		</div>
 	</div>
 </div>
 
 <style lang="scss">
 	.comment-list__item {
-				margin-top: 20px;
+		margin-top: 20px;
 
-				.user-info {
-					.user-avatar {
-						width: 50px;
-						height: 50px;
-						border-radius: 30%;
-						background-color: #ddd;
-						background-size: cover;
-						background-position: 50%;
-						background-repeat: no-repeat;
-						background-image: url('http://dummyimage.com/60x60/c0c0c0');
-					}
+		.user-info {
+			.user-avatar {
+				width: 50px;
+				height: 50px;
+				border-radius: 30%;
+				background-color: #ddd;
+				background-size: cover;
+				background-position: 50%;
+				background-repeat: no-repeat;
+				background-image: url('http://dummyimage.com/60x60/c0c0c0');
+			}
+		}
+
+		.comment-content {
+			flex-grow: 1;
+			margin-left: 20px;
+			overflow: hidden;
+
+			.comment-content__row {
+				.comment-content__username {
+					font-size: 18px;
 				}
 
-				.comment-content {
-					flex-grow: 1;
-					margin-left: 20px;
-					overflow: hidden;
-
-					.comment-content__row {
-						.comment-content__username {
-							font-size: 18px;
-						}
-
-						.comment-content__date {
-							font-size: 14px;
-							color: rgb(165, 165, 165);
-						}
-					}
-
-					.comment-content__message {
-						font-size: 18px;
-					}
-
-					.comment-content__action {
-
-					}
+				.comment-content__date {
+					font-size: 14px;
+					color: rgb(165, 165, 165);
 				}
 			}
+
+			.comment-content__message {
+				font-size: 18px;
+			}
+
+			.comment-content__action {
+			}
+		}
+	}
 </style>

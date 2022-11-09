@@ -1,31 +1,31 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { onMount } from 'svelte';
 
 	let commentId: string;
 	let message: string;
-	export let bookId:number = -1;
-	export let chapterId:number = -1;
-	export let userId:number = 0;
-	let sendBtnActive =  false;
+	export let bookId: number = -1;
+	export let chapterId: number = -1;
+	export let userId: number = 0;
+	let sendBtnActive = false;
 
 	onMount(async () => {
-		commentId = "_" + Math.random().toString(36).substr(2, 9);
+		commentId = '_' + Math.random().toString(36).substr(2, 9);
 	});
 
-	$: message == '' ? sendBtnActive = false : sendBtnActive = true;
+	$: message == '' ? (sendBtnActive = false) : (sendBtnActive = true);
 
 	const send = () => {
 		const bookData = {
 			bookId: bookId,
 			chapterId: chapterId,
 			userId: userId,
-			message: message,
-		}
+			message: message
+		};
 		console.log(bookData);
-	}
+	};
 </script>
 
-<div id="{commentId}" class="comment-create">
+<div id={commentId} class="comment-create">
 	<div class="user-info">
 		<div class="user-avatar" />
 	</div>
@@ -39,7 +39,12 @@
 			/>
 		</div>
 		<div class="comment-action">
-			<button on:click={send} disabled={!sendBtnActive} class="comment-submit b-radius-10" type="submit">Send message</button>
+			<button
+				on:click={send}
+				disabled={!sendBtnActive}
+				class="comment-submit b-radius-10"
+				type="submit">Send message</button
+			>
 		</div>
 	</div>
 </div>

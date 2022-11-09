@@ -1,15 +1,8 @@
 <script lang="ts">
 	import Comment from '@/components/comment/Comment.svelte';
 	import CreateComment from '@/components/comment/CreateComment.svelte';
-	import type { CommentType } from '@/models/comment.model'
+	import type { CommentType } from '@/models/comment.model';
 	import { fade } from 'svelte/transition';
-	import { storeElements, idIncrement } from '@/components/comment/store.js';
-
-	$storeElements = [
-		{ id:0, name: 'First option', otherattrib: "additional note" },
-    	{ id:1, name: 'Second option' },
-    	{ id:2, name: 'Third option' },
-	];
 
 	const bookId: number = 12;
 	const chapterId: number = -1;
@@ -62,10 +55,10 @@
 <div class="comments b-radius-10 p-relative">
 	<div class="comment-container border-box">
 		<h1 class="title">Comments</h1>
-		<svelte:component this={CreateComment} bookId={bookId} chapterId={chapterId} userId={userId}/>
+		<svelte:component this={CreateComment} {bookId} {chapterId} {userId} />
 		<div class="comment-list">
 			{#each commentData as comment}
-				<svelte:component this={Comment} commentData={comment}/>
+				<svelte:component this={Comment} commentData={comment} />
 			{/each}
 		</div>
 	</div>
@@ -83,12 +76,8 @@
 			overflow: auto;
 			padding: 40px;
 
-
 			.comment-list {
-
 			}
-
-			
 		}
 	}
 </style>
