@@ -1,7 +1,3 @@
-<svelte:head>
-	<title>Wellcum!</title>
-</svelte:head>
-
 <header class="global-header w-100 p-fixed p-zero">
 	<nav class="size-ruler dp-flex align-center h-100 m-auto">
 		<a class="navbar__item title" href="/">
