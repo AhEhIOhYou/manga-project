@@ -24,6 +24,12 @@
 		};
 		console.log(replies);
 	};
+
+	const handleComment = (event) => {
+		var l = replies.length;
+		replies[l] = event.detail;
+		console.log(replies);
+	}
 </script>
 
 <div id="comment-{commentData.id}" class="comment-list__item dp-flex">
@@ -55,9 +61,9 @@
 		</div>
 		<div class="comment-content__replies mtb-10">
 			{#if showCreateComment}
-				<svelte:component this={CreateComment} bookId={0} chapterId={-1} userId={1} />
+				<svelte:component this={CreateComment} bookId={0} chapterId={-1} userId={1} on:newComment={handleComment} />
 			{/if}
-			{#each replies as item}
+			{#each [...replies].reverse()  as item}
 				<svelte:self commentData={item} />
 			{/each}
 		</div>
@@ -69,6 +75,8 @@
 		margin-top: 20px;
 
 		.user-info {
+			position: relative;
+
 			.user-avatar {
 				width: 50px;
 				height: 50px;
@@ -86,22 +94,21 @@
 			margin-left: 20px;
 			overflow: hidden;
 
-			.comment-content__row {
-				.comment-content__username {
+			.comment-content__data {
+				.comment-content__row {
+					.comment-content__username {
+						font-size: 18px;
+					}
+
+					.comment-content__date {
+						font-size: 14px;
+						color: rgb(165, 165, 165);
+					}
+				}
+
+				.comment-content__message {
 					font-size: 18px;
 				}
-
-				.comment-content__date {
-					font-size: 14px;
-					color: rgb(165, 165, 165);
-				}
-			}
-
-			.comment-content__message {
-				font-size: 18px;
-			}
-
-			.comment-content__action {
 			}
 		}
 	}

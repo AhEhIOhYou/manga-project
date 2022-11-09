@@ -1,31 +1,45 @@
 <script lang="ts">
+	import type { CommentType } from '@/models/comment.model';
 	import { onMount } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	let commentId: string;
 	let message: string;
 	export let bookId: number = -1;
 	export let chapterId: number = -1;
-	export let userId: number = 0;
+	export let userId: number = 1;
+	export let rootId: number = 0;
+	export let parentId: number = 0;
 	let sendBtnActive = false;
-
-	onMount(async () => {
-		commentId = '_' + Math.random().toString(36).substr(2, 9);
-	});
 
 	$: message == '' ? (sendBtnActive = false) : (sendBtnActive = true);
 
 	const send = () => {
-		const bookData = {
-			bookId: bookId,
-			chapterId: chapterId,
-			userId: userId,
-			message: message
+		const newComment:CommentType = {
+			id: Math.random(),
+			user: {
+				id: userId,
+				name: "Yayaya",
+				avatar: "http://dummyimage.com/50x50/c0c0c0",
+			},
+			book_id: bookId,
+			chapter_id: chapterId,
+			message: message,
+			root_id: rootId,
+			parent_id: parentId,
+			like_count: 0,
+			dislike_count: 0,
+			child_count: 0,
+			date: Date.now().toLocaleString("en-US"),
 		};
-		console.log(bookData);
+
+		dispatch('newComment', newComment);
 	};
 </script>
 
-<div id={commentId} class="comment-create">
+<div class="comment-create">
 	<div class="user-info">
 		<div class="user-avatar" />
 	</div>
