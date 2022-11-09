@@ -1,14 +1,12 @@
 <header class="global-header w-100 p-fixed p-zero">
 	<nav class="size-ruler dp-flex align-center h-100 m-auto">
 		<a class="navbar__item title" href="/">
-			<span>
-				Manga Projcet
-			</span>
+			<span> Manga Projcet </span>
 		</a>
 		<a class="navbar__item" href="/"><span>Home</span></a>
 		<a class="navbar__item" href="/genre"><span>Genre</span></a>
 		<div class="navbar__item">
-			<input type="text">
+			<input type="text" />
 			<button>Search</button>
 		</div>
 		<a class="navbar__item" href="/login"><span>Login/Signup</span></a>

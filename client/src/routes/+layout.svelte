@@ -19,12 +19,12 @@
 	$bodyBGColor: #222;
 	$mainBGColor: #333333;
 	$mainTextColor: white;
-	$headerBGColor: #FFA07A;
+	$headerBGColor: #ffa07a;
 	$headerBGColorScroll: gray;
-	$headerBGColorScrollOpacity: .2;
-	$footerBGColor: #8B4513;
-	$linkHover: #FF4500;
-	$transitionDuration: .5s;
+	$headerBGColorScrollOpacity: 0.2;
+	$footerBGColor: #8b4513;
+	$linkHover: #ff4500;
+	$transitionDuration: 0.5s;
 	$blockTextColor: gray;
 
 	:global(body) {
@@ -68,13 +68,13 @@
 		color: white;
 	}
 
-	:global([contenteditable=true]:empty:before) {
+	:global([contenteditable='true']:empty:before) {
 		content: attr(placeholder);
 		display: block;
 	}
-	
-	:global([contenteditable=true]:empty:focus:before) {
-		content: "";
+
+	:global([contenteditable='true']:empty:focus:before) {
+		content: '';
 	}
 
 	.size-ruler {

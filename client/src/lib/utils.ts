@@ -13,5 +13,5 @@ export const detectMobile = (userAgent: string): boolean => {
 
 	return toMatch.some((toMatchItem) => {
 		return userAgent.match(toMatchItem);
-	})
-}
+	});
+};
