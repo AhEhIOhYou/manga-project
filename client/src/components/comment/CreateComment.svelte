@@ -1,28 +1,29 @@
 <script lang="ts">
 	import type { CommentType } from '@/models/comment.model';
-	import { onMount } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
 
-	const dispatch = createEventDispatcher();
+	export let bookId: number;
+	export let chapterId: number;
+	export let userId: number;
+	export let rootId: number;
+	export let parentId: number;
 
-	let commentId: string;
+	const dispatch = createEventDispatcher<{ newComment: CommentType }>();
+
+	let sendBtnActive: boolean = false;
 	let message: string;
-	export let bookId: number = -1;
-	export let chapterId: number = -1;
-	export let userId: number = 1;
-	export let rootId: number = 0;
-	export let parentId: number = 0;
-	let sendBtnActive = false;
 
 	$: message == '' ? (sendBtnActive = false) : (sendBtnActive = true);
 
 	const send = () => {
-		const newComment:CommentType = {
-			id: Math.random(),
+		let date: Date = new Date();
+
+		const newComment: CommentType = {
+			id: Math.floor(Math.random() * 210000),
 			user: {
 				id: userId,
-				name: "Yayaya",
-				avatar: "http://dummyimage.com/50x50/c0c0c0",
+				name: 'Yayaya',
+				avatar: 'http://dummyimage.com/50x50/c0c0c0'
 			},
 			book_id: bookId,
 			chapter_id: chapterId,
@@ -32,9 +33,10 @@
 			like_count: 0,
 			dislike_count: 0,
 			child_count: 0,
-			date: Date.now().toLocaleString("en-US"),
+			date: date.toDateString()
 		};
 
+		message = '';
 		dispatch('newComment', newComment);
 	};
 </script>

@@ -2,37 +2,29 @@
 	import type { CommentType } from '@/models/comment.model';
 	import CreateComment from '@/components/comment/CreateComment.svelte';
 
+	export let bookId: number;
+	export let chapterId: number;
+	export let userId: number;
+	export let rootId: number;
+	export let parentId: number;
 	export let commentData: CommentType;
-	let showCreateComment = false;
 
+	let showCreateComment: boolean = false;
 	let replies: Array<CommentType> = [];
+	if (rootId == 0) rootId = commentData.id;
+	parentId = commentData.id;
 
 	const getReplies = () => {
-		var l = replies.length;
-		replies[l] = {
-			id: 124 + 2,
-			user: {
-				id: 1,
-				name: 'Ayaya',
-				avatar: 'http://dummyimage.com/50x50/c0c0c0'
-			},
-			message: 'cool manga!',
-			like_count: 0,
-			dislike_count: 0,
-			child_count: 1,
-			date: '09.10.2022'
-		};
 		console.log(replies);
 	};
 
-	const handleComment = (event) => {
-		var l = replies.length;
-		replies[l] = event.detail;
-		console.log(replies);
-	}
+	const addComment = (event: CustomEvent) => {
+		replies[replies.length] = event.detail;
+		showCreateComment = false;
+	};
 </script>
 
-<div id="comment-{commentData.id}" class="comment-list__item dp-flex">
+<div class="comment-list__item dp-flex">
 	<div class="user-info">
 		<div class="user-avatar" />
 	</div>
@@ -56,15 +48,23 @@
 				<button on:click={() => getReplies()} class="load-replies-btn dp-flex">
 					Load replies
 				</button>
-				$Like
+				^Like vDislike
 			</div>
 		</div>
 		<div class="comment-content__replies mtb-10">
 			{#if showCreateComment}
-				<svelte:component this={CreateComment} bookId={0} chapterId={-1} userId={1} on:newComment={handleComment} />
+				<svelte:component
+					this={CreateComment}
+					{bookId}
+					{chapterId}
+					{userId}
+					{rootId}
+					{parentId}
+					on:newComment={addComment}
+				/>
 			{/if}
-			{#each [...replies].reverse()  as item}
-				<svelte:self commentData={item} />
+			{#each replies as item}
+				<svelte:self {bookId} {chapterId} {userId} {rootId} {parentId} commentData={item} />
 			{/each}
 		</div>
 	</div>
