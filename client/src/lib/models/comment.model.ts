@@ -14,5 +14,4 @@ export type CommentType = {
 	dislike_count: number;
 	child_count: number;
 	date: string;
-	childrens?: CommentType;
 };
