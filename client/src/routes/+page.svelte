@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Carousel from '@/components/Carousel.svelte';
+	import Carousel from '@/lib/components/Carousel.svelte';
 	const sliderData = {
 		items: [
 			{

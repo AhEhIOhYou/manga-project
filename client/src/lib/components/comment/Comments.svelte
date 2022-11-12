@@ -1,14 +1,31 @@
 <script lang="ts">
-	import Comment from '@/components/comment/Comment.svelte';
-	import CreateComment from '@/components/comment/CreateComment.svelte';
-	import type { CommentType } from '@/models/comment.model';
+	import { onMount } from 'svelte';
+	import Comment from '@/lib/components/comment/Comment.svelte';
+	import CreateComment from '@/lib/components/comment/CreateComment.svelte';
+	import type { CommentType } from '@/lib/models/comment.model';
 
-	const userId: number = 1;
+	const userId = 1;
 
-	export let bookId: number = 0;
-	export let chapterId: number = -1;
+	export let bookId = 0;
+	export let chapterId = -1;
 
 	const commentData: Array<CommentType> = [];
+
+	async function getComments() {
+		const url: string = `http://localhost:5173/api/comments/`;
+		const res = await fetch(url, {
+			method: 'GET',
+		});
+		let data = await res.json();
+
+		if (res.ok) {
+			return data;
+		} else {
+			throw new Error(data);
+		}
+	}
+
+	let promise = getComments();
 
 	const addComment = (event: CustomEvent) => (commentData[commentData.length] = event.detail);
 </script>
@@ -25,6 +42,13 @@
 			parentId={0}
 			on:newComment={addComment}
 		/>
+		{#await promise}
+	<p>...waiting</p>
+{:then data}
+	<p>{JSON.stringify(data)}</p>
+{:catch error}
+	<p style="color: red">{error.message}</p>
+{/await}
 		<div class="comment-list">
 			{#each commentData as comment}
 				<svelte:component

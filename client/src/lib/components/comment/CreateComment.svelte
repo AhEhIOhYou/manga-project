@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CommentType } from '@/models/comment.model';
+	import type { CommentType } from '@/lib/models/comment.model';
 	import { createEventDispatcher } from 'svelte';
 
 	export let bookId: number;
