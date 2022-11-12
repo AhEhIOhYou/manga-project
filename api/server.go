@@ -34,28 +34,33 @@ func getServices() (*persistence.Repos, error) {
 
 func Serve() {
 
-	services, err := getServices()
-	if err != nil {
-		log.Fatal(err)
-	}
+	// services, err := getServices()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	router := gin.Default()
 	router.Use(middleware.CORSMiddleware())
 	router.Use(middleware.FrontStaticMiddleware())
 
-	
 	router.NoRoute(func(c *gin.Context) {
 		c.File("./client/build/index.html")
 	})
 
+	router.GET("/api/comments/", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{
+			"ha": "haha",
+		})
+	})
+
 	server := &http.Server{
-		Addr:         "0.0.0.0:8095",
+		Addr:         "127.0.0.1:8090",
 		Handler:      router,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
 
-	log.Println("Server: Started at http://localhost:8095 ...")
+	log.Println("Server: Started at http://localhost:8090 ...")
 	go func() {
 		if err := server.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 			log.Fatalln(err)
