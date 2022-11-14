@@ -4,27 +4,13 @@
 	height: 100%;
 }
 
-$bodyBGColor: #222;
-$mainBGColor: #333333;
-$mainTextColor: white;
-$headerBGColor: #ffa07a;
-$headerBGColorScroll: gray;
-$headerBGColorScrollOpacity: 0.2;
-$footerBGColor: #8b4513;
-$linkHover: #ff4500;
-$transitionDuration: 0.5s;
-$blockTextColor: gray;
-
 body {
-	margin: 0;
-	height: 100%;
-	background-color: $bodyBGColor;
-	color: $mainTextColor;
+	background-color: var(--background-body);
+	color: var(--text-primary);
 	flex-direction: column;
 }
 
 .title {
-	margin: 0;
 	font-size: 20px;
 }
 
@@ -36,12 +22,6 @@ body {
 	background-color: rgb(139, 139, 139);
 	bottom: -5px;
 	z-index: 1;
-}
-
-input {
-	background: $mainBGColor;
-	border: none;
-	color: white;
 }
 
 [contenteditable='true']:empty:before {
