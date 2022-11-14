@@ -10,7 +10,9 @@ import (
 	"syscall"
 	"time"
 
+	// "github.com/AhEhIOhYou/manga-project/api/infrastructure/persistence"
 	"github.com/AhEhIOhYou/manga-project/api/infrastructure/persistence"
+	"github.com/AhEhIOhYou/manga-project/api/interfaces"
 	"github.com/AhEhIOhYou/manga-project/api/interfaces/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -34,24 +36,23 @@ func getServices() (*persistence.Repos, error) {
 
 func Serve() {
 
-	// services, err := getServices()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	services, err := getServices()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	router := gin.Default()
 	router.Use(middleware.CORSMiddleware())
-	router.Use(middleware.FrontStaticMiddleware())
+	// router.Use(middleware.FrontStaticMiddleware())
 
-	router.NoRoute(func(c *gin.Context) {
-		c.File("./client/build/index.html")
-	})
+	comments := interfaces.NewComment(services.Comment)
 
-	router.GET("/api/comments/", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"ha": "haha",
-		})
-	})
+
+	// router.NoRoute(func(c *gin.Context) {
+	// 	c.File("./client/build/index.html")
+	// })
+
+	router.POST("/api/comments/", comments.SaveComment)
 
 	server := &http.Server{
 		Addr:         "127.0.0.1:8090",

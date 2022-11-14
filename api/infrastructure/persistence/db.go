@@ -12,6 +12,7 @@ type Repos struct {
 	Book    repository.BookRepository
 	Chapter repository.ChapterRepository
 	Page    repository.PageRepository
+	Comment repository.CommentRepository
 	db      *gorm.DB
 }
 
@@ -28,6 +29,7 @@ func NewRepo(DbUser, DbPassword, DbPort, DbHost, DbName string) (*Repos, error) 
 		Book:    NewBookRepo(db),
 		Chapter: NewChapterRepo(db),
 		Page:    NewPageRepo(db),
+		Comment: NewCommentRepo(db),
 		db:      db,
 	}, nil
 }
