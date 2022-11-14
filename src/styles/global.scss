@@ -1,0 +1,116 @@
+:root {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+		'Open Sans', 'Helvetica Neue', sans-serif;
+	height: 100%;
+}
+
+$bodyBGColor: #222;
+$mainBGColor: #333333;
+$mainTextColor: white;
+$headerBGColor: #ffa07a;
+$headerBGColorScroll: gray;
+$headerBGColorScrollOpacity: 0.2;
+$footerBGColor: #8b4513;
+$linkHover: #ff4500;
+$transitionDuration: 0.5s;
+$blockTextColor: gray;
+
+body {
+	margin: 0;
+	height: 100%;
+	background-color: $bodyBGColor;
+	color: $mainTextColor;
+	flex-direction: column;
+}
+
+.title {
+	margin: 0;
+	font-size: 20px;
+}
+
+.title__text::before {
+	content: '';
+	position: absolute;
+	height: 2px;
+	width: 100%;
+	background-color: rgb(139, 139, 139);
+	bottom: -5px;
+	z-index: 1;
+}
+
+input {
+	background: $mainBGColor;
+	border: none;
+	color: white;
+}
+
+[contenteditable='true']:empty:before {
+	content: attr(placeholder);
+	display: block;
+}
+
+[contenteditable='true']:empty:focus:before {
+	content: '';
+}
+
+.m-auto {
+	margin: 0 auto;
+}
+.dp-flex {
+	display: flex;
+}
+.dp-grid {
+	display: grid;
+}
+.w-100 {
+	width: 100%;
+}
+.h-100 {
+	height: 100%;
+}
+.p-fixed {
+	position: fixed;
+}
+.p-relative {
+	position: relative;
+}
+.p-absolute {
+	position: absolute;
+}
+.p-center, .p-zero {
+	top: 0;
+	left: 0;
+}
+.dp-flex.align-center {
+	align-items: center;
+}
+.dp-flex.fd-row {
+	flex-direction: row;
+}
+.dp-flex.fd-column {
+	flex-direction: column;
+}
+.t-no-wrap, .t-nowrap {
+	white-space: nowrap;
+}
+.b-radius-10 {
+	border-radius: 10px;
+}
+.v-top {
+	vertical-align: top;
+}
+.dp-i-block {
+	display: inline-block;
+}
+.bg-center {
+	background-position: 50%;
+}
+.w-100 {
+	width: 100%;
+}
+.mtb-10 {
+	margin: 10px 0;
+}
+.mb-8 {
+	margin-bottom: 8px;
+}
