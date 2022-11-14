@@ -3,10 +3,13 @@ import type { CommentType } from '@/lib/types';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url }) => {
-	const bookId = Number(url.searchParams.get('id') ?? '0');
-	const rawData = await getComments(bookId);
+	const bookId = Number(url.searchParams.get('book_id') ?? 0);
+	const parentId = Number(url.searchParams.get('parent_id') ?? 0);
+	const chapterId = Number(url.searchParams.get('chapter_id') ?? null);
+	const rawData = await getComments(bookId,parentId,chapterId);
 	let data: Array<CommentType> = [];
-	rawData.forEach((comment, index) => {
+
+	rawData.forEach((comment) => {
 		data.push({
 			id: comment.id,
 			user: {
@@ -27,3 +30,12 @@ export const GET: RequestHandler = async ({ url }) => {
 	});
 	return new Response(JSON.stringify(data));
 };
+
+// /** @type {import('./items').RequestHandler} */
+// export const post: RequestHandler =  async ({ request }) => {
+
+// 	return {
+// 		status: 200,
+// 		body: "sasd",
+// 	};
+// }
