@@ -15,17 +15,17 @@
 		const url: string = `http://localhost:8090/api/comments/`;
 		const res = await fetch(url, {
 			mode: 'cors',
-			method: 'GET',
+			method: 'GET'
 		});
-		let data:Array<CommentType> | string = await res.json();
+		let data: Array<CommentType> | string = await res.json();
 		commentData = [...data];
-		
+
 		// commentData[0] = data;
 
 		if (res.ok) {
 			return data;
 		} else {
-			throw new Error("");
+			throw new Error('');
 		}
 	}
 
@@ -34,9 +34,7 @@
 	const addComment = (event: CustomEvent) => (commentData[commentData.length] = event.detail);
 </script>
 
-<button on:click={getComments}>
-	Click me
-</button>
+<button on:click={getComments}> Click me </button>
 <div class="comments b-radius-10 p-relative">
 	<div class="comment-container border-box">
 		<h1 class="title">Comments</h1>

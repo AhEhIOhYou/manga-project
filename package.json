@@ -5,7 +5,6 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"build-all": "npm run build && cd .. && go build . && echo 'Status: Go build success'",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
