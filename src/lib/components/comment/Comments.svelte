@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import Comment from '@/lib/components/comment/Comment.svelte';
 	import CreateComment from '@/lib/components/comment/CreateComment.svelte';
-	import type { CommentType } from '@/lib/types';
+	import type { CommentType } from '@/lib/types/';
 
 	const userId = 1;
 
@@ -12,15 +12,13 @@
 	let commentData: Array<CommentType> = [];
 
 	async function getComments() {
-		const url: string = `http://localhost:8090/api/comments/`;
+		const url: string = `/api/book?id=1`;
 		const res = await fetch(url, {
 			mode: 'cors',
 			method: 'GET'
 		});
-		let data: Array<CommentType> | string = await res.json();
-		commentData = [...data];
-
-		// commentData[0] = data;
+		let data: Array<CommentType> = await res.json();
+		commentData = data;
 
 		if (res.ok) {
 			return data;
@@ -28,8 +26,6 @@
 			throw new Error('');
 		}
 	}
-
-	let promise: Promise<any>;
 
 	const addComment = (event: CustomEvent) => (commentData[commentData.length] = event.detail);
 </script>
@@ -47,15 +43,6 @@
 			parentId={0}
 			on:newComment={addComment}
 		/>
-		{#if promise}
-			{#await promise}
-				<p>...waiting</p>
-			{:then data}
-				<p>{JSON.stringify(data)}</p>
-			{:catch error}
-				<p style="color: red">{error.message}</p>
-			{/await}
-		{/if}
 		<div class="comment-list">
 			{#each commentData as comment}
 				<svelte:component

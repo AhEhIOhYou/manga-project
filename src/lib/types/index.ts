@@ -1,10 +1,6 @@
 export type CommentType = {
 	id: number;
-	user: {
-		id: number;
-		name: string;
-		avatar: string;
-	};
+	user: PublicUserType;
 	book_id: number;
 	chapter_id: number;
 	message: string;
@@ -15,3 +11,9 @@ export type CommentType = {
 	child_count: number;
 	date: string;
 };
+
+export type PublicUserType = {
+	id: number;
+	name: string;
+	avatar: string;
+} 
