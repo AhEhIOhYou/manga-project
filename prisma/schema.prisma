@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model book {
+  id             Int        @id @default(autoincrement())
+  title          String     @db.VarChar(255)
+  alt_title      String?    @db.VarChar(255)
+  author         String     @db.VarChar(255)
+  type           String     @db.VarChar(100)
+  cover          String?    @db.Text
+  description    String?    @db.Text
+  release_date   DateTime?  @db.Date
+  tags           String?    @db.Text
+  loader_user_id Int
+  created_at     DateTime   @db.DateTime(0)
+  chapter        chapter[]
+  comments       comments[]
+}
+
+model chapter {
+  id             Int        @id @default(autoincrement())
+  title          String     @db.VarChar(255)
+  number         Int
+  translator     String     @db.VarChar(255)
+  book_id        Int
+  loader_user_id Int
+  created_at     DateTime   @db.DateTime(0)
+  book           book       @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "chapter_book_null_fk")
+  comments       comments[]
+  page           page[]
+
+  @@index([book_id], map: "chapter_book_null_fk")
+}
+
+model comments {
+  id            Int       @id @default(autoincrement())
+  book_id       Int?
+  author        Int?
+  chapter_id    Int?
+  message       String?   @db.Text
+  root_id       Int?
+  parent_id     Int?
+  like_count    Int?
+  dislike_count Int?
+  child_count   Int?
+  created_at    DateTime? @db.Timestamp(0)
+  book          book?     @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_book_fk")
+  chapter       chapter?  @relation(fields: [chapter_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_chapter_fk")
+
+  @@index([book_id], map: "comments_book_fk")
+  @@index([chapter_id], map: "comments_chapter_fk")
+}
+
+model page {
+  id             Int      @id @default(autoincrement())
+  url            String   @db.Text
+  chapter_id     Int
+  loader_user_id Int
+  created_at     DateTime @db.DateTime(0)
+  chapter        chapter  @relation(fields: [chapter_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "page_chapter_null_fk")
+
+  @@index([chapter_id], map: "page_chapter_null_fk")
+}
