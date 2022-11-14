@@ -26,7 +26,7 @@
 				avatar: 'http://dummyimage.com/50x50/c0c0c0'
 			},
 			book_id: bookId,
-			chapter_id: chapterId,
+			chapter_id: null	,
 			message: message,
 			root_id: rootId,
 			parent_id: parentId,
@@ -36,6 +36,23 @@
 			date: date.toDateString()
 		};
 
+		async function saveComment() {
+			const url: string = `http://localhost:8090/api/comments/`;
+			const res = await fetch(url, {
+				mode: 'cors',
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(newComment),
+			})
+			const content = await res.json();
+
+			console.log(content);
+		}
+
+		saveComment();
 		message = '';
 		dispatch('newComment', newComment);
 	};

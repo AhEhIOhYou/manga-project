@@ -9,27 +9,34 @@
 	export let bookId = 0;
 	export let chapterId = -1;
 
-	const commentData: Array<CommentType> = [];
+	let commentData: Array<CommentType> = [];
 
 	async function getComments() {
-		const url: string = `http://localhost:5173/api/comments/`;
+		const url: string = `http://localhost:8090/api/comments/`;
 		const res = await fetch(url, {
+			mode: 'cors',
 			method: 'GET',
 		});
-		let data = await res.json();
+		let data:Array<CommentType> | string = await res.json();
+		commentData = [...data];
+		
+		// commentData[0] = data;
 
 		if (res.ok) {
 			return data;
 		} else {
-			throw new Error(data);
+			throw new Error("");
 		}
 	}
 
-	let promise = getComments();
+	let promise: Promise<any>;
 
 	const addComment = (event: CustomEvent) => (commentData[commentData.length] = event.detail);
 </script>
 
+<button on:click={getComments}>
+	Click me
+</button>
 <div class="comments b-radius-10 p-relative">
 	<div class="comment-container border-box">
 		<h1 class="title">Comments</h1>
@@ -42,13 +49,15 @@
 			parentId={0}
 			on:newComment={addComment}
 		/>
-		{#await promise}
-	<p>...waiting</p>
-{:then data}
-	<p>{JSON.stringify(data)}</p>
-{:catch error}
-	<p style="color: red">{error.message}</p>
-{/await}
+		{#if promise}
+			{#await promise}
+				<p>...waiting</p>
+			{:then data}
+				<p>{JSON.stringify(data)}</p>
+			{:catch error}
+				<p style="color: red">{error.message}</p>
+			{/await}
+		{/if}
 		<div class="comment-list">
 			{#each commentData as comment}
 				<svelte:component
@@ -77,8 +86,8 @@
 			overflow: auto;
 			padding: 40px;
 
-			.comment-list {
-			}
+			// .comment-list {
+			// }
 		}
 	}
 </style>
