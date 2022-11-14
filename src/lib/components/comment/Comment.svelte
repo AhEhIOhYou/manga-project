@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CommentType } from '@/lib/models/comment.model';
+	import type { CommentType } from '@/lib/types/';
 	import CreateComment from '@/lib/components/comment/CreateComment.svelte';
 
 	export let bookId: number;
