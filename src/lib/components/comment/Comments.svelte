@@ -4,33 +4,34 @@
 	import CreateComment from '@/lib/components/comment/CreateComment.svelte';
 	import type { CommentType } from '@/lib/types/';
 
-	const userId = 1;
-
 	export let bookId = 0;
-	export let chapterId = -1;
+	export let chapterId = null;
+
+	const userId = 1;
+	const parentId = 0;
 
 	let commentData: Array<CommentType> = [];
 
-	async function getComments() {
-		const url: string = `/api/book?id=1`;
+	onMount(async () => {
+		const chapterQueryParam: string = chapterId == null ? '' : `chapter_id=${chapterId}`;
+		const url: string = `/api/comment?book_id=${bookId}&parent_id=${parentId}` + chapterQueryParam;
+
 		const res = await fetch(url, {
 			mode: 'cors',
 			method: 'GET'
 		});
-		let data: Array<CommentType> = await res.json();
-		commentData = data;
-
 		if (res.ok) {
-			return data;
+			commentData = await res.json();
 		} else {
 			throw new Error('');
 		}
-	}
+	});
 
-	const addComment = (event: CustomEvent) => (commentData[commentData.length] = event.detail);
+	const addComment = (event: CustomEvent) => {
+		commentData[commentData.length] = event.detail;
+	};
 </script>
 
-<button on:click={getComments}> Click me </button>
 <div class="comments b-radius-10 p-relative">
 	<div class="comment-container border-box">
 		<h1 class="title">Comments</h1>

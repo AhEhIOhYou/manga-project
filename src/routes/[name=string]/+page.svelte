@@ -7,4 +7,4 @@
 </script>
 
 <Manga />
-<Comments bookId={5} />
+<Comments bookId={1} />

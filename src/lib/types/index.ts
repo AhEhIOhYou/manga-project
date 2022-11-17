@@ -9,11 +9,12 @@ export type CommentType = {
 	like_count: number;
 	dislike_count: number;
 	child_count: number;
-	date: string;
+	is_deleted: boolean;
+	created_at: Date;
 };
 
 export type PublicUserType = {
 	id: number;
 	name: string;
 	avatar: string;
-} 
+};

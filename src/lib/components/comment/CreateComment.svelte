@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { CommentType } from '@/lib/types/';
+	import type { comments } from '@prisma/client';
 	import { createEventDispatcher } from 'svelte';
 
 	export let bookId: number;
@@ -15,46 +16,33 @@
 
 	$: message == '' ? (sendBtnActive = false) : (sendBtnActive = true);
 
-	const send = () => {
-		let date: Date = new Date();
-
-		const newComment: CommentType = {
-			id: Math.floor(Math.random() * 210000),
-			user: {
-				id: userId,
-				name: 'Yayaya',
-				avatar: 'http://dummyimage.com/50x50/c0c0c0'
-			},
+	const send = async () => {
+		const newComment: object = {
 			book_id: bookId,
-			chapter_id: null,
+			chapter_id: chapterId,
 			message: message,
 			root_id: rootId,
-			parent_id: parentId,
-			like_count: 0,
-			dislike_count: 0,
-			child_count: 0,
-			date: date.toDateString()
+			parent_id: parentId
 		};
 
-		async function saveComment() {
-			const url: string = `http://localhost:8090/api/comments/`;
-			const res = await fetch(url, {
-				mode: 'cors',
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(newComment)
-			});
-			const content = await res.json();
+		const url: string = `/api/comment`;
 
-			console.log(content);
+		const res = await fetch(url, {
+			mode: 'cors',
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(newComment)
+		});
+
+		const createdComment: CommentType = await res.json();
+		if (!res.ok) {
+			throw new Error('');
 		}
 
-		saveComment();
-		message = '';
-		dispatch('newComment', newComment);
+		dispatch('newComment', createdComment);
 	};
 </script>
 
