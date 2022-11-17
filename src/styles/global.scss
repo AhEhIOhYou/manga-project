@@ -57,7 +57,8 @@ body {
 .p-absolute {
 	position: absolute;
 }
-.p-center, .p-zero {
+.p-center,
+.p-zero {
 	top: 0;
 	left: 0;
 }
@@ -70,7 +71,8 @@ body {
 .dp-flex.fd-column {
 	flex-direction: column;
 }
-.t-no-wrap, .t-nowrap {
+.t-no-wrap,
+.t-nowrap {
 	white-space: nowrap;
 }
 .b-radius-10 {
