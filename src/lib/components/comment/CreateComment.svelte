@@ -42,6 +42,7 @@
 			throw new Error('');
 		}
 
+		message = '';
 		dispatch('newComment', createdComment);
 	};
 </script>
