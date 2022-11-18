@@ -33,7 +33,7 @@
 </script>
 
 <div class="comments b-radius-10 p-relative">
-	<div class="comment-container border-box">
+	<div class="comment-container">
 		<h1 class="title">Comments</h1>
 		<svelte:component
 			this={CreateComment}
@@ -65,12 +65,12 @@
 
 	.comments {
 		min-width: 500px;
-		background-color: $mainBGColor;
+		padding: 40px;
+		background-color: var(--container-main);
 
 		.comment-container {
 			height: 100%;
 			overflow: auto;
-			padding: 40px;
 
 			// .comment-list {
 			// }

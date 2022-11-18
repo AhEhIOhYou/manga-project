@@ -91,17 +91,21 @@
 				<button on:click={() => (showCreateComment = !showCreateComment)}
 					>{#if !showCreateComment}Reply{:else}Cancel{/if}</button
 				>
-				{#if showGetReplyBtn}
-					<button on:click={() => getReplies()} class="load-replies-btn dp-flex">
-						{#if !showReplies}Load replies{:else}Close replies{/if}
-					</button>
-				{/if}
 				{#if showDeleteBtn}
 					<button on:click={() => deleteComment()} class="load-replies-btn dp-flex">
 						Delete
 					</button>
 				{/if}
 				^Like vDislike
+				{#if showGetReplyBtn}
+					<div class="show-more-container">
+						<div class="show-more-text">
+							<button on:click={() => getReplies()} class="load-replies-btn dp-flex">
+								{#if !showReplies}Load replies{:else}Close replies{/if}
+							</button>
+						</div>
+					</div>
+				{/if}
 			</div>
 		</div>
 		<div class="comment-content__replies mtb-10">
