@@ -13,6 +13,20 @@ export type CommentType = {
 	created_at: Date;
 };
 
+export type BookType = {
+	id: number;
+	title:string;
+	alt_title:string;
+	author:string;
+	type:string;
+	cover:string;
+	description:string;
+	release_date: Date;
+	tags:string;
+	loader_user_id:number;
+	created_at: Date;
+}
+
 export type PublicUserType = {
 	id: number;
 	name: string;

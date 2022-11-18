@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import Manga from '@/lib/components/Manga.svelte';
-	import Comments from '@/lib/components/comment/Comments.svelte';
+	import Comments from "@/lib/components/comment/Comments.svelte";
+	import Book from "@/lib/components/book/Book.svelte";
 
 	export let data: PageData;
 </script>
 
-<Manga />
+<Book bookId={1} />
 <Comments bookId={1} />
