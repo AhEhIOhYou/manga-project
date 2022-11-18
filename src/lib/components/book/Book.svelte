@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { BookType } from '@/lib/types';
-
 	let pageTitle: string = 'Book page';
 
 	export let bookId: number = 0;
@@ -113,7 +111,7 @@
 	$altTitleColor: #b3b3b3;
 
 	.manga-detail {
-		padding: 20px;
+		padding: 40px;
 		background-color: $mainBGColor;
 	}
 

@@ -10,6 +10,17 @@ body {
 	flex-direction: column;
 }
 
+a {
+	// font-weight: bold;
+	color: var(--text-primary);
+	// &:visited {
+	// 	color: var(--text-primaty-sub);
+	// }
+	&:hover {
+		color: var(--text-hover);
+	}
+}
+
 .title {
 	font-size: 20px;
 }
@@ -22,6 +33,19 @@ body {
 	background-color: rgb(139, 139, 139);
 	bottom: -5px;
 	z-index: 1;
+}
+
+.show-more-container {
+	margin: 10px 0;
+	display: flex;
+	justify-content: center;
+
+	.show-more-text {
+		cursor: pointer;
+		&:hover {
+			color: var(--text-hover);
+	}
+	}
 }
 
 [contenteditable='true']:empty:before {
@@ -70,6 +94,9 @@ body {
 }
 .dp-flex.fd-column {
 	flex-direction: column;
+}
+.dp-flex.jsc-space-between {
+	justify-content: space-between;
 }
 .t-no-wrap,
 .t-nowrap {

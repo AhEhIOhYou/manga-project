@@ -27,6 +27,16 @@ export type BookType = {
 	created_at: Date;
 }
 
+export type ChapterType = {
+	id: number;
+	title: string;
+	number: number;
+	translator: string;
+	book_id: number;
+	loader_user_id: number;
+	created_at: Date;
+}
+
 export type PublicUserType = {
 	id: number;
 	name: string;
