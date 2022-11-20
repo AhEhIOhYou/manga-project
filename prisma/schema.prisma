@@ -64,6 +64,7 @@ model page {
   chapter_id     Int
   loader_user_id Int
   created_at     DateTime @db.DateTime(0)
+  number         Int
   chapter        chapter  @relation(fields: [chapter_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "page_chapter_null_fk")
 
   @@index([chapter_id], map: "page_chapter_null_fk")
