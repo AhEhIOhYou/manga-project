@@ -25,7 +25,7 @@
 	<title>{pageTitle}</title>
 </svelte:head>
 
-<div class="manga-detail  b-radius-10 mtb-10">
+<div class="container">
 	{#await bookLoading(bookId)}
 		<p>...loading</p>
 	{:then bookData}
@@ -106,14 +106,6 @@
 </div>
 
 <style lang="scss">
-	$mainBGColor: #333333;
-	$titleColor: white;
-	$altTitleColor: #b3b3b3;
-
-	.manga-detail {
-		padding: 40px;
-		background-color: $mainBGColor;
-	}
 
 	.manga-detail__image {
 		width: 250px;
@@ -141,7 +133,7 @@
 	}
 
 	.manga-title__alt {
-		color: $altTitleColor;
+		color: var(--text-primaty-sub);
 		margin: 0 0 11px;
 		font-size: 25px;
 		font-weight: 400;

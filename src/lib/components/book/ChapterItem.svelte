@@ -3,7 +3,7 @@
 </script>
 
 <li class="chapters-list__item p-relative">
-	<a class="chapters-list__link dp-flex jsc-space-between" href="book/read">
+	<a class="chapters-list__link dp-flex jsc-space-between" href="/c{chapterItemData.number}">
 		<span class="chapter-item__title">
 			{chapterItemData.title}
 			<span class="chapter-item__translator">

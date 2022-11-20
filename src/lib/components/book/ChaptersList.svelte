@@ -19,8 +19,8 @@
 	};
 </script>
 
-<div class="chapters dp-block mtb-10 b-radius-10">
-	<div class="chapter-container">
+<div class="container dp-block">
+	<div class="chapters">
 		<h1 class="title">Chapters</h1>
 		{#await chaptersLoading(bookId)}
 			<p>...loading</p>
@@ -45,12 +45,7 @@
 
 <style lang="scss">
 	.chapters {
-		padding: 40px;
-		background-color: var(--container-main);
-
-		.chapter-container {
-			height: 100%;
-			overflow: auto;
-		}
+		height: 100%;
+		overflow: auto;
 	}
 </style>

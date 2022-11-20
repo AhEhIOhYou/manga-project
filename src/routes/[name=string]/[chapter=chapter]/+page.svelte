@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import Reader from '@/lib/components/reader/Reader.svelte';
 
 	export let data: PageData;
 </script>
@@ -8,4 +9,9 @@
 	<title>Manga chapter page!</title>
 </svelte:head>
 
-<h1>Here manga chapter page</h1>
+<Reader bookId={1} chapterId={1}/>
+
+
+<style lang="scss">
+	
+</style>

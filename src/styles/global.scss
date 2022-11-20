@@ -35,6 +35,13 @@ a {
 	z-index: 1;
 }
 
+.container {
+	padding: 40px;
+	background-color: var(--container-main);
+	border-radius: 10px;
+	margin: 10px auto;
+}
+
 .show-more-container {
 	margin: 10px 0;
 	display: flex;

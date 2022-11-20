@@ -56,7 +56,7 @@
 			<div
 				class="comment-text p-relative"
 				placeholder="write your comment here"
-				contenteditable="true"
+				contenteditable="plaintext-only"
 				bind:innerHTML={message}
 			/>
 		</div>

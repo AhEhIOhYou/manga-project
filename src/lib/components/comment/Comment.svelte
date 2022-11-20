@@ -57,6 +57,7 @@
 				method: 'DELETE'
 			});
 			if (res.ok) {
+				commentData.is_deleted = true;
 				commentData.message = '';
 			} else {
 				throw new Error('');

@@ -6,16 +6,19 @@
 </script>
 
 <Header />
-<main class="size-ruler 3 p-relative">
-	<slot />
+<main>
+	<div class="size-ruler p-relative">
+		<slot />
+	</div>
 </main>
 <Footer />
 
 <style lang="scss">
 	.size-ruler {
-		width: 1160px;
+		max-width: 1160px;
 		margin: 70px auto 60px;
 		border-radius: 2px;
 		min-height: calc(100vh - 228px);
+		padding: 0 45px;
 	}
 </style>

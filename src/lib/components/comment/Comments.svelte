@@ -12,7 +12,7 @@
 
 	let commentData: Array<CommentType> = [];
 
-	onMount(async () => {
+	const commentsLoading = async (bookId, parentId, chapterId,) => {
 		const chapterQueryParam: string = chapterId == null ? '' : `chapter_id=${chapterId}`;
 		const url: string = `/api/comment?book_id=${bookId}&parent_id=${parentId}` + chapterQueryParam;
 
@@ -20,20 +20,21 @@
 			mode: 'cors',
 			method: 'GET'
 		});
+		const data = await res.json();
 		if (res.ok) {
-			commentData = await res.json();
+			commentData = data;
 		} else {
-			throw new Error('');
+			throw new Error(data.message);
 		}
-	});
+	}
 
 	const addComment = (event: CustomEvent) => {
 		commentData[commentData.length] = event.detail;
 	};
 </script>
 
-<div class="comments b-radius-10 p-relative">
-	<div class="comment-container">
+<div class="container b-radius-10 p-relative">
+	<div class="comments">
 		<h1 class="title">Comments</h1>
 		<svelte:component
 			this={CreateComment}
@@ -45,35 +46,34 @@
 			on:newComment={addComment}
 		/>
 		<div class="comment-list">
-			{#each commentData as comment}
-				<svelte:component
-					this={Comment}
-					{bookId}
-					{chapterId}
-					{userId}
-					commentData={comment}
-					rootId={0}
-					parentId={0}
-				/>
-			{/each}
+			{#await commentsLoading(bookId, parentId, chapterId)}
+				<p>...loading</p>
+			{:then}
+				{#if commentData.length == 0}
+					<p>Be the first!</p>
+				{:else}
+					{#each commentData as comment}
+						<svelte:component
+							this={Comment}
+							{bookId}
+							{chapterId}
+							{userId}
+							commentData={comment}
+							rootId={0}
+							parentId={0}
+						/>
+					{/each}
+				{/if}
+			{:catch error}
+				<p>Attention! {error}</p>
+			{/await}
 		</div>
 	</div>
 </div>
 
 <style lang="scss">
-	$mainBGColor: #333333;
-
 	.comments {
-		min-width: 500px;
-		padding: 40px;
-		background-color: var(--container-main);
-
-		.comment-container {
-			height: 100%;
-			overflow: auto;
-
-			// .comment-list {
-			// }
-		}
+		height: 100%;
+		overflow: auto;
 	}
 </style>
