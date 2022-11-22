@@ -13,7 +13,7 @@
 	let commentData: Array<CommentType> = [];
 
 	const commentsLoading = async (bookId, parentId, chapterId,) => {
-		const chapterQueryParam: string = chapterId == null ? '' : `chapter_id=${chapterId}`;
+		const chapterQueryParam: string = chapterId == null ? '' : `&chapter_id=${chapterId}`;
 		const url: string = `/api/comment?book_id=${bookId}&parent_id=${parentId}` + chapterQueryParam;
 
 		const res = await fetch(url, {
