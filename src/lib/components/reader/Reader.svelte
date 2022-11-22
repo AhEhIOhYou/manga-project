@@ -1,6 +1,17 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	export let bookId = 0;
 	export let chapterId = 0;
+
+	let pageBack:number = 0;
+	let pageNext:number = 2;
+	
+	const handleImgClick = (event) => {
+		let bb: DOMRect = event.target.getBoundingClientRect();
+		$page.url.searchParams.set('page', (event.clientX - bb.left > (bb.right - bb.left) / 2 ? pageNext :  pageBack).toString()); 
+		goto(`?${$page.url.searchParams.toString()}`);
+	}
 </script>
 
 <div class="container">
@@ -27,28 +38,19 @@
 		<div class="select-pagination">
 			<div class="nav-prev dp-i-block">
 				<a class="btn prev_page" href="#">
-					Prev
+					Prev Chapter
 				</a>
 			</div>
 			<div class="nav-next dp-i-block">
 				<a class="btn next_page" href="#">
-					Next
+					Next Chapter
 				</a>
 			</div>
 		</div>
 	</div>
-	<div class="reader-body w-100 h-100 p-relative">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<div class="reader-body w-100 h-100 p-relative" on:mouseup={handleImgClick}>
 		<div class="image-list m-auto">
-			<div class="image-item p-relative">
-				<div class="image-container w-100 h-100 p-relative">
-					<img alt="альтухи" src="http://dummyimage.com/1080x1552/c0c0c0">
-				</div>
-			</div>
-			<div class="image-item p-relative">
-				<div class="image-container w-100 h-100 p-relative">
-					<img alt="альтухи" src="http://dummyimage.com/1080x1552/c0c0c0">
-				</div>
-			</div>
 			<div class="image-item p-relative">
 				<div class="image-container w-100 h-100 p-relative">
 					<img alt="альтухи" src="http://dummyimage.com/1080x1552/c0c0c0">
@@ -76,15 +78,15 @@
 				</select>
 			</div>
 		</div>
-		<div class="select-pagination">
+		<div class="chapter-pagination">
 			<div class="nav-prev dp-i-block">
-				<a class="btn prev_page" href="#">
-					Prev
+				<a class="btn prev_chapter" href="#">
+					Prev Chapter
 				</a>
 			</div>
 			<div class="nav-next dp-i-block">
-				<a class="btn next_page" href="#">
-					Next
+				<a class="btn next_chapter" href="#">
+					Next Chapter
 				</a>
 			</div>
 		</div>
@@ -93,7 +95,12 @@
 
 <style lang="scss">
 	.reader-menu {
-		.select-pagination {
+		.page-pagination {
+			position: fixed;
+			top: 100px;
+
+		}
+		.chapter-pagination {
 			.nav-prev {
 				.prev_page {
 					
