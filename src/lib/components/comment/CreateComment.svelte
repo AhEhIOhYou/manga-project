@@ -45,6 +45,16 @@
 		message = '';
 		dispatch('newComment', createdComment);
 	};
+
+	const handlePaste = (event) => {
+		let clipboardData, pastedData;
+		event.stopPropagation();
+		event.preventDefault();
+		//window.clipboardData - IE support (maybe delete?)
+		clipboardData = event.clipboardData || window.clipboardData;
+		pastedData = clipboardData.getData("Text");
+		message = pastedData;
+	}
 </script>
 
 <div class="comment-create">
@@ -56,8 +66,9 @@
 			<div
 				class="comment-text p-relative"
 				placeholder="write your comment here"
-				contenteditable="plaintext-only"
+				contenteditable="true"
 				bind:innerHTML={message}
+				on:paste={handlePaste}
 			/>
 		</div>
 		<div class="comment-action">
