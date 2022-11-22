@@ -1,5 +1,10 @@
-import type { PageLoad } from './$types';
+import { dataset_dev } from 'svelte/internal';
+import type { PageLoad, PageServerData } from './$types'
 
-export const load: PageLoad = async () => {
-	return {};
+type OutputProps = Pick<PageServerData, 'pages'>
+
+export const load: PageLoad<OutputProps> = async ( { data }) => {
+	return {
+		pages: data,
+	};
 };

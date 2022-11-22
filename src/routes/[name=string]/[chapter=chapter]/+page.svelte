@@ -4,6 +4,8 @@
 	import Comments from '@/lib/components/comment/Comments.svelte';
 
 	export let data: PageData;
+	console.log(data);
+	
 </script>
 
 <svelte:head>

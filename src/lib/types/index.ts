@@ -15,15 +15,15 @@ export type CommentType = {
 
 export type BookType = {
 	id: number;
-	title:string;
-	alt_title:string;
-	author:string;
-	type:string;
-	cover:string;
-	description:string;
+	title: string;
+	alt_title: string;
+	author: string;
+	type: string;
+	cover: string;
+	description: string;
 	release_date: Date;
-	tags:string;
-	loader_user_id:number;
+	tags: string;
+	loader_user_id: number;
 	created_at: Date;
 }
 
@@ -35,6 +35,9 @@ export type ChapterType = {
 	book_id: number;
 	loader_user_id: number;
 	created_at: Date;
+	nextPageNum?: number;
+	maxPageNum?: number;
+	minPageNum?: number;
 }
 
 export type PublicUserType = {

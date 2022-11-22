@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import type { page as PageType } from "@prisma/client";
 	import { goto } from '$app/navigation';
+	import { page } from "$app/stores";
 	export let bookId = 0;
 	export let chapterId = 0;
 
 	let pageBack:number = 0;
 	let pageNext:number = 2;
+
+	export let pages: Array<PageType> = [];
 	
 	const handleImgClick = (event) => {
 		let bb: DOMRect = event.target.getBoundingClientRect();
@@ -49,15 +52,17 @@
 		</div>
 	</div>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<div class="reader-body w-100 h-100 p-relative" on:mouseup={handleImgClick}>
-		<div class="image-list m-auto">
-			<div class="image-item p-relative">
-				<div class="image-container w-100 h-100 p-relative">
-					<img alt="альтухи" src="http://dummyimage.com/1080x1552/c0c0c0">
+	{#each pages as page}
+		<div class="reader-body w-100 h-100 p-relative" on:mouseup={handleImgClick}>
+			<div class="image-list m-auto">
+				<div class="image-item p-relative">
+					<div class="image-container w-100 h-100 p-relative">
+						<img alt="альтухи" src="{page.url}">
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	{/each}
 	<div class="reader-menu dp-flex jsc-space-between mtb-10">
 		<div class="select-view">
 			<div class="select-chapter dp-i-block">
