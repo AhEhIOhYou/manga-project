@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	export let chapterItemData;
 </script>
 
 <li class="chapters-list__item p-relative">
-	<a class="chapters-list__link dp-flex jsc-space-between" href="/c{chapterItemData.number}">
+	<a class="chapters-list__link dp-flex jsc-space-between" href="{$page.url}/c{chapterItemData.number}">
 		<span class="chapter-item__title">
 			{chapterItemData.title}
 			<span class="chapter-item__translator">
