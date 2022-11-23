@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { PageServerData } from './$types';
 	import Comments from "@/lib/components/comment/Comments.svelte";
-	import Book from "@/lib/components/book/Book.svelte";
-	import ChaptersList from '@/lib/components/book/ChaptersList.svelte';
+	import Book from "@/lib/shared/ui/book/Book.svelte";
+	import ChaptersList from '@/lib/components/chapter/ChaptersList.svelte';
 
-	export let data: PageData;
+	export let data: PageServerData;
 </script>
 
-<Book bookId={1} />
+<Book bookData={data.bookInfo} />
 <ChaptersList bookId={1} />
 <Comments bookId={1} />

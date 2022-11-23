@@ -8,7 +8,7 @@
 	let pageBack:number = 0;
 	let pageNext:number = 2;
 
-	export let pages: Array<PageType> = [];
+	export let pages;
 	
 	const handleImgClick = (event) => {
 		let bb: DOMRect = event.target.getBoundingClientRect();
@@ -51,7 +51,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	{#each pages as page}
 		<div class="reader-body w-100 h-100 p-relative" on:mouseup={handleImgClick}>
 			<div class="image-list m-auto">
@@ -119,6 +118,7 @@
 
 			.image-item {
 				width: 100%;
+				cursor: pointer;
 
 				.loaded {
 					min-width: auto!important;

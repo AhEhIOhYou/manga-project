@@ -19,6 +19,7 @@ model book {
   tags           String?    @db.Text
   loader_user_id Int
   created_at     DateTime   @db.DateTime(0)
+  link_title     String     @db.Text
   chapter        chapter[]
   comments       comments[]
 }

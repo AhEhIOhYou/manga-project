@@ -1,10 +1,10 @@
-import { getBook } from '@/lib/server/book';
+import { getBookByTitle } from '@/lib/server/book';
 import type { BookType } from '@/lib/types';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url }) => {
-	const bookId = Number(url.searchParams.get('id') ?? 0);
-	const rawData = await getBook(bookId);
+	const bookLibkTitle = url.searchParams.get('link_title') ?? '';
+	const rawData = await getBookByTitle(bookLibkTitle);
 	let data: BookType = {
 		id: rawData.id,
 		title: rawData.title,
@@ -17,6 +17,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		tags: rawData.tags,
 		loader_user_id: rawData.loader_user_id,
 		created_at: rawData.created_at,
+		link_title: rawData.link_title,
 	}
 	return new Response(JSON.stringify(data));
 };

@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import type { page as PageType } from "@prisma/client";
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ url, fetch }) => {
 
 	const chapterId = Number(url.pathname.substring(url.pathname.lastIndexOf('/') + 1).match(/\d+$/));
 	let rawPageNumber = Number(url.searchParams.get('page'));
@@ -10,16 +10,12 @@ export const load: PageServerLoad = async ({ url }) => {
 	let pages: Array<PageType> = [];
 
 	const pageNumberQueryParam: string = pageNumber == null ? '' : `&page_number=${pageNumber}`;
-	const api: string = `${url.host}/api/page?chapter_id=${chapterId}${pageNumberQueryParam}`;
+	const api: string = `/api/page?chapter_id=${chapterId}${pageNumberQueryParam}`;
 	console.log(api);
 	
-	const res: Response = await fetch(api, {
-		mode: 'cors',
-		method: 'GET'
-	});
+	const res: Response = await fetch(api);
 
 	const data: any = await res.json();
-	console.log(data);
 
 	if (res.ok) {
 		pages = data;
@@ -27,5 +23,5 @@ export const load: PageServerLoad = async ({ url }) => {
 		throw new Error(data.message);
 	}
 
-	return pages;
+	return { pages };
 };

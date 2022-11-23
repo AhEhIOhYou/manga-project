@@ -25,6 +25,7 @@ export type BookType = {
 	tags: string;
 	loader_user_id: number;
 	created_at: Date;
+	link_title: string;
 }
 
 export type ChapterType = {

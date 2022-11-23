@@ -12,4 +12,4 @@ export const GET: RequestHandler = async ({ url }) => {
 	}
 	
 	return new Response(JSON.stringify(rawData));
-};
+};	

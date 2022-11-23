@@ -1,10 +1,9 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import Reader from '@/lib/components/reader/Reader.svelte';
+	import Reader from '@/lib/shared/ui/reader/Reader.svelte';
 	import Comments from '@/lib/components/comment/Comments.svelte';
+	import type { PageServerData } from './$types';
 
-	export let data: PageData;
-	console.log(data);
+	export let data: PageServerData;
 	
 </script>
 
@@ -12,7 +11,7 @@
 	<title>Manga chapter page!</title>
 </svelte:head>
 
-<Reader bookId={1} chapterId={1}/>
+<Reader bookId={1} chapterId={1} pages={data.pages}/>
 <Comments bookId={1} chapterId={1}/>
 
 <style lang="scss">
