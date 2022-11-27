@@ -11,7 +11,7 @@
 	<title>Manga chapter page!</title>
 </svelte:head>
 
-<Reader bookId={1} chapterId={1} pages={data.pages}/>
+<Reader pagesData={data}/>
 <Comments bookId={1} chapterId={1}/>
 
 <style lang="scss">

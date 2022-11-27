@@ -10,11 +10,10 @@ export const load: PageServerLoad = async ({ url, fetch }) => {
 	let pages: Array<PageType> = [];
 
 	const pageNumberQueryParam: string = pageNumber == null ? '' : `&page_number=${pageNumber}`;
-	const api: string = `/api/page?chapter_id=${chapterId}${pageNumberQueryParam}`;
+	const api: string = `/api/method/page.get?chapter_id=${chapterId}${pageNumberQueryParam}`;
 	console.log(api);
 	
 	const res: Response = await fetch(api);
-
 	const data: any = await res.json();
 
 	if (res.ok) {
@@ -23,5 +22,9 @@ export const load: PageServerLoad = async ({ url, fetch }) => {
 		throw new Error(data.message);
 	}
 
-	return { pages };
+	return {
+		pages: pages,
+		pageBackUrl: "",
+		pageNextUrl: "",
+	};
 };

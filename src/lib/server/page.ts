@@ -22,6 +22,12 @@ export async function getPage(chapterId: number, pageNumber: number) {
 	return page;
 }
 
+export async function getNextPage(pageId:number) {
+	const page = prisma.page.findFirst({
+		
+	});
+}
+
 export async function getChapterPageInfo(chapterId: number) {
 	const data = prisma.page.aggregate({
 		where: {

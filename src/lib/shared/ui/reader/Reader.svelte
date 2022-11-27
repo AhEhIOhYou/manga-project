@@ -1,19 +1,15 @@
 <script lang="ts">
-	import type { page as PageType } from "@prisma/client";
 	import { goto } from '$app/navigation';
-	import { page } from "$app/stores";
-	export let bookId = 0;
-	export let chapterId = 0;
 
-	let pageBack:number = 0;
-	let pageNext:number = 2;
-
-	export let pages;
+	export let pagesData;
 	
 	const handleImgClick = (event) => {
-		let bb: DOMRect = event.target.getBoundingClientRect();
-		$page.url.searchParams.set('page', (event.clientX - bb.left > (bb.right - bb.left) / 2 ? pageNext :  pageBack).toString()); 
-		goto(`?${$page.url.searchParams.toString()}`);
+		const pos:number = event.offsetX < (event.target.width / 2) ? -1 : 1;
+		if (pos == 1) {
+			goto(pagesData.pageNextUrl);
+		} else {
+			goto(pagesData.pageBackUrl);
+		}
 	}
 </script>
 
@@ -51,7 +47,7 @@
 			</div>
 		</div>
 	</div>
-	{#each pages as page}
+	{#each pagesData.pages as page}
 		<div class="reader-body w-100 h-100 p-relative" on:mouseup={handleImgClick}>
 			<div class="image-list m-auto">
 				<div class="image-item p-relative">
