@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import Comment from '@/lib/components/comment/Comment.svelte';
 	import CreateComment from '@/lib/components/comment/CreateComment.svelte';
-	import type { CommentType } from '@/lib/types/';
+	import type { CommentType } from '@/lib/server/domain/entities';
 
 	export let bookId = 0;
 	export let chapterId = null;

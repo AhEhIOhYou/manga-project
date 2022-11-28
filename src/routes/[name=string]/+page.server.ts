@@ -1,4 +1,4 @@
-import type { BookType } from '@/lib/types';
+import type { BookType } from '@/lib/server/domain/entities';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ( {url, fetch} ) => {

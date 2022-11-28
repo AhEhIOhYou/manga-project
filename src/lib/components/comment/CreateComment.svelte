@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CommentType } from '@/lib/types/';
+	import type { CommentType } from '@/lib/server/domain/entities';
 	import type { comments } from '@prisma/client';
 	import { createEventDispatcher } from 'svelte';
 

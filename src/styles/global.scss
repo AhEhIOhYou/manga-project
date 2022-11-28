@@ -13,6 +13,7 @@ body {
 a {
 	// font-weight: bold;
 	color: var(--text-primary);
+
 	// &:visited {
 	// 	color: var(--text-primaty-sub);
 	// }
@@ -24,13 +25,24 @@ a {
 select {
 	padding: 12px;
 	border: none;
-	border-radius: 8px;
 	color: var(--text-primary);
 	background-color: var(--container-main-sub);
 }
 
+option {
+	background-color: var(--container-main-sub);
+}
+
+input::file-selector-button {
+	color: var(--text-primary);
+	background-color: var(--btn-main);
+	border: none;
+	border-radius: 3px;
+	padding: 5px;
+}
+
 .title {
-	font-size: 20px;
+	font-size: 30px;
 }
 
 .title__text::before {
@@ -51,6 +63,7 @@ select {
 }
 
 .btn {
+	margin: 10px;
 	display: inline-block;
 	text-align: center;
 	vertical-align: middle;
@@ -59,6 +72,7 @@ select {
 	background-color: var(--btn-main);
 	line-height: 1.5;
 	padding: 10px;
+
 	&:hover {
 		background-color: var(--btn-main-hover);
 		color: white;
@@ -72,9 +86,10 @@ select {
 
 	.show-more-text {
 		cursor: pointer;
+
 		&:hover {
 			color: var(--text-hover);
-	}
+		}
 	}
 }
 
@@ -84,72 +99,96 @@ select {
 }
 
 [contenteditable='true']:empty:focus:before {
-	content: '';
+	content: attr(placeholder);
+}
+
+textarea {
+	margin-top: 5px;
 }
 
 .m-auto {
 	margin: 0 auto;
 }
+
 .dp-flex {
 	display: flex;
 }
+
 .dp-grid {
 	display: grid;
 }
+
 .w-100 {
 	width: 100%;
 }
+
 .h-100 {
 	height: 100%;
 }
+
 .p-fixed {
 	position: fixed;
 }
+
 .p-relative {
 	position: relative;
 }
+
 .p-absolute {
 	position: absolute;
 }
+
 .p-center,
 .p-zero {
 	top: 0;
 	left: 0;
 }
+
 .dp-flex.align-center {
 	align-items: center;
 }
+
 .dp-flex.fd-row {
 	flex-direction: row;
 }
+
 .dp-flex.fd-column {
 	flex-direction: column;
 }
+
 .dp-flex.jsc-space-between {
 	justify-content: space-between;
 }
+
 .t-no-wrap,
 .t-nowrap {
 	white-space: nowrap;
 }
+
 .b-radius-10 {
 	border-radius: 10px;
 }
+
 .v-top {
 	vertical-align: top;
 }
+
 .dp-i-block {
 	display: inline-block;
 }
+
 .bg-center {
 	background-position: 50%;
 }
+
 .w-100 {
 	width: 100%;
 }
+
 .mtb-10 {
 	margin: 10px 0;
 }
+
 .mb-8 {
 	margin-bottom: 8px;
 }

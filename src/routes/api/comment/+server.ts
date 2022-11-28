@@ -1,5 +1,5 @@
 import { deleteCommentText, getComments, saveComment } from '@/lib/server/comment';
-import type { CommentType } from '@/lib/types';
+import type { CommentType } from '@/lib/server/domain/entities';
 import type { comments } from '@prisma/client';
 import type { RequestHandler } from './$types';
 

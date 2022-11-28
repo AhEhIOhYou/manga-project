@@ -1,5 +1,5 @@
 import { getBookByTitle } from '@/lib/server/book';
-import type { BookType } from '@/lib/types';
+import type { BookType } from '@/lib/server/domain/entities';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url }) => {

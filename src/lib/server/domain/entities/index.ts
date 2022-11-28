@@ -14,17 +14,16 @@ export type CommentType = {
 };
 
 export type BookType = {
-	id: number;
+	id?: number;
 	title: string;
-	alt_title: string;
+	alt_title?: string;
 	author: string;
 	type: string;
-	cover: string;
-	description: string;
-	release_date: Date;
-	tags: string;
+	cover?: string;
+	description?: string;
+	release_date: string;
 	loader_user_id: number;
-	created_at: Date;
+	created_at: string;
 	link_title: string;
 }
 
