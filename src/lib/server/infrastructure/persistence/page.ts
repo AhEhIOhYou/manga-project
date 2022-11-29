@@ -1,4 +1,19 @@
-import prisma from "../prisma";
+import type { PageType } from "../../domain/entities";
+import prisma from "@/lib/prisma";
+import type { Prisma } from "@prisma/client";
+
+export async function addPage(newPage: PageType) {
+	const page = await prisma.page.create({
+		data: {
+			file_name: newPage.file_name,
+			chapter_id: newPage.chapter_id,
+			loader_user_id: newPage.loader_user_id,
+			created_at: newPage.created_at,
+			number: newPage.number
+		}
+	});
+	return page;
+}
 
 export async function getPages(chapterId: number) {
 	const pages = prisma.page.findMany({
@@ -22,9 +37,9 @@ export async function getPage(chapterId: number, pageNumber: number) {
 	return page;
 }
 
-export async function getNextPage(pageId:number) {
+export async function getNextPage(pageId: number) {
 	const page = prisma.page.findFirst({
-		
+
 	});
 }
 

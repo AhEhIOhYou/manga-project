@@ -1,3 +1,6 @@
 @use 'clear.scss';
 @use 'colors.scss';
 @use 'global.scss';
+
+@import 'filepond/dist/filepond.css';
+@import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';

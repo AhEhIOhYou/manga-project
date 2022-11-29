@@ -28,16 +28,24 @@ export type BookType = {
 }
 
 export type ChapterType = {
-	id: number;
+	id?: number;
 	title: string;
+	volume: number;
 	number: number;
 	translator: string;
 	book_id: number;
 	loader_user_id: number;
-	created_at: Date;
-	nextPageNum?: number;
-	maxPageNum?: number;
-	minPageNum?: number;
+	created_at?: string;
+	page_count?:number;
+}
+
+export type PageType = {
+	id?: number;
+	file_name: string;
+	chapter_id: number;
+	loader_user_id: number;
+	created_at?: string;
+	number: number;
 }
 
 export type PublicUserType = {
