@@ -1,3 +1,16 @@
+<script lang="ts">
+	import { goto } from "$app/navigation";
+
+
+	const handleLogout = async () => {
+		const logoutUserApiUrl = `/api/method/user.logout`;
+		const res = await fetch(logoutUserApiUrl);
+		if (res.ok) {
+			goto('/');
+		}
+	};
+</script>
+
 <header class="global-header w-100 p-fixed p-zero">
 	<nav class="size-ruler dp-flex align-center h-100 m-auto">
 		<a class="navbar__item title" href="/">
@@ -10,6 +23,9 @@
 			<button>Search</button>
 		</div>
 		<a class="navbar__item" href="/login"><span>Login/Signup</span></a>
+		<button class="btn" on:click={handleLogout}>
+			Logout
+		</button>
 	</nav>
 </header>
 

@@ -32,8 +32,8 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 	const key = VITE_JWT_KEY;
 	const token = jwt.sign(user, key, { expiresIn: `${15 * 60 * 1000}` });
 
-	cookies.set("token", token, { maxAge: 15 * 60 });
-	cookies.set("refresh_token", refresh_token, { maxAge: 30 * 24 * 60 * 60 });
+	cookies.set("token", token, { maxAge: 15 * 60, path: "/" });
+	cookies.set("refresh_token", refresh_token, { maxAge: 30 * 24 * 60 * 60, path: "/" });
 
 	return new Response(JSON.stringify(user));
 };
