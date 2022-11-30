@@ -56,9 +56,9 @@ export type PublicUserType = {
 
 export type UserType = {
 	id?: number;
-	email: string;
-	password: string;
-	username: string;
+	email?: string;
+	password?: string;
+	username?: string;
 	user_id?: string;
 	refresh_token?: string;
 }

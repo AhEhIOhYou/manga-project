@@ -30,3 +30,19 @@ export async function checkUserUnique(email: string, username: string) {
 	});
 	return !(res.length > 0);
 }
+
+export async function getUserByLogin(email: string, username: string) {
+	const user = await prisma.users.findFirst({
+		where: {
+			OR: [
+				{
+					email: email,
+				},
+				{
+					username: username,
+				}
+			]
+		}
+	});
+	return user;
+}
