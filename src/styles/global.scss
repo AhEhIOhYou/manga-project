@@ -246,3 +246,9 @@ textarea {
 	border-width: 3px;
 	border-color: var(--green-main);
 }
+
+.error {
+	color: var(--text-error);
+	font-size: 20px;
+	padding: 20px;
+}

@@ -53,3 +53,12 @@ export type PublicUserType = {
 	name: string;
 	avatar: string;
 };
+
+export type UserType = {
+	id?: number;
+	email: string;
+	password: string;
+	username: string;
+	user_id?: string;
+	refresh_token?: string;
+}
