@@ -10,7 +10,12 @@ export const GET: RequestHandler = async ({ cookies }) => {
 	const key = VITE_JWT_KEY;
 
 	try {
-		const user = jwt.verify(token, key) as Record<any, any>;
+		const userData = jwt.verify(token, key) as Record<any, any>;
+
+		const user = {
+			username: userData.username,
+		};
+
 		return new Response(JSON.stringify(user));
 	} catch {
 		if (!refresh_token)
@@ -24,8 +29,6 @@ export const GET: RequestHandler = async ({ cookies }) => {
 
 		const user = {
 			username: userData.username,
-			user_id: userData.user_id,
-			email: userData.email
 		};
 
 		const token = jwt.sign(user, key, { expiresIn: `${15 * 60 * 1000}` });

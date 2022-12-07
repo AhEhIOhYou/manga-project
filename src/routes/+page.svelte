@@ -1,15 +1,13 @@
 <script lang="ts">
-	
+	import type { PageData } from './$types';
+	export let data: PageData;
+	const title: string = data.user ? data.user.name : 'master';
 </script>
 
 <svelte:head>
-	<title>Welcome, ahehiohyou</title>
+	<title>Welcome home, {title}!</title>
 </svelte:head>
 
 <div class="container">
-	<div class="title">
-		Test Page
-	</div>
-
-	
+	<div class="title">Test Page</div>
 </div>

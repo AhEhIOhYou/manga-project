@@ -1,31 +1,45 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
+	import { invalidateAll, goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
-
-	const handleLogout = async () => {
-		const logoutUserApiUrl = `/api/method/user.logout`;
-		const res = await fetch(logoutUserApiUrl);
-		if (res.ok) {
-			goto('/');
+	$: navigation = [
+		{
+			href: '/',
+			name: 'Home'
+		},
+		{
+			href: '/test2',
+			name: `${$page.data.user ? $page.data.user.name : '🔒'} Test-2`
 		}
-	};
+	];
+
+	async function handleSignOut() {
+		await fetch('/api/method/user.logout');
+		invalidateAll();
+		goto('/');
+	}
 </script>
 
 <header class="global-header w-100 p-fixed p-zero">
 	<nav class="size-ruler dp-flex align-center h-100 m-auto">
 		<a class="navbar__item title" href="/">
-			<span> Manga Projcet </span>
+			<span> Manga Project </span>
 		</a>
-		<a class="navbar__item" href="/"><span>Home</span></a>
-		<a class="navbar__item" href="/genre"><span>Genre</span></a>
+		{#each navigation as link}
+			<a href={link.href} class="navbar__item">
+				<span>{link.name}</span>
+			</a>
+		{/each}
 		<div class="navbar__item">
 			<input type="text" />
 			<button>Search</button>
 		</div>
-		<a class="navbar__item" href="/login"><span>Login/Signup</span></a>
-		<button class="btn" on:click={handleLogout}>
-			Logout
-		</button>
+		{#if $page.data.user}
+			<button on:click={handleSignOut} class="btn"> Sign out </button>
+		{:else}
+			<a href="/user/sign-in" class="navbar__item"> Sign in </a>
+			<a href="/user/sign-up" class="navbar__item"> Sign up </a>
+		{/if}
 	</nav>
 </header>
 

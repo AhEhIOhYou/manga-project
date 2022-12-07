@@ -8,12 +8,12 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
 export const POST: RequestHandler = async ({ cookies, request }) => {
-	const data = (await request.json()) as UserType;
+	const data = (await request.json());
 
-	if (!data.email || !data.password || !data.username)
+	if (!data.login || !data.password)
 		throw error(400, 'Data not valid');
 
-	const userData: UserType = await getUserByLogin(data.email, data.username);
+	const userData: UserType = await getUserByLogin(data.login, data.login);
 	if (!userData) {
 		throw error(400, 'User not found');
 	};

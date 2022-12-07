@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Reader from '@/lib/shared/ui/reader/Reader.svelte';
+	import Reader from '@/lib/components/Reader.svelte';
 	import Comments from '@/lib/components/comment/Comments.svelte';
 	import type { PageServerData } from './$types';
 

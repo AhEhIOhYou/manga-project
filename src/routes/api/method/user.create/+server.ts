@@ -10,7 +10,7 @@ import { randomUUID } from 'crypto';
 import * as jwt from 'jsonwebtoken';
 
 export const POST: RequestHandler = async ({ cookies, request }) => {
-	const data = (await request.json()) as UserType;
+	const data = (await request.json());
 
 	if (!data.email || !data.password || !data.username)
 		throw error(400, 'Data not valid');
@@ -46,8 +46,8 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 	const key = VITE_JWT_KEY;
 	const token = jwt.sign(user, key, { expiresIn: `${15 * 60 * 1000}` });
 
-	cookies.set("token", token, { maxAge: 15 * 60 });
-	cookies.set("refresh_token", refresh_token, { maxAge: 30 * 24 * 60 * 60 });
+	cookies.set("token", token, { maxAge: 15 * 60, path: "/" });
+	cookies.set("refresh_token", refresh_token, { maxAge: 30 * 24 * 60 * 60, path: "/" });
 
 	return new Response(JSON.stringify(user));
 };
