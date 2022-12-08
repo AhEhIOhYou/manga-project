@@ -8,5 +8,5 @@
 </script>
 
 <Book bookData={data.bookInfo} />
-<ChaptersList bookId={1} />
-<Comments bookId={1} />
+<ChaptersList chaptersData={data.chaptersInfo} showAll={false}/>
+<!-- <Comments bookId={1} /> -->

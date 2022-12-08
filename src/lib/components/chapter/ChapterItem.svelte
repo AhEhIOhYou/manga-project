@@ -9,9 +9,12 @@
 		href="{$page.url}/c{chapterItemData.number}"
 	>
 		<span class="chapter-item__title">
-			{chapterItemData.title}
-			<span class="chapter-item__translator">
-				{chapterItemData.translator}
+			{#if chapterItemData.volume}
+				Volume {chapterItemData.volume}
+			{/if}
+			Chapter {chapterItemData.number}
+			<span class="chapter-item__subtitile">
+				{chapterItemData.title}
 			</span>
 		</span>
 		<span>
@@ -32,7 +35,7 @@
 			}
 
 			.chapter-item__title {
-				.chapter-item__translator {
+				.chapter-item__subtitile {
 					font-size: 16px;
 					color: var(--text-primaty-sub);
 				}

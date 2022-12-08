@@ -30,11 +30,11 @@ export type BookType = {
 export type ChapterType = {
 	id?: number;
 	title: string;
-	volume: number;
+	volume?: number;
 	number: number;
 	translator: string;
 	book_id: number;
-	loader_user_id: number;
+	loader_user_id: string;
 	created_at?: string;
 	page_count?:number;
 }

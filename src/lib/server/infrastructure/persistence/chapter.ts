@@ -21,6 +21,9 @@ export async function getChapters(bookId: number) {
 	const chapters = prisma.chapter.findMany({
 		where: {
 			book_id: bookId
+		},
+		orderBy: {
+			number: 'asc'
 		}
 	});
 	return chapters

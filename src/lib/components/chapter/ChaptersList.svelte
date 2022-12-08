@@ -1,45 +1,53 @@
 <script lang="ts">
 	import ChapterItem from './ChapterItem.svelte';
+	export let chaptersData;
+	export let showAll = true;
 
-	export let bookId: number = 0;
-	const chaptersLoading = async (bookId: number) => {
-		const url: string = `api/chapter?book_id=${bookId}`;
-		const res: Response = await fetch(url, {
-			mode: 'cors',
-			method: 'GET'
-		});
+	let showMoreBtnActive = false;
+	let showMoreActive = false;
+	let firstPart = chaptersData;
+	let secondPart = [];
 
-		const data: any = await res.json();
-
-		if (res.ok) {
-			return data;
-		} else {
-			throw new Error(data.message);
+	if (!showAll) {
+		if (chaptersData.length > 2) {
+			firstPart = chaptersData.slice(0, 2);
+			secondPart = chaptersData.slice(2, chaptersData.length);
+			showMoreBtnActive = true;
 		}
-	};
+	}
 </script>
 
 <div class="container dp-block">
 	<div class="chapters">
 		<h1 class="title">Chapters</h1>
-		{#await chaptersLoading(bookId)}
-			<p>...loading</p>
-		{:then chaptersData} 
 		<ul class="chapters-list mtb-10">
 			{#if chaptersData.length == 0}
-				<p>Chapters empty</p>
+				<p>Empty</p>
 			{:else}
-				{#each chaptersData as data}
+				{#each firstPart as data}
 					<ChapterItem chapterItemData={data} />
 				{/each}
+				{#if showMoreActive}
+					{#each secondPart as data}
+						<ChapterItem chapterItemData={data} />
+					{/each}
+				{/if}
 			{/if}
 		</ul>
-		<div class="show-more-container">
-			<div class="show-more-text">Show more!</div>
-		</div>
-		{:catch error}
-			<p>Attention! {error}</p>
-		{/await}
+		{#if showMoreBtnActive}
+			<div class="show-more-container">
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div
+					class="show-more-text"
+					on:click={() => {
+						showMoreActive = true;
+						showMoreBtnActive = false;
+					}}
+				>
+					Show more!
+				</div>
+			</div>
+		{/if}
 	</div>
 </div>
 

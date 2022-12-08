@@ -1,25 +1,36 @@
-import type { BookType } from '@/lib/server/domain/entities';
+import type { BookType, ChapterType } from '@/lib/server/domain/entities';
 import type { PageServerLoad } from './$types';
 
 
-export const load: PageServerLoad = async ( {url, fetch} ) => {
-	
+export const load: PageServerLoad = async ({ url, fetch }) => {
+
 	let bookInfo: BookType;
 	const linkTitle = url.pathname.replace(/\//g, '');
-	const response = await fetch('/api/method/book.get', {
+	const responseBook = await fetch('/api/method/book.get', {
 		method: 'POST',
-		body: JSON.stringify( {linkTitle} ),
+		body: JSON.stringify({ linkTitle }),
 		headers: {
 			'Content-Type': 'application/json'
 		}
 	});
-	const body = await response.json();
+	const bodyBook = await responseBook.json();
 
-	if (response.ok) {
-		bookInfo = body;
+	if (responseBook.ok) {
+		bookInfo = bodyBook;
 	} else {
-		throw new Error(body.message);
+		throw new Error(bodyBook.message);
 	}
 
-	return { bookInfo };
+	let chaptersInfo: Array<ChapterType> = [];
+	const responseChapters = await fetch(`/api/method/chapters.get?book_id=${bookInfo.id}`, {
+		method: 'GET'
+	});
+	const bodyChapters = await responseChapters.json();
+	if (responseChapters.ok) {
+		chaptersInfo = bodyChapters.reverse();
+	} else {
+		throw new Error(bodyChapters.message);
+	}
+
+	return { bookInfo, chaptersInfo };
 };
