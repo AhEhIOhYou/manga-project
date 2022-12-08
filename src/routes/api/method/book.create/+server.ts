@@ -18,7 +18,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
 	const newBook: BookType = {
 		title: data.title,
-		alt_title: data.alt_title,
+		alt_title: data.altTitle,
 		author: data.author,
 		type: data.type,
 		release_date: new Date(data.release).toISOString(),

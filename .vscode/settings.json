@@ -1,0 +1,7 @@
+{
+	"workbench.colorTheme": "Jetbrains Fleet",
+	"workbench.iconTheme": "material-icon-theme",
+	"workbench.preferredDarkColorTheme": "Jetbrains Fleet",
+	"workbench.preferredHighContrastColorTheme": "Jetbrains Fleet",
+	"typescript.inlayHints.enumMemberValues.enabled": false
+}

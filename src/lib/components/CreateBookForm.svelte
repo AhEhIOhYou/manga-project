@@ -1,13 +1,9 @@
 <script lang="ts">
-	import Input from './Input.svelte';
-	import Select from './Select.svelte';
+	import Input from './Input/Input.svelte';
+	import Select from './Input/Select.svelte';
 	import Button from './Button.svelte';
-	import FileInput from './FileInput.svelte';
+	import FileInput from './Input/FileInput.svelte';
 	import { createEventDispatcher } from 'svelte';
-	import FilePond, { registerPlugin, supported } from 'svelte-filepond';
-	import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
-	import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-	registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
 
 	let title = '';
 	let altTitle = '';
@@ -16,8 +12,6 @@
 	let cover = '';
 	let description = '';
 	let release;
-	let error;
-	let coverInputRef;
 	const dispatch = createEventDispatcher();
 	function handleSubmit() {
 		dispatch('submit', {
@@ -44,7 +38,7 @@
 	/>
 	<Input label="Author" id="author" name="author" type="text" required bind:value={author} />
 	<Input label="Description" id="description" name="description" type="text" bind:value={description} />
-	<Input label="Release Date" id="release" name="release" type="date" bind:value={release} />
+	<Input label="Year release" id="release" name="release" type="number" bind:value={release} />
 	<Select
 		label="Type"
 		id="Type"

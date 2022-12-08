@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getCroppedImg } from '../utils';
+	import { getCroppedImg } from '../../utils';
 
 	export let value = '';
 	export let id;
@@ -71,7 +71,7 @@
 		<p class="error">{error}</p>
 	{/if}
 	{#if img}
-		<div class="wrapper m-auto">
+		<div class="wrapper-cover m-auto">
 			<img src={img} alt={name} />
 		</div>
 		<button on:click|preventDefault={onFileDeleteBtn}> Delete img </button>
@@ -86,17 +86,3 @@
 		class="form__field"
 	/>
 </div>
-
-<style lang="scss">
-	.wrapper {
-		width: 250px;
-		height: 320px;
-		border: 5px solid #515151;
-
-		img {
-			object-fit: cover;
-			width: 100%;
-			height: 100%;
-		}
-	}
-</style>

@@ -1,19 +1,24 @@
 import type { BookType } from '@/lib/server/domain/entities';
 import type { PageServerLoad } from './$types';
 
+
 export const load: PageServerLoad = async ( {url, fetch} ) => {
 	
 	let bookInfo: BookType;
-	const bookName = url.pathname.replace(/\//g, '');
+	const linkTitle = url.pathname.replace(/\//g, '');
+	const response = await fetch('/api/method/book.get', {
+		method: 'POST',
+		body: JSON.stringify( {linkTitle} ),
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+	const body = await response.json();
 
-	const api: string = `/api/book?link_title=${bookName}`;
-	const res: Response = await fetch(api);
-	const data: any = await res.json();
-
-	if (res.ok) {
-		bookInfo = data;
+	if (response.ok) {
+		bookInfo = body;
 	} else {
-		throw new Error(data.message);
+		throw new Error(body.message);
 	}
 
 	return { bookInfo };

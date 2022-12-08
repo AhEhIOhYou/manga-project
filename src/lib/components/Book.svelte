@@ -7,8 +7,8 @@
 </svelte:head>
 
 <div class="container">
-	<div class="manga-detail__cover dp-i-block v-top bg-cover bg-center p-relative">
-		<img class="w-100" alt={bookData.title} src={bookData.cover} />
+	<div class="wrapper-cover dp-i-block v-top bg-cover bg-center p-relative">
+		<img class="w-100" alt={bookData.title} src={'/src/upload/' + bookData.cover} />
 	</div>
 	<div class="manga-detail__info dp-i-block p-relative v-top">
 		<div class="manga-title-container">
@@ -81,16 +81,6 @@
 </div>
 
 <style lang="scss">
-
-	.manga-detail__image {
-		width: 250px;
-		height: 320px;
-		background-color: #e7e7e7;
-		background-size: auto;
-		background-origin: center;
-		background-repeat: no-repeat;
-	}
-
 	.manga-detail__info {
 		width: calc(100% - 260px);
 		min-height: 320px;
