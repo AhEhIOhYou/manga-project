@@ -55,15 +55,3 @@ export async function getUserByRefreshToken(refreshToken: string) {
 	});
 	return user;
 }
-
-export async function updateUserRefreshToken(oldRefreshToken, newRefreshToken: string) {
-	const user = await prisma.users.update({
-		where: {
-			refresh_token: oldRefreshToken
-		},
-		data: {
-			refresh_token: newRefreshToken
-		}
-	});
-	return user;
-}

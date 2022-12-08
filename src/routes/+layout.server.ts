@@ -30,10 +30,10 @@ export const load: LayoutServerLoad = async ({ locals, cookies, url }) => {
 	}
 
 	if (!user && protectedRoutes.includes(url.pathname))
-		throw redirect(303, '/user/sign-in');
+		throw redirect(307, '/user/sign-in');
 
 	if (user && protectedAfterLogin.includes(url.pathname))
-		throw redirect(303, '/');
+		throw redirect(307, '/');
 
 	return {
 		user: locals.user,

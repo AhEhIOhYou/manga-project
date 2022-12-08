@@ -22,7 +22,7 @@ export type BookType = {
 	cover?: string;
 	description?: string;
 	release_date: string;
-	loader_user_id: number;
+	loader_user_id: string;
 	created_at: string;
 	link_title: string;
 }

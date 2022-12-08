@@ -1,33 +1,38 @@
 import type { BookType } from '@/lib/server/domain/entities';
 import { createBook } from '@/lib/server/infrastructure/persistence/book';
+import { getUserByLogin } from '@/lib/server/infrastructure/persistence/user';
 import { createLinkTitle } from '@/lib/utils';
+import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-// test:
-// http://localhost:5173/api/method/book.create?title=fufu&author=ytata%20mou&type=manga&release_date=12.12.2021
-export const GET: RequestHandler = async ({ url }) => {
-	const title = url.searchParams.get('title');
-	const alt_title = url.searchParams.get('alt_title');
-	const author = url.searchParams.get('author');
-	const type = url.searchParams.get('type');
-	const description = url.searchParams.get('description');
-	const cover = url.searchParams.get('cover');
-	const release_date = url.searchParams.get('release_date');
+export const POST: RequestHandler = async ({ request, locals }) => {
+	const data = (await request.json());
+
+	if (!data.title || !data.author || !data.type || !data.cover)
+		throw error(400, 'Data not valid');
+
+	if (!locals.user)
+		throw error(401, 'User unauthorized');
+
+	let user = await getUserByLogin("", locals.user.name);
 
 	const newBook: BookType = {
-		title: title,
-		alt_title: alt_title,
-		author: author,
-		type: type,
-		release_date: new Date(release_date).toISOString(),
-		loader_user_id: 1,
-		link_title: createLinkTitle(title),
-		description: description,
-		cover: cover,
+		title: data.title,
+		alt_title: data.alt_title,
+		author: data.author,
+		type: data.type,
+		release_date: new Date(data.release).toISOString(),
+		loader_user_id: user.user_id,
+		link_title: createLinkTitle(data.title),
+		description: data.description,
+		cover: data.cover,
 		created_at: new Date().toISOString(),
 	};
 
 	let rawData = await createBook(newBook);
+	if (!rawData) {
+		throw error(500, 'Database error');
+	}
 
 	return new Response(JSON.stringify(rawData));
 };

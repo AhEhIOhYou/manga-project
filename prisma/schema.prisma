@@ -18,8 +18,8 @@ model book {
   cover          String?
   release_date   DateTime?  @db.Date
   created_at     DateTime   @db.Timestamp(6)
-  loader_user_id Int        @default(1)
-  users          users      @relation(fields: [loader_user_id], references: [id], onDelete: SetDefault, onUpdate: NoAction, map: "book_users_null_fk")
+  loader_user_id String?    @db.Uuid
+  users          users?     @relation(fields: [loader_user_id], references: [user_id], onUpdate: NoAction, map: "book_users_null_fk")
   chapter        chapter[]
   comments       comments[]
 }
@@ -31,11 +31,11 @@ model chapter {
   number         Int
   translator     String     @db.VarChar(255)
   book_id        Int
-  loader_user_id Int        @default(1)
   created_at     DateTime   @db.Timestamp(6)
   page_count     Int?
+  loader_user_id String?    @db.Uuid
   book           book       @relation(fields: [book_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "chapter_book_null_fk")
-  users          users      @relation(fields: [loader_user_id], references: [id], onDelete: SetDefault, onUpdate: NoAction, map: "chapter_users_null_fk")
+  users          users?     @relation(fields: [loader_user_id], references: [user_id], onUpdate: NoAction, map: "chapter_users_user_id_fk")
   comments       comments[]
   page           page[]
 }
@@ -44,7 +44,6 @@ model comments {
   id          Int      @id(map: "comments_pk") @default(autoincrement())
   book_id     Int?
   chapter_id  Int?
-  author_id   Int      @default(1)
   message     String
   root_id     Int?
   parent_id   Int?
@@ -53,20 +52,21 @@ model comments {
   child_count Int?
   is_deleted  Boolean
   created_at  DateTime @db.Timestamp(6)
+  author      String?  @db.Uuid
   book        book?    @relation(fields: [book_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "comments_book_null_fk")
   chapter     chapter? @relation(fields: [chapter_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "comments_chapter_null_fk")
-  users       users    @relation(fields: [author_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "comments_users_id_fk")
+  users       users?   @relation(fields: [author], references: [user_id], onUpdate: NoAction, map: "comments_users_user_id_fk")
 }
 
 model page {
   id             Int      @id(map: "page_pk") @default(autoincrement())
   file_name      String
   chapter_id     Int
-  loader_user_id Int      @default(1)
   created_at     DateTime @db.Timestamp(6)
   number         Int
+  loader_user_id String?  @db.Uuid
   chapter        chapter  @relation(fields: [chapter_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "page_chapter_null_fk")
-  users          users    @relation(fields: [loader_user_id], references: [id], onDelete: SetDefault, onUpdate: NoAction, map: "page_users_null_fk")
+  users          users?   @relation(fields: [loader_user_id], references: [user_id], onUpdate: NoAction, map: "page_users_user_id_fk")
 }
 
 model users {
