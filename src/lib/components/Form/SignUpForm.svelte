@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Input from './Input/Input.svelte';
-	import Button from './Button.svelte';
+	import Input from '../Input/Input.svelte';
+	import Button from '../Button.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	let username = '';
