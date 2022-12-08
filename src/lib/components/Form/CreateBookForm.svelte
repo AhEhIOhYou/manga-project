@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Input from './Input/Input.svelte';
-	import Select from './Input/Select.svelte';
-	import Button from './Button.svelte';
-	import FileInput from './Input/FileInput.svelte';
+	import Input from '../Input/Input.svelte';
+	import Select from '../Input/Select.svelte';
+	import Button from '../Button.svelte';
+	import FileInput from '../Input/FileInput.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	let title = '';

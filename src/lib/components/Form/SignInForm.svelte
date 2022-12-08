@@ -1,6 +1,6 @@
 <script>
-	import Input from '$lib/components/Input.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import Input from '../Input/Input.svelte';
+	import Button from '../Button.svelte';
 	import { createEventDispatcher } from 'svelte';	
 
 	let login = '';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import SignInForm from '@/lib/components/SignInForm.svelte';
+	import SignInForm from '@/lib/components/Form/SignInForm.svelte';
 	import { goto } from '$app/navigation';
 	export let data: PageData;
 
