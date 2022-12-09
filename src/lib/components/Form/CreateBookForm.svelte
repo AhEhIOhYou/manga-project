@@ -9,7 +9,7 @@
 	let altTitle = '';
 	let author = '';
 	let type = '';
-	let cover = '';
+	let cover = [];
 	let description = '';
 	let release;
 	const dispatch = createEventDispatcher();
@@ -24,7 +24,6 @@
 			release,
 		});
 	};
-	
 </script>
 
 <form class="form dp-flex fd-column align-center" on:submit|preventDefault={handleSubmit}>
@@ -38,7 +37,7 @@
 	/>
 	<Input label="Author" id="author" name="author" type="text" required bind:value={author} />
 	<Input label="Description" id="description" name="description" type="text" bind:value={description} />
-	<Input label="Year release" id="release" name="release" type="number" bind:value={release} />
+	<Input label="Release" id="release" name="release" type="date" bind:value={release} />
 	<Select
 		label="Type"
 		id="Type"
@@ -47,6 +46,6 @@
 		bind:value={type}
 		required
 	/>
-	<FileInput bind:value={cover} label="Cover" id="cover" name="cover" required />
+	<FileInput bind:fileList={cover} label="Cover" id="cover" name="cover" required />
 	<Button type="submit">Create book</Button>
 </form>

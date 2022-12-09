@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	export let bookData;
 </script>
 
@@ -68,6 +69,11 @@
 					{bookData.loader_user_id}
 					{bookData.created_at}
 				</div>
+			</div>
+			<div class="manga-data__element dp-flex">
+				<a href={$page.url + "/chapter/add"}>
+					Add chapter
+				</a>
 			</div>
 			<!-- <div class="manga-data__element dp-flex">
 			<div class="manga-data__content  mtb-10">

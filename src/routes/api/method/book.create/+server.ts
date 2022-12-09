@@ -7,7 +7,7 @@ import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 	const data = (await request.json());
-
+	
 	if (!data.title || !data.author || !data.type || !data.cover)
 		throw error(400, 'Data not valid');
 

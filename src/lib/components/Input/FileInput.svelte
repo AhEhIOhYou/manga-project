@@ -1,35 +1,30 @@
 <script lang="ts">
 	import { getCroppedImg } from '../../utils';
 
-	export let value = '';
+	export let fileList = [];
 	export let id;
 	export let label;
 	export let name;
 	export let required = false;
+	export let multiple = false;
 	let error;
 
-	let img;
 	const onFileSelected = async (e) => {
-		let image = e.target.files[0];
-		try {
-			value = await saveFile(e.target.files[0]);
-		} catch (err) {
-			error = err;
+		for (const targetFile of e.target.files) {
+			try {
+				const file = await saveFile(targetFile);
+				multiple ? (fileList[fileList.length] = file) : (fileList[0] = file);
+			} catch (err) {
+				error = err;
+			}
 		}
-		let reader = new FileReader();
-		reader.readAsDataURL(image);
-		reader.onload = async (e) => {
-			img = e.target.result;
-			// let res = await getCroppedImg(img, {x:0, y:0, width: 250, height:320} );
-		};
 	};
 
-	const onFileDeleteBtn = async (e) => {
-		if (value) {
+	const onFileDeleteBtn = async (fileName) => {
+		if (fileName) {
 			try {
-				await deleteFile(value);
-				value = '';
-				img = '';
+				await deleteFile(fileName);
+				fileList = fileList.filter((element) => element != fileName);
 			} catch (err) {
 				error = err;
 			}
@@ -70,17 +65,21 @@
 	{#if error}
 		<p class="error">{error}</p>
 	{/if}
-	{#if img}
-		<div class="wrapper-cover m-auto">
-			<img src={img} alt={name} />
-		</div>
-		<button on:click|preventDefault={onFileDeleteBtn}> Delete img </button>
+	{#if fileList}
+		{#each fileList as file}
+			<div class="wrapper-cover m-auto">
+				<img src={`/src/upload/${file}`} alt="page" />
+			</div>
+			<button on:click|preventDefault={() => onFileDeleteBtn(file)}> Delete img </button>
+		{/each}
 	{/if}
 	<input
 		type="file"
+		value=""
 		{name}
 		{id}
 		{required}
+		{multiple}
 		accept=".jpg, .jpeg, .png"
 		on:change={(e) => onFileSelected(e)}
 		class="form__field"

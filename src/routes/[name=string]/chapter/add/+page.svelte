@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import type { PageData } from './$types';
 	import FilePond, { registerPlugin, supported } from 'svelte-filepond';
 
@@ -145,4 +145,24 @@
 			padding-top: 10px;
 		}
 	}
-</style>
+</style> -->
+
+<script lang="ts">
+	import type { PageData } from './$types';
+	import CreateChapterForm from '@/lib/components/Form/CreateChapterForm.svelte';
+	import { goto } from '$app/navigation';
+	export let data: PageData;
+	let error;
+
+	async function handleSubmit({ detail: { title, altTitle, author, type, cover, description, release } }) {
+		
+	}
+</script>
+
+<div class="container">
+	<div class="title">Add chapter</div>
+	{#if error}
+		<p class="error">{error}</p>
+	{/if}
+	<CreateChapterForm on:submit={handleSubmit} />
+</div>
