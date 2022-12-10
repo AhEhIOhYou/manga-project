@@ -6,11 +6,10 @@
 	let error;
 
 	async function handleSubmit({ detail: { title, altTitle, author, type, cover, description, release } }) {
-		const coverImg = cover[0];
 		const response = await fetch('/api/method/book.create', {
 			method: 'POST',
 			body: JSON.stringify({
-				title, altTitle, author, type, coverImg, description, release
+				title, altTitle, author, type, cover, description, release
 			}),
 			headers: {
 				'Content-Type': 'application/json'

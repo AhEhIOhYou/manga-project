@@ -9,11 +9,12 @@
 	let altTitle = '';
 	let author = '';
 	let type = '';
-	let cover = [];
+	let fileImg = [];
 	let description = '';
 	let release;
 	const dispatch = createEventDispatcher();
 	function handleSubmit() {
+		const cover = fileImg[0];
 		dispatch('submit', {
 			title,
 			altTitle,
@@ -46,6 +47,6 @@
 		bind:value={type}
 		required
 	/>
-	<FileInput bind:fileList={cover} label="Cover" id="cover" name="cover" required />
+	<FileInput bind:fileList={fileImg} label="Cover" id="cover" name="cover" required />
 	<Button type="submit">Create book</Button>
 </form>

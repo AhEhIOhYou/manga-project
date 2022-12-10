@@ -35,7 +35,7 @@ export type ChapterType = {
 	translator: string;
 	book_id: number;
 	loader_user_id: string;
-	created_at?: string;
+	created_at: string;
 	page_count?:number;
 }
 
@@ -43,7 +43,7 @@ export type PageType = {
 	id?: number;
 	file_name: string;
 	chapter_id: number;
-	loader_user_id: number;
+	loader_user_id: string;
 	created_at?: string;
 	number: number;
 }

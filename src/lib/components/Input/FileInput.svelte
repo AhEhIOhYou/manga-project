@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { getCroppedImg } from '../../utils';
-
 	export let fileList = [];
 	export let id;
 	export let label;

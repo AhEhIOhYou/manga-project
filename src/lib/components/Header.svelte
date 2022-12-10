@@ -21,7 +21,7 @@
 </script>
 
 <header class="global-header w-100 p-fixed p-zero">
-	<nav class="size-ruler dp-flex align-center h-100 m-auto">
+	<nav class="size-ruler dp-flex jsc-space-between align-center h-100 m-auto">
 		<a class="navbar__item title" href="/">
 			<span> Manga Project </span>
 		</a>
@@ -35,7 +35,7 @@
 			<button>Search</button>
 		</div>
 		{#if $page.data.user}
-			<button on:click={handleSignOut} class="btn"> Sign out </button>
+			<button on:click={handleSignOut} class="navbar__item btn"> Sign out </button>
 		{:else}
 			<a href="/user/sign-in" class="navbar__item"> Sign in </a>
 			<a href="/user/sign-up" class="navbar__item"> Sign up </a>
@@ -52,7 +52,7 @@
 
 		.size-ruler {
 			max-width: 1160px;
-			padding: 0 1.33333rem;
+			padding: 0 3rem;
 
 			.logo {
 				height: 100%;
@@ -66,10 +66,6 @@
 			.navbar__item {
 				text-decoration: none;
 				color: white;
-			}
-
-			.navbar__item:not(:last-child) {
-				margin-right: 30px;
 			}
 		}
 	}
