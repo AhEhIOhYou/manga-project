@@ -9,7 +9,7 @@
 
 <div class="container">
 	<div class="wrapper-cover dp-i-block v-top bg-cover bg-center p-relative">
-		<img class="w-100" alt={bookData.title} src={'/src/upload/' + bookData.cover} />
+		<img class="w-100" alt={bookData.title} src={bookData.cover_url} />
 	</div>
 	<div class="manga-detail__info dp-i-block p-relative v-top">
 		<div class="manga-title-container">
@@ -57,7 +57,7 @@
 			</div>
 			<div class="manga-data__element dp-flex">
 				<div class="manga-data__header">Release:</div>
-				<div class="manga-data__content">{bookData.release_date}</div>
+				<div class="manga-data__content">{bookData.release_year}</div>
 			</div>
 			<div class="manga-data__element dp-flex">
 				<div class="manga-data__header">Type:</div>

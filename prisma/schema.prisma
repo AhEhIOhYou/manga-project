@@ -11,12 +11,12 @@ model book {
   id             Int        @id(map: "book_pk") @default(autoincrement())
   title          String
   alt_title      String?
-  link_title     String
+  link_title     String     @unique
   author         String     @db.VarChar(255)
   type           String     @db.VarChar(100)
   description    String?
   cover          String?
-  release_date   DateTime?  @db.Date
+  release_year   Int?       @db.SmallInt
   created_at     DateTime   @db.Timestamp(6)
   loader_user_id String?    @db.Uuid
   users          users?     @relation(fields: [loader_user_id], references: [user_id], onUpdate: NoAction, map: "book_users_null_fk")

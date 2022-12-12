@@ -1,8 +1,9 @@
+import { Prisma } from '@prisma/client';
 import prisma from '../../../prisma';
 import type { BookType } from '../../domain/entities';
 
-export async function createBook(newBook:BookType) {
-	const book = prisma.book.create({
+export async function createBook(newBook: BookType) {
+	const book = await prisma.book.create({
 		data: {
 			title: newBook.title,
 			alt_title: newBook.alt_title,
@@ -11,7 +12,7 @@ export async function createBook(newBook:BookType) {
 			type: newBook.type,
 			description: newBook.description,
 			cover: newBook.cover,
-			release_date: newBook.release_date,
+			release_year: newBook.release_year,
 			created_at: newBook.created_at,
 			loader_user_id: newBook.loader_user_id,
 		}
@@ -19,8 +20,8 @@ export async function createBook(newBook:BookType) {
 	return book;
 }
 
-export async function getBookById(bookId:number) {
-	const book = prisma.book.findFirst({
+export async function getBookById(bookId: number) {
+	const book = await prisma.book.findFirst({
 		where: {
 			id: bookId,
 		}
@@ -28,10 +29,10 @@ export async function getBookById(bookId:number) {
 	return book;
 }
 
-export async function getBookByTitle(title:string) {
-	const book = prisma.book.findFirst({
+export async function getBookByLinkTitle(linkTitle: string) {
+	const book = await prisma.book.findFirst({
 		where: {
-			link_title: title,
+			link_title: linkTitle,
 		}
 	});
 	return book;

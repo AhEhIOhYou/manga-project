@@ -70,7 +70,7 @@ export async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
 		Math.round(0 - safeArea / 2 + image.width * 0.5 - pixelCrop.x),
 		Math.round(0 - safeArea / 2 + image.height * 0.5 - pixelCrop.y)
 	)
-	
+
 	return canvas.toDataURL('image/jpeg');
 }
 /*
@@ -90,3 +90,34 @@ export const cyrb53 = function (str, seed = 0) {
 	h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
 	return 4294967296 * (2097151 & h2) + (h1 >>> 0);
 };
+
+//Saves file to server
+export async function saveFile(file: Blob, category: string = ''): Promise<string> {
+	let form: FormData = new FormData();
+	form.append('file', file, file.name);
+	form.append('category', category);
+	const response = await fetch('/api/method/file', {
+		method: 'POST',
+		body: form
+	});
+	const body = await response.json();
+	if (response.ok) {
+		return body.file;
+	} else {
+		throw body.message;
+	}
+}
+
+//Deletes file from server
+export async function deleteFile(name: string, category: string = ''): Promise<string> {
+	const response = await fetch('/api/method/file', {
+		method: 'DELETE',
+		body: JSON.stringify({ file: name, category: category })
+	});
+	const body = await response.json();
+	if (response.ok) {
+		return body.file;
+	} else {
+		throw body.message;
+	}
+}

@@ -5,6 +5,7 @@ import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url }) => {
 	const bookId = Number(url.searchParams.get('book_id'));
+
 	if (!bookId)
 		throw error(400, 'Qeury not valid');
 
@@ -13,23 +14,24 @@ export const GET: RequestHandler = async ({ url }) => {
 	let data: Array<ChapterType> = [];
 
 	if (!chapterId) {
-		const rawData = await getChapters(bookId);
-		if (!rawData)
-			throw error(500, 'Database error');
-		
-		rawData.forEach((chapter) => {
-			data.push({
-				id: chapter.id,
-				title: chapter.title,
-				volume: chapter.volume,
-				number: chapter.number,
-				translator: chapter.translator,
-				book_id: chapter.book_id,
-				loader_user_id: chapter.loader_user_id,
-				created_at: new Date(chapter.created_at).toISOString(),
+		try {
+			const rawData = await getChapters(bookId);
+			rawData.forEach((chapter) => {
+				data.push({
+					id: chapter.id,
+					title: chapter.title,
+					volume: chapter.volume,
+					number: chapter.number,
+					translator: chapter.translator,
+					book_id: chapter.book_id,
+					loader_user_id: chapter.loader_user_id,
+					created_at: new Date(chapter.created_at).toISOString(),
+				});
 			});
-		});
+
+			return new Response(JSON.stringify(data));
+		} catch (e) {
+			throw error(500, 'Database Error: Get chapters data');
+		}
 	}
-	
-	return new Response(JSON.stringify(data));
 };

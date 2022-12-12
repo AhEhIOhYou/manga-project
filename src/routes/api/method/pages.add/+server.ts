@@ -12,7 +12,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	const user = await getUserByLogin("", locals.user.name);
 
 	for (const page of data.pages) {
-		if (!page.fileName || !page.chapterId || !page.number)
+		if (!page.fileName || !data.chapterId || !page.number)
 			throw error(400, 'Data not valid');
 
 		const newPage: PageType = {
@@ -25,8 +25,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		const rawData = await addPage(newPage);
 		if (!rawData)
 			throw error(500, 'Database error');
-		console.log(rawData);
 	}
 
-	return new Response(JSON.stringify(":)"));
+	return new Response();
 };

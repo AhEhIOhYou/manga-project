@@ -20,8 +20,9 @@ export type BookType = {
 	author: string;
 	type: string;
 	cover?: string;
+	cover_url?: string;
 	description?: string;
-	release_date: string;
+	release_year?: number;
 	loader_user_id: string;
 	created_at: string;
 	link_title: string;

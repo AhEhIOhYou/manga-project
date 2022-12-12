@@ -1,61 +1,62 @@
 <script lang="ts">
-	export let fileList = [];
-	export let id;
-	export let label;
-	export let name;
-	export let required = false;
-	export let multiple = false;
-	let error;
+	import { deleteFile, saveFile } from '@/lib/utils';
 
-	const onFileSelected = async (e) => {
-		for (const targetFile of e.target.files) {
+	export let id: string;
+	export let label: string;
+	export let name: string;
+	export let required: boolean = false;
+	export let multiple: boolean = false;
+	export let fileList: Array<string> = [];
+	export let validFileTypes: Array<string> = [];
+	export let fileCategory: string = '';
+	let error: string;
+
+	//Delete files from server
+	export const clearFiles = async () => {
+		for (const file of fileList) {
 			try {
-				const file = await saveFile(targetFile);
-				multiple ? (fileList[fileList.length] = file) : (fileList[0] = file);
+				await deleteFile(file, fileCategory);
 			} catch (err) {
 				error = err;
 			}
 		}
 	};
 
+	//Uploads files to the server and add to the file list
+	const onFileSelected = async (e) => {
+		error = null;
+		for (const targetFile of e.target.files) {
+			if (validFileTypes && !validFileTypes.includes(targetFile.type)) {
+				error = 'Invalid file type';
+				return;
+			}
+
+			try {
+				const file = await saveFile(targetFile, fileCategory);
+				if (!multiple) {
+					if (fileList[0]) await deleteFile(fileList[0], fileCategory);
+					fileList[0] = file;
+				} else {
+					fileList[fileList.length] = file;
+				}
+			} catch (err) {
+				error = err;
+			}
+		}
+	};
+
+	//Deletes a file from the server by file name
 	const onFileDeleteBtn = async (fileName) => {
+		error = null;
 		if (fileName) {
 			try {
-				await deleteFile(fileName);
+				await deleteFile(fileName, fileCategory);
 				fileList = fileList.filter((element) => element != fileName);
 			} catch (err) {
 				error = err;
 			}
 		}
 	};
-
-	async function saveFile(file: Blob): Promise<string> {
-		let form: FormData = new FormData();
-		form.append('image', file, file.name);
-		const response = await fetch('/api/method/file', {
-			method: 'POST',
-			body: form
-		});
-		const body = await response.json();
-		if (response.ok) {
-			return body.file;
-		} else {
-			throw body.message;
-		}
-	}
-
-	async function deleteFile(fileName: string): Promise<string> {
-		const response = await fetch('/api/method/file', {
-			method: 'DELETE',
-			body: JSON.stringify({ file: fileName })
-		});
-		const body = await response.json();
-		if (response.ok) {
-			return body.file;
-		} else {
-			throw body.message;
-		}
-	}
 </script>
 
 <div class="form__group field">
@@ -66,19 +67,18 @@
 	{#if fileList}
 		{#each fileList as file}
 			<div class="wrapper-cover m-auto">
-				<img src={`/src/upload/${file}`} alt="page" />
+				<img src={`/src/upload/${fileCategory}/${file}`} alt="page" />
 			</div>
 			<button on:click|preventDefault={() => onFileDeleteBtn(file)}> Delete img </button>
 		{/each}
 	{/if}
 	<input
 		type="file"
-		value=""
 		{name}
 		{id}
 		{required}
 		{multiple}
-		accept=".jpg, .jpeg, .png"
+		accept=".jpg,.jpeg,.png"
 		on:change={(e) => onFileSelected(e)}
 		class="form__field"
 	/>

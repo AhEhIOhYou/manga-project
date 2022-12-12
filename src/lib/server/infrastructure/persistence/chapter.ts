@@ -18,13 +18,18 @@ export async function addChapter(newChapter: ChapterType) {
 }
 
 export async function getChapters(bookId: number) {
-	const chapters = prisma.chapter.findMany({
+	const chapters = await prisma.chapter.findMany({
 		where: {
 			book_id: bookId
 		},
-		orderBy: {
-			number: 'asc'
-		}
+		orderBy: [
+			{
+				volume: 'asc',
+			},
+			{
+				number: 'asc'
+			}
+		]
 	});
 	return chapters
 }

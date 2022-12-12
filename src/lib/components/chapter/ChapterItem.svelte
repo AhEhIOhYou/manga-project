@@ -6,12 +6,10 @@
 <li class="chapters-list__item p-relative">
 	<a
 		class="chapters-list__link dp-flex jsc-space-between"
-		href="{$page.url}/c{chapterItemData.number}"
+		href="{$page.url}/v{chapterItemData.volume}c{chapterItemData.number}"
 	>
 		<span class="chapter-item__title">
-			{#if chapterItemData.volume}
-				Volume {chapterItemData.volume}
-			{/if}
+			Volume {chapterItemData.volume}
 			Chapter {chapterItemData.number}
 			<span class="chapter-item__subtitile">
 				{chapterItemData.title}

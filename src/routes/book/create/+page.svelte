@@ -5,11 +5,19 @@
 	export let data: PageData;
 	let error;
 
-	async function handleSubmit({ detail: { title, altTitle, author, type, cover, description, release } }) {
+	async function handleSubmit({
+		detail: { title, altTitle, author, type, cover, description, release }
+	}) {
 		const response = await fetch('/api/method/book.create', {
 			method: 'POST',
 			body: JSON.stringify({
-				title, altTitle, author, type, cover, description, release
+				title,
+				altTitle,
+				author,
+				type,
+				cover,
+				description,
+				release
 			}),
 			headers: {
 				'Content-Type': 'application/json'
@@ -23,10 +31,14 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Create book</title>
+</svelte:head>
+
 <div class="container">
 	<div class="title">Create book</div>
 	{#if error}
 		<p class="error">{error}</p>
 	{/if}
-	<CreateBookForm on:submit={handleSubmit} />
+	<CreateBookForm on:submit={handleSubmit}/>
 </div>
