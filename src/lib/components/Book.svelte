@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { DateTimeFormatter } from '../util_classes/DateTimeFormatter';
 	export let bookData;
+	const createdAtString: string = DateTimeFormatter.toDateString(bookData.created_at);
 </script>
 
 <svelte:head>
@@ -67,13 +69,11 @@
 				<div class="manga-data__header">Upload by:</div>
 				<div class="manga-data__content">
 					{bookData.loader_user_id}
-					{bookData.created_at}
+					{createdAtString}
 				</div>
 			</div>
 			<div class="manga-data__element dp-flex">
-				<a href={$page.url + "/chapter/add"}>
-					Add chapter
-				</a>
+				<a href={$page.url + '/chapter/add'}> Add chapter </a>
 			</div>
 			<!-- <div class="manga-data__element dp-flex">
 			<div class="manga-data__content  mtb-10">
