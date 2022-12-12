@@ -1,7 +1,8 @@
-<script>
-	export let type = 'button';
+<script lang="ts">
+	export let type: string = 'button';
+	export let disabled: boolean = false;
 </script>
 
-<button {type} class="btn">
+<button {type} {disabled} class="btn">
 	<slot />
 </button>

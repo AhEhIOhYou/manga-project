@@ -93,13 +93,16 @@ input::file-selector-button {
 	}
 }
 
-[contenteditable='true']:empty:before {
-	content: attr(placeholder);
-	display: block;
+
+[contenteditable] {
+	outline: none;
 }
 
-[contenteditable='true']:empty:focus:before {
+[contenteditable='plaintext-only']:empty:before {
 	content: attr(placeholder);
+	display: block;
+	color: var(--gray-sub);
+	font-style: italic;
 }
 
 textarea {
