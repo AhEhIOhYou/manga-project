@@ -1,6 +1,6 @@
 export class DateTimeFormatter {
 
-	private static readonly justNow: string = 'just now';
+	private static readonly recently: string = 'recently';
 
 	private static readonly minutesLaterArr: Array<string> = [
 		'five minutes ago',
@@ -50,7 +50,7 @@ export class DateTimeFormatter {
 			sec: diff.getUTCSeconds(),
 		};
 
-		if (interval.days > 28) {
+		if (interval.year > 0 ||interval.month > 0 ||interval.days > 28) {
 			return new Date(date).toLocaleDateString('ru-RU', { year: 'numeric', month: 'numeric', day: 'numeric' });
 		} else if (interval.days >= 7) {
 			return this.weekLaterArr[interval.days % 7];
@@ -69,7 +69,7 @@ export class DateTimeFormatter {
 		} else if (interval.min >= 1) {
 			return this.minutesLaterArr[interval.min % 5];
 		} else {
-			return this.justNow;
+			return this.recently;
 		}
 	}
 
