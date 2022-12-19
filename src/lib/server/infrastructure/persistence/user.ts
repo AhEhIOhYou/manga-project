@@ -9,6 +9,7 @@ export async function createUser(newUser: UserType) {
 			password: newUser.password,
 			username: newUser.username,
 			user_id: newUser.user_id,
+			avatar: newUser.avatar,
 			refresh_token: newUser.refresh_token,
 		}
 	});

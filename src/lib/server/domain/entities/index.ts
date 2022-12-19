@@ -62,4 +62,17 @@ export type UserType = {
 	username?: string;
 	user_id?: string;
 	refresh_token?: string;
+	avatar?: string;
+}
+
+export type AuthorType = {
+	id?: number;
+	name: string;
+}
+
+export type TranslationTeamType = {
+	id?: number;
+	name: string;
+	owner_id: number;
+	party?: PublicUserType[];
 }
