@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { DateTimeFormatter } from '@/lib/util_classes/DateTimeFormatter';
 	export let chapterItemData;
+	const createdAt = DateTimeFormatter.toDateString(chapterItemData.created_at);
 </script>
 
 <li class="chapters-list__item p-relative">
@@ -16,7 +18,7 @@
 			</span>
 		</span>
 		<span>
-			{chapterItemData.created_at}
+			{createdAt}
 		</span>
 	</a>
 </li>
@@ -35,7 +37,7 @@
 			.chapter-item__title {
 				.chapter-item__subtitile {
 					font-size: 16px;
-					color: var(--text-primaty-sub);
+					color: var(--text-primary-sub);
 				}
 			}
 		}

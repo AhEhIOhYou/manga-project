@@ -17,7 +17,7 @@
 	}
 </script>
 
-<div class="container dp-block">
+<div class="container">
 	<div class="chapters">
 		<h1 class="title">Chapters</h1>
 		<ul class="chapters-list mtb-10">
