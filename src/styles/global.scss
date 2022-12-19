@@ -40,23 +40,6 @@ a {
 	}
 }
 
-.btn {
-	margin: 10px;
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-	border-radius: 5px;
-	background-color: var(--btn-main);
-	line-height: 1.5;
-	padding: 10px;
-
-	&:hover {
-		background-color: var(--btn-main-hover);
-		color: white;
-	}
-}
-
 .show-more-container {
 	margin: 10px 0;
 	display: flex;

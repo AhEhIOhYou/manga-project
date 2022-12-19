@@ -10,11 +10,11 @@
 		},
 		{
 			name: 'Sign in',
-			link: '/auth/signin'
+			link: '/user/signin'
 		},
 		{
 			name: 'Sign up',
-			link: '/auth/signup'
+			link: '/user/signup'
 		},
 		{
 			name: 'Create book',

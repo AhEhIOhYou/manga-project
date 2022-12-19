@@ -1,71 +1,75 @@
 <script lang="ts">
 	import type { PageData } from '../api/test2/$types';
-	import CreateComment from '@/lib/components/Comment/CreateComment.svelte';
-	import Comment from '@/lib/components/Comment/Comment.svelte';
+	import Comments from '@/lib/components/Comment/Comments.svelte';
+	import { DateTimeFormatter } from '@/lib/util_classes/DateTimeFormatter';
 
 	export let data: PageData;
+	const user = { username: 'Dima', id: 123123 };
 	let comments = [
 		{
 			id: 1,
-			name: 'Igor',
-			message: 'text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1',
-			children: [],
+			userName: 'Igor',
+			message:
+				'text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1text-1',
+			createdAt: DateTimeFormatter.Since('12.12.2012')
 		},
 		{
 			id: 2,
-			name: 'Igor',
+			userName: 'Igor',
 			message: 'text-2',
-			children: [],
+			createdAt: DateTimeFormatter.Since('12.12.2012')
 		},
 		{
 			id: 3,
-			name: 'Igor',
+			userName: 'Igor',
 			message: 'text-3',
-			children: [
-				{
-					id: 32,
-					name: 'Igor-2',
-					message: 'text-32',
-					children: [],
-				},
-				{
-					id: 33,
-					name: 'Igor-2',
-					message: 'text-32',
-					children: [],
-				},
-				{
-					id: 34,
-					name: 'Igor-2',
-					message: 'text-32',
-					children: [],
-				},
-				{
-					id: 35,
-					name: 'Igor-2',
-					message: 'text-32',
-					children: [],
-				},
-				{
-					id: 36,
-					name: 'Igor-2',
-					message: 'text-32',
-					children: [],
-				},
-			]
+			createdAt: DateTimeFormatter.Since('12.12.2012')
+		},
+		{
+			id: 32,
+			userName: 'Igor-2',
+			message: 'text-32',
+			createdAt: DateTimeFormatter.Since('12.12.2012')
+		},
+		{
+			id: 33,
+			userName: 'Igor-2',
+			message: 'text-32',
+			createdAt: DateTimeFormatter.Since('12.12.2012')
+		},
+		{
+			id: 34,
+			userName: 'Igor-2',
+			message: 'text-32',
+			createdAt: DateTimeFormatter.Since('12.12.2012')
+		},
+		{
+			id: 35,
+			userName: 'Igor-2',
+			message: 'text-32',
+			createdAt: DateTimeFormatter.Since('12.12.2012')
+		},
+		{
+			id: 36,
+			userName: 'Igor-2',
+			message: 'text-32',
+			createdAt: DateTimeFormatter.Since('17.12.2022')
 		}
 	];
-	async function handleSubmit({ detail: { parentId, message } }) {
-		const index = comments[parentId].children ? comments[parentId].children.length : 0;
-		comments[parentId].children[index] = ({id:1233, name: 'aaa', message: message, children: []})
-		console.log(comments);
+	async function handleSubmit({ detail: { message } }) {
+		comments[comments.length] = ({
+			id: comments.length + 1,
+			userName: user.username,
+			message,
+			createdAt: DateTimeFormatter.Since(Date.now().toLocaleString),
+		});
 	}
+
+	$: console.log(comments);
+	
 </script>
 
 <div class="container">
 	<div class="title">Test 2</div>
-	<CreateComment user="" />
-	{#each comments as comment, index}
-		<Comment commentData={comment} {index} on:new-comment={handleSubmit} />
-	{/each}
+	<Comments commentData={comments} on:new-comment={handleSubmit} {user} />
 </div>

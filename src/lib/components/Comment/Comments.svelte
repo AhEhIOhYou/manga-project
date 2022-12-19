@@ -1,53 +1,28 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { DateTimeFormatter } from '@/lib/util_classes/DateTimeFormatter';
 	import CreateComment from './CreateComment.svelte';
 
 	export let commentData;
-	export let index;
-	export let level = 0;
-
-	let btnReplyState = false;
-	let btnChildrenState = false;
-	let btnChildrenShow = false;
-	let children = [];
-	const childrenLoadStep = 10;
-	let childrenAdded = 0;
-
-	const createdAtString: string = DateTimeFormatter.Since('12.11.2022');
+	export let user = null;
+	
+	let replyMessage = '';
 
 	const dispatch = createEventDispatcher();
 
 	async function handleSubmit({ detail: { message } }) {
 		dispatch('new-comment', {
-			parentId: index,
 			message
 		});
-		btnChildrenShow = true;
-		btnReplyState = false;
-		showChildren(++childrenAdded);
 	}
 
-	$: if (commentData.children.length > 0) {
-		btnChildrenShow = true;
-		btnChildrenState = true;
-	}
-
-	$: if (commentData.children.length == children.length) {
-		btnChildrenShow = false;
-	}
-	function showChildren(count: number = 0) {
-		if (!btnChildrenShow) {
-			children = [];
-			btnChildrenShow = true;
-		} else {
-			const to = count ? count : children.length + childrenLoadStep;
-			children = commentData.children.slice(0, to);
-		}
+	function handleReply(userName: string) {
+		replyMessage = `@${userName}, `;
 	}
 </script>
 
-<div class="comment-list__item dp-flex">
+<CreateComment {user} message={replyMessage} on:submit={handleSubmit} />
+{#each commentData as comment, index}
+		<div class="comment-list__item dp-flex">
 	<div class="user-info">
 		<div class="user-avatar" />
 	</div>
@@ -55,14 +30,14 @@
 		<div class="comment-content__data">
 			<div class="comment-content__row mb-8">
 				<div class="comment-content__username dp-i-block">
-					{commentData.name}
+					{comment.userName}
 				</div>
 				<div class="comment-content__date dp-i-block">
-					{createdAtString}
+					{comment.createdAt}
 				</div>
 			</div>
 			<div class="comment-content__message mb-8">
-				{commentData.message}
+				{comment.message}
 				<!-- {#if commentData.is_deleted}
 					<p style="color: grey;">comment deleted</p>
 				{:else}
@@ -70,28 +45,12 @@
 				{/if} -->
 			</div>
 			<div class="comment-content__action">
-				<button on:click={() => (btnReplyState = !btnReplyState)}
-					>{#if !btnReplyState}Reply{:else}Cancel{/if}</button
-				>
-				{#if btnChildrenState}
-					<button on:click={() => showChildren()} class="load-replies-btn">
-						{#if btnChildrenShow}Load replies{:else}Close replies{/if}
-					</button>
-				{/if}
+				<button on:click={() => handleReply(comment.userName)}>Reply</button>
 			</div>
-		</div>
-		<div class="comment-content__replies mtb-10">
-			{#if btnReplyState}
-				<CreateComment user="" on:submit={handleSubmit} />
-			{/if}
-			{#if children}
-				{#each children as item}
-					<svelte:self commentData={item} level={++level} {index} on:new-comment={handleSubmit}/>
-				{/each}
-			{/if}
 		</div>
 	</div>
 </div>
+{/each}
 
 <style lang="scss">
 	.comment-list__item {

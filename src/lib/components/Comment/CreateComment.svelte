@@ -1,11 +1,8 @@
 <script lang="ts">
-	import Contenteditable from '../Input/Contenteditable.svelte';
 	import { createEventDispatcher } from 'svelte';
-	import Button from '../Button.svelte';
 
-	export let user;
-	let message = '';
-	let disabled = true;
+	export let user = null;
+	export let message = '';
 	let error;
 
 	$: disabled = message == '' ? true : false;
@@ -14,6 +11,10 @@
 	const dispatch = createEventDispatcher();
 	function handleSubmit() {
 		error = null;
+		if (!user) {
+			error = 'Please, login to comment';
+			return;
+		}
 		message = message.replace(/&nbsp;/g, ' ').trim();
 		if (!message) {
 			error = 'Empty comment';
@@ -26,22 +27,28 @@
 	}
 </script>
 
-<form class="form comment-create" on:submit|preventDefault={handleSubmit}>
+<div class="comment-create">
 	<div class="user-info">
 		<div class="user-avatar" />
 	</div>
 	<div class="comment-content">
+		{#if error}
+			<p class="error">{error}</p>
+		{/if}
 		<div class="comment-input p-relative">
-			<Contenteditable bind:value={message} />
+			<div
+				id="message"
+				name="message"
+				placeholder="Message"
+				contenteditable="plaintext-only"
+				bind:innerHTML={message}
+			/>
 		</div>
 		<div class="comment-action">
-			{#if error}
-				<p class="error">{error}</p>
-			{/if}
-			<Button type="submit" {disabled}>Send message</Button>
+			<button class="create-btn" on:click={handleSubmit}>Send message</button>
 		</div>
 	</div>
-</form>
+</div>
 
 <style lang="scss">
 	.comment-create {
@@ -78,7 +85,7 @@
 
 			.comment-input {
 				min-height: 36px;
-				padding: 5px;
+				padding: 5px 0;
 				border-bottom: 2px solid #ffffff80;
 				overflow: auto;
 				cursor: text;
@@ -95,14 +102,12 @@
 				margin-top: 20px;
 				text-align: right;
 
-				.comment-submit {
-					padding: 10px;
-					border: none;
-					font-size: 16px;
-					line-height: 16px;
-					cursor: pointer;
-					background-color: #26ff0080;
-					color: #fff;
+				.create-btn {
+					margin-top: 5px;
+					color: var(--white);
+					padding: 0.5em 1em;
+					border-radius: 5px;
+					background-color: var(--btn-main);
 				}
 			}
 		}
