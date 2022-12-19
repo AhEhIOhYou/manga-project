@@ -28,7 +28,7 @@
 {#if error}
 	<p class="error">{error}</p>
 {/if}
-<form class="form dp-flex fd-column align-center" on:submit|preventDefault={handleSubmit}>
+<form class="form" on:submit|preventDefault={handleSubmit}>
 	<Input
 		label="Username"
 		id="username"

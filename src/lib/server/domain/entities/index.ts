@@ -18,7 +18,7 @@ export type BookType = {
 	title: string;
 	alt_title?: string;
 	author: string;
-	type: string;
+	type: number;
 	cover?: string;
 	cover_url?: string;
 	description?: string;

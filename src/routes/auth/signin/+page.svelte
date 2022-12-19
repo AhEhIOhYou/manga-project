@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { PageData } from '../sign-in/$types';
 	import SignInForm from '@/lib/components/Form/SignInForm.svelte';
 	import { goto } from '$app/navigation';
 	export let data: PageData;
@@ -26,5 +26,14 @@
 	{#if error}
 		<p class="error">{error}</p>
 	{/if}
-	<SignInForm on:submit={handleSubmit} />
+	<div class="size-ruler">
+		<SignInForm on:submit={handleSubmit} />
+	</div>
 </div>
+
+<style lang="scss">
+	.size-ruler {
+		margin: 0 auto;
+		width: 20rem;
+	}
+</style>

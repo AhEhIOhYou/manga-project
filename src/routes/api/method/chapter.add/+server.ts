@@ -12,25 +12,26 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	if (!locals.user)
 		throw error(401, 'User unauthorized');
 
+	let user;
 	try {
-		const user = await getUserByLogin("", locals.user.name);
-		const newChapter: ChapterType = {
-			title: data.title,
-			number: Number(data.number),
-			volume: Number(data.volume),
-			translator: data.translator,
-			book_id: Number(data.bookId),
-			loader_user_id: user.user_id,
-			created_at: new Date().toISOString(),
-		}
-
-		try {
-			const rawData = await addChapter(newChapter);
-			return new Response(JSON.stringify(rawData));
-		} catch (e) {
-			throw error(500, 'Database Error: Add chapter data');
-		}
+		user = await getUserByLogin("", locals.user.name);
 	} catch (e) {
 		throw error(500, 'Database Error: User not found');
+	}
+	const newChapter: ChapterType = {
+		title: data.title,
+		number: Number(data.number),
+		volume: Number(data.volume),
+		translator: data.translator,
+		book_id: Number(data.bookId),
+		loader_user_id: user.user_id,
+		created_at: new Date().toISOString(),
+	}
+
+	try {
+		const rawData = await addChapter(newChapter);
+		return new Response(JSON.stringify(rawData));
+	} catch (e) {
+		throw error(500, 'Database Error: Add chapter data');
 	}
 };

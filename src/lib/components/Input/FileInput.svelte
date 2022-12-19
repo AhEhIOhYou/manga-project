@@ -4,12 +4,17 @@
 	export let id: string;
 	export let label: string;
 	export let name: string;
-	export let required: boolean = false;
 	export let multiple: boolean = false;
 	export let fileList: Array<string> = [];
 	export let validFileTypes: Array<string> = [];
 	export let fileCategory: string = '';
 	let error: string;
+
+	const handleDrop = async (event: DragEvent) => {
+		await onFileSelected(event.dataTransfer.files);
+	};
+	const handleDragEnter = (event) => {};
+	const handleDragLeave = (event) => {};
 
 	//Delete files from server
 	export const clearFiles = async () => {
@@ -23,22 +28,31 @@
 	};
 
 	//Uploads files to the server and add to the file list
-	const onFileSelected = async (e) => {
+	const onFileSelected = async (eventFiles) => {
 		error = null;
-		for (const targetFile of e.target.files) {
-			if (validFileTypes && !validFileTypes.includes(targetFile.type)) {
+		if (multiple) {
+			for (const targetFile of eventFiles) {
+				if (validFileTypes && !validFileTypes.includes(targetFile.type)) {
+					error = 'Invalid file type';
+					return;
+				}
+
+				try {
+					const file = await saveFile(targetFile, fileCategory);
+					fileList[fileList.length] = file;
+				} catch (err) {
+					error = err;
+				}
+			}
+		} else {
+			if (validFileTypes && !validFileTypes.includes(eventFiles[0].type)) {
 				error = 'Invalid file type';
 				return;
 			}
 
 			try {
-				const file = await saveFile(targetFile, fileCategory);
-				if (!multiple) {
-					if (fileList[0]) await deleteFile(fileList[0], fileCategory);
-					fileList[0] = file;
-				} else {
-					fileList[fileList.length] = file;
-				}
+				const file = await saveFile(eventFiles[0], fileCategory);
+				fileList[0] = file;
 			} catch (err) {
 				error = err;
 			}
@@ -59,27 +73,49 @@
 	};
 </script>
 
-<div class="form__group field">
-	<label for={id} class="form__label">{label}</label>
-	{#if error}
-		<p class="error">{error}</p>
-	{/if}
-	{#if fileList}
-		{#each fileList as file}
-			<div class="wrapper-cover m-auto">
-				<img src={`/src/upload/${fileCategory}/${file}`} alt="page" />
-			</div>
-			<button on:click|preventDefault={() => onFileDeleteBtn(file)}> Delete img </button>
-		{/each}
-	{/if}
+<label for={id} class="input-label">{label}</label>
+<div
+	class="drop-area"
+	on:dragenter|stopPropagation|preventDefault={handleDragEnter}
+	on:dragover|stopPropagation|preventDefault
+	on:dragleave|stopPropagation|preventDefault={handleDragLeave}
+	on:drop|stopPropagation|preventDefault={handleDrop}
+>
 	<input
 		type="file"
 		{name}
 		{id}
-		{required}
 		{multiple}
-		accept=".jpg,.jpeg,.png"
-		on:change={(e) => onFileSelected(e)}
-		class="form__field"
+		accept="image/*"
+		on:change={(e) => onFileSelected(e.target.files)}
+		class="input-file"
 	/>
+	<label class=" input-label" for={id}>
+		Drag &amp; Drop or
+		<strong>select file</strong>
+		to upload
+	</label>
 </div>
+{#if error}
+	<p class="error">{error}</p>
+{/if}
+{#if fileList}
+	{#each fileList as file}
+		<div class="wrapper-cover m-auto">
+			<img src={`/src/upload/${fileCategory}/${file}`} alt="page" />
+			<div class="delete-img" on:click={() => onFileDeleteBtn(file)}>X</div>
+		</div>
+	{/each}
+{/if}
+
+<style lang="scss">
+	.delete-img {
+		position: absolute;
+		top: 0;
+		right: 0;
+		color: var(--white);
+		padding: 5px;
+		cursor: pointer;
+		font-size: 20px;
+	}
+</style>

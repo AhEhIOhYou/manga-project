@@ -1,71 +1,107 @@
 <script lang="ts">
-	import { invalidateAll, goto } from '$app/navigation';
-	import { page } from '$app/stores';
-
-	$: navigation = [
+	let navEleemnts = [
 		{
-			href: '/',
-			name: 'Home'
+			name: 'Home',
+			link: '/'
 		},
 		{
-			href: '/test2',
-			name: `${$page.data.user ? $page.data.user.name : '🔒'} Test-2`
+			name: 'About',
+			link: '#'
+		},
+		{
+			name: 'Sign in',
+			link: '/auth/signin'
+		},
+		{
+			name: 'Sign up',
+			link: '/auth/signup'
+		},
+		{
+			name: 'Create book',
+			link: '/book/create'
 		}
 	];
-
-	async function handleSignOut() {
-		await fetch('/api/method/user.logout');
-		invalidateAll();
-		goto('/');
-	}
 </script>
 
-<header class="global-header w-100 p-fixed p-zero">
-	<nav class="size-ruler dp-flex jsc-space-between align-center h-100 m-auto">
-		<a class="navbar__item title" href="/">
-			<span> Manga Project </span>
-		</a>
-		{#each navigation as link}
-			<a href={link.href} class="navbar__item">
-				<span>{link.name}</span>
-			</a>
-		{/each}
-		<div class="navbar__item">
-			<input type="text" />
-			<button>Search</button>
+<header class="header">
+	<div class="nav-wrapper">
+		<div class="logo">
+			<img src="/favicon.png" alt="logo" />
 		</div>
-		{#if $page.data.user}
-			<button on:click={handleSignOut} class="navbar__item btn"> Sign out </button>
-		{:else}
-			<a href="/user/sign-in" class="navbar__item"> Sign in </a>
-			<a href="/user/sign-up" class="navbar__item"> Sign up </a>
-		{/if}
-	</nav>
+		<nav class="nav-container">
+			<ul>
+				{#each navEleemnts as navElement}
+					<li>
+						<a href={navElement.link}>{navElement.name}</a>
+					</li>
+				{/each}
+			</ul>
+		</nav>
+	</div>
 </header>
 
 <style lang="scss">
-	.global-header {
+	header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 100;
 		height: 50px;
-		background-color: #3c3c3c;
-		box-shadow: 0 0 5px 1px #26ff0080;
-		z-index: 10;
+		display: block;
+		background-color: var(--container-main);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		padding: 0 15px;
 
-		.size-ruler {
+		.nav-wrapper {
 			max-width: 1160px;
-			padding: 0 3rem;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin: 0 auto;
 
 			.logo {
-				height: 100%;
-				margin-right: 5px;
+				height: 45px;
+				width: 45px;
 			}
 
-			.title {
-				font-weight: bold;
+			.nav-container {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				height: 50px;
+				width: 100%;
+				ul {
+					display: flex;
+					align-items: center;
+					justify-content: flex-end;
+					height: 100%;
+					width: 100%;
+					li {
+						list-style: none;
+						margin: 0 10px;
+						a {
+							text-decoration: none;
+							color: var(--black);
+							font-size: 1.2rem;
+							&:hover {
+								color: var(--primary);
+							}
+						}
+					}
+				}
 			}
+		}
+	}
 
-			.navbar__item {
-				text-decoration: none;
-				color: white;
+	@media (max-width: 600px) {
+		header {
+			.nav-wrapper {
+				.nav-container {
+					ul {
+						display: none;
+					}
+				}
 			}
 		}
 	}

@@ -9,8 +9,15 @@
 	let number = '';
 	let translator = '';
 	let files = [];
+	let error;
+	let validFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+	const fileCategory = 'pages';
 	const dispatch = createEventDispatcher();
 	function handleSubmit() {
+		if (!files.length) {
+			error = 'No cover';
+			return;
+		}
 		dispatch('submit', {
 			title,
 			volume,
@@ -21,7 +28,10 @@
 	}
 </script>
 
-<form class="form dp-flex fd-column align-center" on:submit|preventDefault={handleSubmit}>
+{#if error}
+	<p class="error">{error}</p>
+{/if}
+<form class="form-grid" on:submit|preventDefault={handleSubmit}>
 	<Input label="Title" id="title" name="title" type="text" required bind:value={title} />
 	<Input label="Volume" id="volume" name="volume" type="number" required bind:value={volume} />
 	<Input label="Number" id="number" name="number" type="number" required bind:value={number} />
@@ -33,6 +43,16 @@
 		required
 		bind:value={translator}
 	/>
-	<FileInput bind:fileList={files} multiple={true} label="Pages" id="pages" name="pages" required />
+	<div class="full-width">
+		<FileInput
+			{fileCategory}
+			{validFileTypes}
+			bind:fileList={files}
+			multiple={true}
+			label="Pages"
+			id="pages"
+			name="pages"
+		/>
+	</div>
 	<Button type="submit">Create book</Button>
 </form>

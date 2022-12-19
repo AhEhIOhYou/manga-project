@@ -3,6 +3,6 @@
 	export let disabled: boolean = false;
 </script>
 
-<button {type} {disabled} class="btn">
+<button {type} {disabled} class="button">
 	<slot />
 </button>

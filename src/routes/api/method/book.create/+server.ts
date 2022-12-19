@@ -5,48 +5,47 @@ import { createLinkTitle } from '@/lib/utils';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request, locals }) => {
+export const POST: RequestHandler = async ({ request, fetch }) => {
 	const data = await request.json();
 
 	if (!data.title || !data.author || !data.type || !data.cover)
 		throw error(400, 'Data not valid');
 
-	if (!locals.user)
-		throw error(401, 'User unauthorized');
+	let user;
+	try {
+		const res = await fetch('/api/method/user.auth');
+		user = await res.json();
+	} catch (e) {
+		throw error(500, e.message);
+	}
+
+	const title = data.title.replace(/[^a-z\s]/gi, "");
 
 	try {
-		const user = await getUserByLogin("", locals.user.name);
-
-		const title = data.title.replace(/[^a-z\s]/gi, "");
-
-		try {
-			const existingBook = await getBookByLinkTitle(createLinkTitle(title));
-			if (existingBook)
-				throw error(400, 'Book already exsist');
-		} catch (e) {
-			throw error(500, 'Database Error: Book title');
-		}
-
-		const newBook: BookType = {
-			title: title,
-			alt_title: data.altTitle,
-			author: data.author,
-			type: data.type,
-			release_year: Number(data.release),
-			loader_user_id: user.user_id,
-			link_title: createLinkTitle(title),
-			description: data.description,
-			cover: data.cover,
-			created_at: new Date().toISOString(),
-		};
-
-		try {
-			let rawData = await createBook(newBook);
-			return new Response(JSON.stringify(rawData));
-		} catch (e) {
-			throw error(500, 'Database Error: Add book data');
-		}
+		const existingBook = await getBookByLinkTitle(createLinkTitle(title));
+		if (existingBook)
+			throw error(400, 'Book already exsist');
 	} catch (e) {
-		throw error(500, 'Database Error: User not found');
+		throw error(500, 'Database Error: Book title');
+	}
+
+	const newBook: BookType = {
+		title: title,
+		alt_title: data.altTitle,
+		author: data.author,
+		type: Number(data.type),
+		release_year: Number(data.release),
+		loader_user_id: user.user_id,
+		link_title: createLinkTitle(title),
+		description: data.description,
+		cover: data.cover,
+		created_at: new Date().toISOString(),
+	};
+
+	try {
+		let rawData = await createBook(newBook);
+		return new Response(JSON.stringify(rawData));
+	} catch (e) {
+		throw error(500, 'Database Error: Add book data');
 	}
 };

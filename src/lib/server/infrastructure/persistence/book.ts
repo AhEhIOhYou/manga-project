@@ -37,3 +37,21 @@ export async function getBookByLinkTitle(linkTitle: string) {
 	});
 	return book;
 }
+
+export async function getBooks(offset: number = 0, take: number = 10) {
+	const books = await prisma.book.findMany({
+		select: {
+			title: true,
+			link_title: true,
+			cover: true,
+			book_types: {
+				select: {
+					name: true,
+				}
+			}
+		},
+		skip: offset,
+		take: take,
+	});
+	return books;
+}

@@ -13,12 +13,13 @@ model book {
   alt_title      String?
   link_title     String     @unique
   author         String     @db.VarChar(255)
-  type           String     @db.VarChar(100)
+  type           Int        @db.SmallInt
   description    String?
   cover          String?
   release_year   Int?       @db.SmallInt
   created_at     DateTime   @db.Timestamp(6)
   loader_user_id String?    @db.Uuid
+  book_types     book_types @relation(fields: [type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_book_types_null_fk")
   users          users?     @relation(fields: [loader_user_id], references: [user_id], onUpdate: NoAction, map: "book_users_null_fk")
   chapter        chapter[]
   comments       comments[]
@@ -80,4 +81,10 @@ model users {
   chapter       chapter[]
   comments      comments[]
   page          page[]
+}
+
+model book_types {
+  id   Int    @id(map: "book_types_pk") @default(autoincrement())
+  name String @db.VarChar(50)
+  book book[]
 }

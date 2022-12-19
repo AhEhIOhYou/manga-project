@@ -2,12 +2,22 @@ import type { RequestHandler } from './$types';
 import { VITE_JWT_KEY } from '$env/static/private';
 import * as jwt from 'jsonwebtoken';
 import { error } from '@sveltejs/kit';
-import { getUserByRefreshToken } from '@/lib/server/infrastructure/persistence/user';
+import { getUserByLogin, getUserByRefreshToken } from '@/lib/server/infrastructure/persistence/user';
 
-export const GET: RequestHandler = async ({ cookies }) => {
+export const GET: RequestHandler = async ({ cookies, locals }) => {
 	const token = cookies.get('token');
 	const refresh_token = cookies.get('refresh_token');
 	const key = VITE_JWT_KEY;
+
+	let user;
+	if (locals.user) {
+		try {
+			user = await getUserByLogin("", locals.user.name);
+			return user;
+		} catch (e) {
+			throw error(500, 'Database Error: User not found');
+		}
+	}
 
 	try {
 		const userData = jwt.verify(token, key) as Record<any, any>;
@@ -28,6 +38,7 @@ export const GET: RequestHandler = async ({ cookies }) => {
 		}
 
 		const user = {
+			user_ud: userData.user_id,
 			username: userData.username,
 		};
 

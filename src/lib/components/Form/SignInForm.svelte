@@ -14,7 +14,7 @@
 	}
 </script>
 
-<form class="form dp-flex fd-column align-center" on:submit|preventDefault={handleSubmit} >
+<form class="form" on:submit|preventDefault={handleSubmit} >
 	<Input
 		label="Email or username"
 		id="login"

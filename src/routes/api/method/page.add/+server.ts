@@ -12,7 +12,12 @@ export const POST: RequestHandler = async ({request, locals}) => {
 	if (!locals.user)
 		throw error(401, 'User unauthorized');
 	
-	let user = await getUserByLogin("", locals.user.name);
+	let user;
+	try {
+		user = await getUserByLogin("", locals.user.name);
+	} catch (e) {
+		throw error(500, 'Database Error: User not found');
+	}
 
 	const newPage: PageType = {
 		file_name: data.fileName,
@@ -22,7 +27,10 @@ export const POST: RequestHandler = async ({request, locals}) => {
 		created_at: new Date().toISOString(),
 	}
 
-	const rawData = await addPage(newPage);
-
-	return new Response(JSON.stringify(rawData));
+	try {
+		const rawData = await addPage(newPage);
+		return new Response(JSON.stringify(rawData));
+	} catch (e) {
+		throw error(500, 'Database Error: Add page data');
+	}
 };

@@ -7,7 +7,7 @@
 
 <Header />
 <main>
-	<div class="size-ruler p-relative">
+	<div class="size-ruler">
 		<slot />
 	</div>
 </main>
@@ -15,10 +15,19 @@
 
 <style lang="scss">
 	.size-ruler {
+		position: relative;
 		max-width: 1160px;
 		margin: 70px auto 60px;
 		border-radius: 2px;
 		min-height: calc(100vh - 228px);
 		padding: 0 45px;
+
+		@media (max-width: 768px) {
+			padding: 0 20px;
+		}
+
+		@media (max-width: 480px) {
+			padding: 0;
+		}
 	}
 </style>

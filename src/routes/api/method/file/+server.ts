@@ -20,8 +20,6 @@ export const DELETE: RequestHandler = async ({ request }) => {
 	const data = await request.json();
 	const category: string = data.category;
 	let deletePath: string = import.meta.env.VITE_UPLOAD_DIR + category + "/" + data.file;
-	console.log(deletePath);
-	
 	try {
 		await fs.unlink(deletePath);
 		return new Response(JSON.stringify({ file: data.file }));

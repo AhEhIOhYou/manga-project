@@ -26,5 +26,14 @@
 	{#if error}
 		<p class="error">{error}</p>
 	{/if}
-	<SignUpForm on:submit={handleSubmit} />
+	<div class="size-ruler">
+		<SignUpForm on:submit={handleSubmit} />
+	</div>
 </div>
+
+<style lang="scss">
+	.size-ruler {
+		margin: 0 auto;
+		width: 20rem;
+	}
+</style>

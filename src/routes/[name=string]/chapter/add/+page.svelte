@@ -1,12 +1,14 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { PageServerData, PageData } from './$types';
+	import { goto } from '$app/navigation';
 	import CreateChapterForm from '@/lib/components/Form/CreateChapterForm.svelte';
-	export let data: PageData;
+
+	export let data: PageServerData;
+	const bookId = data.bookId;
 	let error;
-	
-	const bookId = 8;
 
 	async function handleSubmit({ detail: { title, volume, number, translator, files } }) {
+		
 		let pages = [];
 		let chapterId;
 		const responseChapter = await fetch('/api/method/chapter.add', {
@@ -45,15 +47,16 @@
 				'Content-Type': 'application/json'
 			}
 		});
-		const bodyPages = await responseChapter.json();
+		const bodyPages = await responsePages.json();
 		if (responsePages.ok) {
-			console.log(bodyPages);
-
-			console.log('круто');
+			
 		} else {
 			error = bodyPages.message;
 		}
 	}
+	console.log(data);
+	
+	
 </script>
 
 <div class="container">

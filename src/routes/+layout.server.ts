@@ -18,7 +18,6 @@ export const load: LayoutServerLoad = async ({ locals, cookies, url }) => {
 	const token = cookies.get('token');
 	const refresh_token = cookies.get('refresh_token');
 
-
 	let user: UserType;
 	if (token || refresh_token) {
 		user = await AuthUser(cookies, token, refresh_token);

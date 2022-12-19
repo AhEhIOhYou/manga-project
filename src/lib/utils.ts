@@ -112,7 +112,7 @@ export async function saveFile(file: Blob, category: string = ''): Promise<strin
 export async function deleteFile(name: string, category: string = ''): Promise<string> {
 	const response = await fetch('/api/method/file', {
 		method: 'DELETE',
-		body: JSON.stringify({ file: name, category: category })
+		body: JSON.stringify({ file: name, category: category }),
 	});
 	const body = await response.json();
 	if (response.ok) {

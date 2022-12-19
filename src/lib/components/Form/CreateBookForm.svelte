@@ -4,17 +4,23 @@
 	import Button from '../Button.svelte';
 	import FileInput from '../Input/FileInput.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import Contenteditable from '../Input/Contenteditable.svelte';
 
 	let title = '';
 	let altTitle = '';
 	let author = '';
-	let type = '';
+	let type;
 	let fileImg = [];
 	let description = '';
 	let release;
 	let error;
 	let validFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
 	const fileCategory = 'covers';
+	let typeOptions = [
+		{ id: 1, text: `Manga` },
+		{ id: 2, text: `Manhua` },
+		{ id: 3, text: `Comics` }
+	];
 
 	const dispatch = createEventDispatcher();
 	function handleSubmit() {
@@ -25,6 +31,10 @@
 		}
 		if (release > 2100 || release < 1900) {
 			error = 'Wrong release year';
+			return;
+		}
+		if (!fileImg.length) {
+			error = 'No cover';
 			return;
 		}
 		const cover = fileImg[0];
@@ -43,7 +53,7 @@
 {#if error}
 	<p class="error">{error}</p>
 {/if}
-<form class="form dp-flex fd-column align-center" on:submit|preventDefault={handleSubmit}>
+<form class="form-grid" on:submit|preventDefault={handleSubmit}>
 	<Input label="Title" id="title" name="title" type="text" required bind:value={title} />
 	<Input
 		label="Alternative title"
@@ -53,30 +63,26 @@
 		bind:value={altTitle}
 	/>
 	<Input label="Author" id="author" name="author" type="text" required bind:value={author} />
-	<Input
-		label="Description"
-		id="description"
-		name="description"
-		type="text"
-		bind:value={description}
-	/>
+	<div class="full-width">
+		<Contenteditable
+			label="Description"
+			id="description"
+			name="description"
+			bind:value={description}
+			placeholder="Description"
+		/>
+	</div>
 	<Input label="Year Release" id="release" name="release" type="number" bind:value={release} />
-	<Select
-		label="Type"
-		id="Type"
-		name="Type"
-		options={['Manga', 'Manhua', 'Comics']}
-		bind:value={type}
-		required
-	/>
-	<FileInput
-		{fileCategory}
-		{validFileTypes}
-		bind:fileList={fileImg}
-		label="Cover"
-		id="cover"
-		name="cover"
-		required
-	/>
+	<Select label="Type" id="Type" name="Type" options={typeOptions} bind:selected={type} required />
+	<div class="full-width">
+		<FileInput
+			{fileCategory}
+			{validFileTypes}
+			bind:fileList={fileImg}
+			label="Cover"
+			id="cover"
+			name="cover"
+		/>
+	</div>
 	<Button type="submit">Create book</Button>
 </form>

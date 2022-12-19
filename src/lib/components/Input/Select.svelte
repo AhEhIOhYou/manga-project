@@ -1,18 +1,19 @@
 <script>
-	export let value = '';
+	export let selected = 1;
 	export let id;
 	export let label;
 	export let name;
 	export let required = false;
-	export let inputRef = null;
 	export let options = [];
 </script>
 
-<div class="form__group field">
-	<select class="form__field" {name} {id} {required} bind:value bind:this={inputRef}>
-		{#each options as optionValue}
-			<option>{optionValue}</option>
+<div>
+	<label for={id} class="input-label">{label}</label>
+	<select {name} {id} {required} bind:value={selected} class="input-field">
+		{#each options as option}
+			<option value={option.id}>
+				{option.text}
+			</option>
 		{/each}
 	</select>
-	<label for={id} class="form__label">{label}</label>
 </div>
