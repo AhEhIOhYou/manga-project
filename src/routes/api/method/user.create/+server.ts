@@ -2,7 +2,7 @@ import type { RequestHandler } from './$types';
 import { VITE_JWT_KEY } from '$env/static/private';
 import { error } from '@sveltejs/kit';
 
-import type { UserType } from '@/lib/server/domain/entities';
+import type { PublicUserType, UserType } from '@/lib/server/domain/entities';
 import { checkUserUnique, createUser } from '@/lib/server/infrastructure/persistence/user';
 
 import * as bcrypt from 'bcrypt';
@@ -29,6 +29,7 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 		password: hash,
 		username: data.username,
 		user_id: user_id,
+		avatar: data.avatar,
 		refresh_token: refresh_token,
 	};
 
@@ -37,10 +38,10 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 		throw error(400, 'Database error');
 	}
 
-	const user = {
-		username: data.username,
-		user_id,
-		email: data.email
+	const user: PublicUserType = {
+		id: user_id,
+		name: data.username,
+		avatar: data.avatar,
 	};
 
 	const key = VITE_JWT_KEY;

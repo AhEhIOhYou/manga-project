@@ -50,7 +50,7 @@ export type PageType = {
 }
 
 export type PublicUserType = {
-	id: number;
+	id: string;
 	name: string;
 	avatar: string;
 };
@@ -73,6 +73,6 @@ export type AuthorType = {
 export type TranslationTeamType = {
 	id?: number;
 	name: string;
-	owner_id: number;
+	owner_id: string;
 	party?: PublicUserType[];
 }

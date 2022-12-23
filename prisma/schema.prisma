@@ -83,7 +83,7 @@ model page {
 
 model translation_team {
   id         Int          @id(map: "translator_pk") @default(autoincrement())
-  name       String       @db.VarChar(255)
+  name       String       @unique @db.VarChar(255)
   owner      String?      @db.Uuid
   chapter    chapter[]
   users      users?       @relation(fields: [owner], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "translation_team_users_user_id_fk")

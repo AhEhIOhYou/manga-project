@@ -1,4 +1,4 @@
-import type { UserType } from '@/lib/server/domain/entities';
+import type { PublicUserType, UserType } from '@/lib/server/domain/entities';
 import { getUserByLogin } from '@/lib/server/infrastructure/persistence/user';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
@@ -23,10 +23,11 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 		throw error(400, 'Incorrect password');
 
 	const refresh_token = userData.refresh_token;
-	const user = {
-		username: userData.username,
-		user_id: userData.user_id,
-		email: userData.email
+
+	const user: PublicUserType = {
+		id: userData.user_id,
+		name: userData.username,
+		avatar: userData.avatar,
 	};
 
 	const key = VITE_JWT_KEY;

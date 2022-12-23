@@ -4,12 +4,11 @@ import { getUserByLogin } from '@/lib/server/infrastructure/persistence/user';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request, locals }) => {
+export const POST: RequestHandler = async ({ request, fetch }) => {
 	const data = await request.json();
-	if (!locals.user)
-		throw error(401, 'User unauthorized');
 
-	const user = await getUserByLogin("", locals.user.name);
+	if (!data.user_id)
+		throw error(400, 'User not valid');
 
 	for (const page of data.pages) {
 		if (!page.fileName || !data.chapterId || !page.number)

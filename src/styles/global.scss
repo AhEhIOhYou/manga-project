@@ -12,9 +12,9 @@ body {
 
 a {
 	color: var(--text-primary);
-	&:hover {
-		color: var(--text-hover);
-	}
+	// &:hover {
+	// 	color: var(--text-hover);
+	// }
 }
 
 .container {
@@ -231,6 +231,14 @@ select {
 
 .error {
 	background-color: var(--red-main);
+	color: var(--white-main);
+	padding: 1rem;
+	border-radius: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.info {
+	background-color: var(--pink-dark);
 	color: var(--white-main);
 	padding: 1rem;
 	border-radius: 0.5rem;

@@ -1,14 +1,15 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import SignUpForm from '@/lib/components/Form/SignUpForm.svelte';
+	import type { PageData } from '../../author/create/$types';
+	import CreateTranslationTeam from '@/lib/components/Form/CreateTranslationTeam.svelte';
 	import { goto } from '$app/navigation';
 	export let data: PageData;
 
 	let error;
-	async function handleSubmit({ detail: { username, avatar, email, password } }) {
-		const response = await fetch('/api/method/user.create', {
+	async function handleSubmit({ detail: { tname } }) {
+		error = null;
+		const response = await fetch('/api/method/translation_team.create', {
 			method: 'POST',
-			body: JSON.stringify({ username, avatar, email, password }),
+			body: JSON.stringify({ tname }),
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -27,7 +28,7 @@
 		<p class="error">{error}</p>
 	{/if}
 	<div class="size-ruler">
-		<SignUpForm on:submit={handleSubmit} />
+		<CreateTranslationTeam on:submit={handleSubmit} />
 	</div>
 </div>
 

@@ -4,20 +4,19 @@ import { getUserByLogin } from '@/lib/server/infrastructure/persistence/user';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request, locals }) => {
+export const POST: RequestHandler = async ({ request, fetch }) => {
 	const data = await request.json();
 	if (!data.title || !data.number || !data.translator || !data.bookId)
 		throw error(400, 'Data not valid');
 
-	if (!locals.user)
-		throw error(401, 'User unauthorized');
-
 	let user;
 	try {
-		user = await getUserByLogin("", locals.user.name);
+		const res = await fetch('/api/method/user.auth');
+		user = await res.json();
 	} catch (e) {
-		throw error(500, 'Database Error: User not found');
+		throw error(500, e.message);
 	}
+
 	const newChapter: ChapterType = {
 		title: data.title,
 		number: Number(data.number),
