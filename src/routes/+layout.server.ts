@@ -2,7 +2,7 @@ import type { LayoutServerLoad } from './$types';
 import { VITE_JWT_KEY } from '$env/static/private';
 import * as jwt from 'jsonwebtoken';
 import { getUserByRefreshToken } from '@/lib/server/infrastructure/persistence/user';
-import type { UserType } from '@/lib/server/domain/entities';
+import type { PublicUserType, UserType } from '@/lib/server/domain/entities';
 import { redirect, type Cookies } from '@sveltejs/kit';
 
 const protectedRoutes: string[] = [
@@ -18,12 +18,14 @@ export const load: LayoutServerLoad = async ({ locals, cookies, url }) => {
 	const token = cookies.get('token');
 	const refresh_token = cookies.get('refresh_token');
 
-	let user: UserType;
+	let user: PublicUserType;
 	if (token || refresh_token) {
 		user = await AuthUser(cookies, token, refresh_token);
 		if (user) {
 			locals.user = {
-				name: user.username,
+				id: user.id,
+				name: user.name,
+				avatar: user.avatar,
 			};
 		}
 	}
@@ -44,24 +46,22 @@ async function AuthUser(cookies: Cookies, token: string, refresh_token: string) 
 	const key = VITE_JWT_KEY;
 
 	try {
-		const userData = jwt.verify(token, key) as Record<any, any>;
-		const user = {
-			username: userData.username,
-		};
-		return user;
+		const userData = jwt.verify(token, key) as Record<any, any> as PublicUserType;
+		return userData;
 	} catch {
 		if (!refresh_token)
-			return
+			return null;
 
 		const userData = await getUserByRefreshToken(refresh_token);
 		if (!userData) {
 			await cookies.delete('refresh_token', { path: "/" });
-			return
-			// return 'User data error';
+			return null;
 		}
 
-		const user = {
-			username: userData.username,
+		const user: PublicUserType = {
+			id: userData.user_id,
+			name: userData.username,
+			avatar: userData.avatar,
 		};
 
 		const token = jwt.sign(user, key, { expiresIn: `${15 * 60 * 1000}` });

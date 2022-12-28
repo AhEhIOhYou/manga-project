@@ -15,7 +15,7 @@
 		});
 		const body = await response.json();
 		if (response.ok) {
-			goto('/');
+			location.href = '/';
 		}
 		error = body.message;
 	}

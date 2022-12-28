@@ -10,32 +10,13 @@ export const GET: RequestHandler = async ({ cookies, locals }) => {
 	const refresh_token = cookies.get('refresh_token');
 	const key = VITE_JWT_KEY;
 
-	let user;
-
 	if (locals.user) {
-		try {
-			user = await getUserByLogin("", locals.user.name);
-			return user;
-		} catch (e) {
-			throw error(500, 'Database Error: User not found');
-		}
+		return locals.user;
 	}
 
 	try {
 		const userData = jwt.verify(token, key) as Record<any, any>;
-
-		console.log("1");
-		
-		console.log(userData);
-		
-
-		const user: PublicUserType = {
-			id: userData.id,
-			name: userData.name,
-			avatar: userData.avatar,
-		};
-
-		return new Response(JSON.stringify(user));
+		return new Response(JSON.stringify(userData));
 	} catch {
 		if (!refresh_token)
 			throw error(401, 'Unauthorized user');

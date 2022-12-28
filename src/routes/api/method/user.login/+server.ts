@@ -23,7 +23,7 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 		throw error(400, 'Incorrect password');
 
 	const refresh_token = userData.refresh_token;
-
+	
 	const user: PublicUserType = {
 		id: userData.user_id,
 		name: userData.username,
