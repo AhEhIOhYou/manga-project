@@ -5,10 +5,11 @@
 	import FileInput from '../Input/FileInput.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import Contenteditable from '../Input/Contenteditable.svelte';
+	import AuthorInput from '../Input/AuthorInput.svelte';
 
 	let title = '';
 	let altTitle = '';
-	let author = '';
+	let author;
 	let type;
 	let fileImg = [];
 	let description = '';
@@ -41,7 +42,7 @@
 		dispatch('submit', {
 			title,
 			altTitle,
-			author,
+			author_id: author.id,
 			type,
 			cover,
 			description,
@@ -62,7 +63,13 @@
 		type="text"
 		bind:value={altTitle}
 	/>
-	<Input label="Author" id="author" name="author" type="text" required bind:value={author} />
+	<AuthorInput
+		id={'author'}
+		name={'author'}
+		label={'Author'}
+		required={true}
+		bind:value={author}
+	/>
 	<div class="full-width">
 		<Contenteditable
 			label="Description"

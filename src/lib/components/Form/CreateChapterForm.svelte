@@ -3,15 +3,17 @@
 	import Button from '../Button.svelte';
 	import FileInput from '../Input/FileInput.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import TranslationTeamInput from '../Input/TranslationTeamInput.svelte';
 
 	let title = '';
 	let volume = '';
 	let number = '';
-	let translator = '';
+	let translator;
 	let files = [];
 	let error;
 	let validFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
 	const fileCategory = 'pages';
+
 	const dispatch = createEventDispatcher();
 	function handleSubmit() {
 		if (!files.length) {
@@ -35,12 +37,11 @@
 	<Input label="Title" id="title" name="title" type="text" required bind:value={title} />
 	<Input label="Volume" id="volume" name="volume" type="number" required bind:value={volume} />
 	<Input label="Number" id="number" name="number" type="number" required bind:value={number} />
-	<Input
-		label="Translator"
-		id="translator"
-		name="translator"
-		type="text"
-		required
+	<TranslationTeamInput
+		id={'translation_team'}
+		name={'transltranslation_teamator'}
+		label={'Translation team'}
+		required={true}
 		bind:value={translator}
 	/>
 	<div class="full-width">

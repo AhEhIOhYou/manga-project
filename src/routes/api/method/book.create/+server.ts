@@ -8,7 +8,7 @@ import type { RequestHandler } from './$types';
 export const POST: RequestHandler = async ({ request, fetch }) => {
 	const data = await request.json();
 
-	if (!data.title || !data.author || !data.type || !data.cover)
+	if (!data.title || !data.author_id || !data.type || !data.cover)
 		throw error(400, 'Data not valid');
 
 	let user;
@@ -32,7 +32,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 	const newBook: BookType = {
 		title: title,
 		alt_title: data.altTitle,
-		author: data.author,
+		author_id: Number(data.author_id),
 		type: Number(data.type),
 		release_year: Number(data.release),
 		loader_user_id: user.user_id,

@@ -8,7 +8,7 @@ export async function createBook(newBook: BookType) {
 			title: newBook.title,
 			alt_title: newBook.alt_title,
 			link_title: newBook.link_title,
-			author: newBook.author,
+			author: newBook.author_id,
 			type: newBook.type,
 			description: newBook.description,
 			cover: newBook.cover,

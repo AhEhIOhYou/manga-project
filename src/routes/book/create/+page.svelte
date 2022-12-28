@@ -6,14 +6,14 @@
 	let error;
 
 	async function handleSubmit({
-		detail: { title, altTitle, author, type, cover, description, release }
+		detail: { title, altTitle, author_id, type, cover, description, release }
 	}) {
 		const response = await fetch('/api/method/book.create', {
 			method: 'POST',
 			body: JSON.stringify({
 				title,
 				altTitle,
-				author,
+				author_id,
 				type,
 				cover,
 				description,

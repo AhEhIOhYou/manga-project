@@ -17,7 +17,8 @@ export type BookType = {
 	id?: number;
 	title: string;
 	alt_title?: string;
-	author: string;
+	author_id?: number;
+	author?: string;
 	type: number;
 	cover?: string;
 	cover_url?: string;
@@ -33,7 +34,7 @@ export type ChapterType = {
 	title: string;
 	volume?: number;
 	number: number;
-	translator: string;
+	translator: number;
 	book_id: number;
 	loader_user_id: string;
 	created_at: string;
@@ -52,7 +53,7 @@ export type PageType = {
 export type PublicUserType = {
 	id: string;
 	name: string;
-	avatar: string;
+	avatar?: string;
 };
 
 export type UserType = {
@@ -75,4 +76,11 @@ export type TranslationTeamType = {
 	name: string;
 	owner_id: string;
 	party?: PublicUserType[];
+}
+
+export type TranslationTeamInfoType = {
+	id: number;
+	name: string;
+	description?: string;
+	members: PublicUserType[];
 }

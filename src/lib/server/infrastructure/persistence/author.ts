@@ -19,7 +19,12 @@ export async function deleteAuthor(id:number) {
 	return author;
 }
 
-export async function findByChares(characters: string) {
+export async function getAllAuthors() {
+	const authors = await prisma.author.findMany();
+	return authors;
+}
+
+export async function findByCharesAuthor(characters: string) {
 	const authors = await prisma.author.findMany({
 		where: {
 			name: {

@@ -17,7 +17,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			id: rawData.id,
 			title: rawData.title,
 			alt_title: rawData.alt_title,
-			author: rawData.author,
+			author_id: rawData.author,
 			type: rawData.type,
 			cover_url: "src/upload/" + fileCategory + "/" + rawData.cover,
 			description: rawData.description,

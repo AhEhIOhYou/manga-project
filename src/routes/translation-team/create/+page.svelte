@@ -7,7 +7,7 @@
 	let error;
 	async function handleSubmit({ detail: { tname } }) {
 		error = null;
-		const response = await fetch('/api/method/translation_team.create', {
+		const response = await fetch('/api/method/translationteam.create', {
 			method: 'POST',
 			body: JSON.stringify({ tname }),
 			headers: {

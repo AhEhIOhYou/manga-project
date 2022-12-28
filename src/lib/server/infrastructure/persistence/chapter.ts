@@ -33,3 +33,14 @@ export async function getChapters(bookId: number) {
 	});
 	return chapters
 }
+
+export async function checkUniqueChapter(bookId: number, volume: number, number: number) {
+	const res = await prisma.chapter.findFirst({
+		where: {
+			book_id: bookId,
+			volume: volume,
+			number: number
+		}
+	});
+	return res == null;
+}
