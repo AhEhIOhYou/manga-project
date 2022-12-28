@@ -38,6 +38,14 @@ a {
 			margin-top: 10px;
 		}
 	}
+
+	@media (max-width: 1100px) {
+		padding: 0 5px;
+	}
+
+	@media (max-width: 680px) {
+		padding: 0;
+	}
 }
 
 .show-more-container {
@@ -175,48 +183,47 @@ textarea {
 
 .form,
 .form-grid {
-
 	margin: 1.5rem 0;
+}
 
-	.input-label {
-		color: var(--text-primary);
+.input-label {
+	color: var(--text-primary);
+}
+
+.input-field {
+	margin: 10px 0;
+	width: 100%;
+	background-color: var(--black);
+	border: 0.5px solid var(--gray-sub);
+	padding: 0.5em;
+	border-radius: 4px;
+
+	&:not(:placeholder-shown, [contenteditable]) {
+		border-color: var(--green-main);
 	}
+}
 
-	.input-field {
-		margin: 10px 0;
-		width: 100%;
-		background-color: var(--black);
-		border: 0.5px solid var(--gray-sub);
-		padding: 0.5em;
-		border-radius: 4px;
-
-		&:not(:placeholder-shown, [contenteditable]) {
-			border-color: var(--green-main);
-		}
-	}
-
-	option {
-		background-color: var(--container-main-sub);
-	}
+option {
+	background-color: var(--container-main-sub);
+}
 
 
-	.input-file {
-		display: none;
-	}
+.input-file {
+	display: none;
+}
 
-	.drop-area {
-		border: 4px dashed var(--gray-sub);
-		border-radius: 10px;
-		margin: 10px 0;
-		padding: 3em;
-		text-align: center;
-	}
+.drop-area {
+	border: 4px dashed var(--gray-sub);
+	border-radius: 10px;
+	margin: 10px 0;
+	padding: 3em;
+	text-align: center;
 }
 
 .button {
 	margin-top: 5px;
 	color: var(--white);
-	padding: 1em 2em;
+	padding: 0.7em 1em;
 	border-radius: 5px;
 	background-color: var(--btn-main);
 }

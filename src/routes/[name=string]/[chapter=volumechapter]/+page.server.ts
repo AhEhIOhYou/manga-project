@@ -1,30 +1,23 @@
 import type { PageServerLoad } from './$types';
-import type { page as PageType } from "@prisma/client";
 
-export const load: PageServerLoad = async ({ url, fetch }) => {
+export const load: PageServerLoad = async ({ url, fetch, params }) => {
 
-	const chapterId = Number(url.pathname.substring(url.pathname.lastIndexOf('/') + 1).match(/\d+$/));
+	const bookLinkTitle = params.name;
+	const volumeNumber = Number(params.chapter.match(/v\d+/)[0].substring(1));
+	const chapterNumber = Number(params.chapter.match(/c\d+/)[0].substring(1));
+
 	let rawPageNumber = Number(url.searchParams.get('page'));
 	const pageNumber = rawPageNumber == 0 ? null : rawPageNumber;
 
-	let pages: Array<PageType> = [];
-
 	const pageNumberQueryParam: string = pageNumber == null ? '' : `&page_number=${pageNumber}`;
-	const api: string = `/api/method/page.get?chapter_id=${chapterId}${pageNumberQueryParam}`;
-	console.log(api);
-	
-	const res: Response = await fetch(api);
+
+	const res = await fetch('/api/method/chapter.get?book_link_title=' + bookLinkTitle + '&chapter_volume=' + volumeNumber + '&chapter_number=' + chapterNumber + pageNumberQueryParam);
+
 	const data: any = await res.json();
 
-	if (res.ok) {
-		pages = data;
-	} else {
+	if (!res.ok) {
 		throw new Error(data.message);
 	}
 
-	return {
-		pages: pages,
-		pageBackUrl: "",
-		pageNextUrl: "",
-	};
+	return { readerData: data };
 };

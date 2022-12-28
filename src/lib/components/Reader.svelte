@@ -1,128 +1,138 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import Button from './Button.svelte';
+	import Select from './Input/Select.svelte';
 
-	export let pagesData;
-	
+	export let readerData;
+
+	const viewOptions = [
+		{ id: 1, text: 'List style' },
+		{ id: 2, text: 'Page style' }
+	];
+	console.log(readerData);
+
+	const prevChapterUrl =
+		'/' +
+		readerData.book_link_title +
+		(readerData.nav_info.prev
+			? `/v${readerData.nav_info.prev.volume}c${readerData.nav_info.prev.number}`
+			: '');
+	const nextChapterUrl =
+		'/' +
+		readerData.book_link_title +
+		(readerData.nav_info.next
+			? `/v${readerData.nav_info.next.volume}c${readerData.nav_info.next.number}`
+			: '');
+
+	const navItems = [
+		{ label: 'Prev Chapter', url: prevChapterUrl },
+		{ label: 'Next Chapter', url: nextChapterUrl }
+	];
+
 	const handleImgClick = (event) => {
-		const pos:number = event.offsetX < (event.target.width / 2) ? -1 : 1;
+		const pos: number = event.offsetX < event.target.width / 2 ? -1 : 1;
 		if (pos == 1) {
-			goto(pagesData.pageNextUrl);
+			console.log('next page');
+
+			// goto(pagesData.pageNextUrl);
 		} else {
-			goto(pagesData.pageBackUrl);
+			console.log('prev page');
+			// goto(pagesData.pageBackUrl);
 		}
+	};
+
+	let scrollY: number = 0;
+	let scrollYtmp: number = 0;
+	let inactive;
+	$: {
+		inactive = scrollY > scrollYtmp;
+		scrollYtmp = scrollY;
 	}
 </script>
 
-<div class="container">
-	<div class="reader-menu dp-flex jsc-space-between mtb-10">
-		<div class="select-view">
-			<div class="select-chapter dp-i-block">
-				<div class="dp-i-block">
-					<a class="btn" href="#">
-						Select chapter
-					</a>
-				</div>
-			</div>
-			<div class="select-pagestyle dp-i-block">
-				<select>
-					<option>
-						List style
-					</option>
-					<option>
-						Page style
-					</option>
-				</select>
+<svelte:window bind:scrollY />
+
+<div class="container reader">
+	<div class="reader-menu" class:inactive>
+		<div class="reader-menu__left">
+			<Select id="view" name="view" options={viewOptions} />
+		</div>
+		<div class="reader-menu__center">
+			<div class="select-pagination">
+				{#each navItems as item}
+					<Button>
+						<a class="button" href={item.url}> {item.label} </a>
+					</Button>
+				{/each}
 			</div>
 		</div>
-		<div class="select-pagination">
-			<div class="nav-prev dp-i-block">
-				<a class="btn prev_page" href="#">
-					Prev Chapter
-				</a>
-			</div>
-			<div class="nav-next dp-i-block">
-				<a class="btn next_page" href="#">
-					Next Chapter
-				</a>
-			</div>
+		<div class="reader-menu__right">
+			<Button>
+				<a class="button" href="#"> Chapters </a>
+			</Button>
 		</div>
 	</div>
-	{#each pagesData.pages as page}
-		<div class="reader-body w-100 h-100 p-relative" on:mouseup={handleImgClick}>
-			<div class="image-list m-auto">
-				<div class="image-item p-relative">
-					<div class="image-container w-100 h-100 p-relative">
-						<img alt="альтухи" src="{page.url}">
-					</div>
-				</div>
+	<div class="reader-content">
+		{#each readerData.pages as page}
+			<div class="content-wrap">
+				<img alt="Book page" class="content-image" src={page.url} on:click={handleImgClick} />
 			</div>
-		</div>
-	{/each}
-	<div class="reader-menu dp-flex jsc-space-between mtb-10">
-		<div class="select-view">
-			<div class="select-chapter dp-i-block">
-				<div class="dp-i-block">
-					<a class="btn" href="#">
-						Select chapter
-					</a>
-				</div>
-			</div>
-			<div class="select-pagestyle dp-i-block">
-				<select>
-					<option>
-						List style
-					</option>
-					<option>
-						Page style
-					</option>
-				</select>
-			</div>
-		</div>
-		<div class="chapter-pagination">
-			<div class="nav-prev dp-i-block">
-				<a class="btn prev_chapter" href="#">
-					Prev Chapter
-				</a>
-			</div>
-			<div class="nav-next dp-i-block">
-				<a class="btn next_chapter" href="#">
-					Next Chapter
-				</a>
-			</div>
-		</div>
+		{/each}
 	</div>
 </div>
 
 <style lang="scss">
-	.reader-menu {
-		.page-pagination {
-			position: fixed;
-			top: 100px;
+	.reader {
+		position: relative;
 
-		}
-		.chapter-pagination {
-			.nav-prev {
-				.prev_page {
-					
+		.reader-menu {
+			background-color: var(--container-main-sub);
+			bottom: 0;
+			box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+			display: flex;
+			justify-content: space-between;
+			left: 0;
+			padding: 2px 10px;
+			position: fixed;
+			right: 0;
+			z-index: 1;
+			transition-duration: 0.3s;
+
+			&.inactive {
+				transform: translateY(100%);
+			}
+
+			&__left {
+				display: flex;
+				align-items: center;
+			}
+
+			&__center {
+				.select-pagination {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 10px;
 				}
+				display: flex;
+				align-items: center;
+			}
+
+			&__right {
+				display: flex;
+				align-items: center;
 			}
 		}
-	}
-	.reader-body {
-		.image-list {
-			overflow: hidden;
 
-			.image-item {
+		.reader-content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			.content-wrap {
 				width: 100%;
-				cursor: pointer;
 
-				.loaded {
-					min-width: auto!important;
-					min-height: auto!important;
-				}
-
-				.image-container {
-
+				.content-image {
+					width: inherit;
 				}
 			}
 		}

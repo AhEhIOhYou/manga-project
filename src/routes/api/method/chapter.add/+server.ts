@@ -1,5 +1,5 @@
 import type { ChapterType } from '@/lib/server/domain/entities';
-import { addChapter, checkUniqueChapter } from '@/lib/server/infrastructure/persistence/chapter';
+import { addChapter, checkUniqueChapter, getLastChapter } from '@/lib/server/infrastructure/persistence/chapter';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
@@ -8,9 +8,8 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 	if (!data.title || !data.number || !data.translator || !data.bookId)
 		throw error(400, 'Data not valid');
 
-	if (!await checkUniqueChapter(data.bookId, Number(data.volume), Number(data.number))) {
+	if (!await checkUniqueChapter(data.bookId, Number(data.volume), Number(data.number)))
 		throw error(400, 'Chapter already exists');
-	}
 
 	let user;
 	try {
@@ -20,6 +19,9 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 		throw error(500, e.message);
 	}
 
+	const lastChapter = await getLastChapter(data.bookId);
+	const lastChapterNumber = lastChapter?.global_number ?? 0;
+
 	const newChapter: ChapterType = {
 		title: data.title,
 		number: Number(data.number),
@@ -28,6 +30,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 		book_id: Number(data.bookId),
 		loader_user_id: user.id,
 		created_at: new Date().toISOString(),
+		global_number: lastChapterNumber + 1,
 	}
 
 	try {
