@@ -39,11 +39,13 @@ export type ChapterType = {
 	loader_user_id: string;
 	created_at: string;
 	page_count?:number;
+	global_number?: number;
 }
 
 export type PageType = {
 	id?: number;
 	file_name: string;
+	url?: string;
 	chapter_id: number;
 	loader_user_id: string;
 	created_at?: string;
