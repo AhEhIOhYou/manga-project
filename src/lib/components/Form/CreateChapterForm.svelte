@@ -17,7 +17,7 @@
 	const dispatch = createEventDispatcher();
 	function handleSubmit() {
 		if (!files.length) {
-			error = 'No cover';
+			error = 'No pages added';
 			return;
 		}
 		dispatch('submit', {
