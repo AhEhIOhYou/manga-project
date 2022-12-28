@@ -22,7 +22,7 @@
 					<a href={item.link_title}>
 						<img src={item.cover} alt="img" />
 						<div class="tile-list__item__text">{item.title}</div>
-					</a>	
+					</a>
 				</div>
 		{/each}
 	</div>

@@ -1,5 +1,6 @@
 <script lang="ts">
-	let navEleemnts = [
+	import { page } from '$app/stores';
+	let navElements = [
 		{
 			name: 'Home',
 			link: '/'
@@ -9,18 +10,27 @@
 			link: '#'
 		},
 		{
+			name: 'Create book',
+			link: '/book/create'
+		}
+	];
+	
+	if ($page.data.user) {
+		navElements.push({
+			name: 'Logout',
+			link: '/user/logout'
+		})
+	} else {
+		navElements.push({
 			name: 'Sign in',
 			link: '/user/signin'
 		},
 		{
 			name: 'Sign up',
 			link: '/user/signup'
-		},
-		{
-			name: 'Create book',
-			link: '/book/create'
 		}
-	];
+		)
+	}
 </script>
 
 <header class="header">
@@ -30,7 +40,7 @@
 		</div>
 		<nav class="nav-container">
 			<ul>
-				{#each navEleemnts as navElement}
+				{#each navElements as navElement}
 					<li>
 						<a href={navElement.link}>{navElement.name}</a>
 					</li>
