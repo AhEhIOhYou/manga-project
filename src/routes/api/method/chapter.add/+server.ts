@@ -31,7 +31,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 		loader_user_id: user.id,
 		created_at: new Date().toISOString(),
 		global_number: lastChapterNumber + 1,
-	}
+	};
 
 	try {
 		const rawData = await addChapter(newChapter);

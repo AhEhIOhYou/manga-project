@@ -22,7 +22,5 @@ export const POST: RequestHandler = async ({ request }) => {
 		prev: rawData.prev,
 	};
 
-	console.log(navInfo);
-
 	return new Response(JSON.stringify(navInfo));
 };

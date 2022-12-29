@@ -6,7 +6,7 @@ export const load: PageServerLoad = async () => {
 	let books = [];
 
 	try {
-		const rawData = await getBooks();
+		const rawData = await getBooks(0, 20);
 		books = rawData.map(book => {
 			return {
 				title: book.title,

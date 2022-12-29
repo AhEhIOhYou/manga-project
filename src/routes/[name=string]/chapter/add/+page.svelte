@@ -7,7 +7,9 @@
 	import { goto, afterNavigate } from '$app/navigation';
 	import { base } from '$app/paths';
 
+
 	let previousPage: string = base;
+
 	afterNavigate(({ from }) => {
 		previousPage = from?.url.pathname || previousPage;
 	});
