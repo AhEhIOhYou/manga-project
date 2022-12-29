@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { DateTimeFormatter } from '../util_classes/DateTimeFormatter';
+	import Button from './Button.svelte';
 	export let bookData;
 	const createdAtString: string = DateTimeFormatter.toDateString(bookData.created_at);
 </script>
@@ -10,119 +11,132 @@
 </svelte:head>
 
 <div class="container">
-	<div class="wrapper-cover dp-i-block v-top bg-cover bg-center p-relative">
-		<img class="w-100" alt={bookData.title} src={bookData.cover_url} />
-	</div>
-	<div class="manga-detail__info dp-i-block p-relative v-top">
-		<div class="manga-title-container">
-			<div class="manga-title__main">
-				{bookData.title}
+	<div class="book-container">
+		<div class="book-left">
+			<div class="wrapper-cover">
+				<img src={bookData.cover_url} alt="book cover" />
+				<div class="book-type-img">{bookData.type}</div>
+				<div class="book-year-img">{bookData.release_year}</div>
 			</div>
-			<div class="manga-title__alt">
-				{bookData.alt_title}
+			<div class="book-created">
+				Created at: {createdAtString}
+			</div>
+			<div class="book-add-chapter">
+				<Button>
+					<a href={$page.url + '/chapter/add'}> Add chapter </a>
+				</Button>
 			</div>
 		</div>
-		<div class="manga-description">
-			<span>{bookData.description}</span>
-		</div>
-		<div class="manga-rating dp-flex">
-			<span>
-				<svg width="40" height="40">
-					<circle cx="20" cy="20" r="15" fill="yellow" />
-				</svg>
-			</span>
-			<span>
-				<svg width="40" height="40">
-					<circle cx="20" cy="20" r="15" fill="yellow" />
-				</svg>
-			</span>
-			<span>
-				<svg width="40" height="40">
-					<circle cx="20" cy="20" r="15" fill="yellow" />
-				</svg>
-			</span>
-			<span>
-				<svg width="40" height="40">
-					<circle cx="20" cy="20" r="15" fill="yellow" />
-				</svg>
-			</span>
-			<span>
-				<svg width="40" height="40">
-					<circle cx="20" cy="20" r="15" fill="yellow" />
-				</svg>
-			</span>
-		</div>
-		<div class="manga-data">
-			<div class="manga-data__element dp-flex">
-				<div class="manga-data__header">Author:</div>
-				<div class="manga-data__content">{bookData.author}</div>
+		<div class="book-right">
+			<div class="book-info__title">
+				<h2>{bookData.title}</h2>
 			</div>
-			<div class="manga-data__element dp-flex">
-				<div class="manga-data__header">Release:</div>
-				<div class="manga-data__content">{bookData.release_year}</div>
+			<div class="book-info__alt-title">
+				<h2>{bookData.alt_title}</h2>
 			</div>
-			<div class="manga-data__element dp-flex">
-				<div class="manga-data__header">Type:</div>
-				<div class="manga-data__content">{bookData.type}</div>
+			<div class="book-info__author">
+				<h3>by {bookData.author}</h3>
 			</div>
-			<div class="manga-data__element dp-flex">
-				<div class="manga-data__header">Upload by:</div>
-				<div class="manga-data__content">
-					{bookData.loader_user_id}
-					{createdAtString}
-				</div>
+			<div class="book-info__description">
+				<p>{bookData.description}</p>
 			</div>
-			<div class="manga-data__element dp-flex">
-				<a href={$page.url + '/chapter/add'}> Add chapter </a>
-			</div>
-			<!-- <div class="manga-data__element dp-flex">
-			<div class="manga-data__content  mtb-10">
-				{#each bookData.tags as tag}
-					<a class="manga-data__tag" href="#">{tag}</a>
-				{/each}
-			</div>
-		</div> -->
 		</div>
 	</div>
 </div>
 
 <style lang="scss">
-	.manga-detail__info {
-		width: calc(100% - 260px);
-		min-height: 320px;
-		padding-left: 30px;
+	.book-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: start;
+		width: 100%;
+		max-width: 1000px;
+		gap: 20px;
+
+		.book-left {
+			.wrapper-cover {
+				position: relative;
+
+				.book-type-img {
+					position: absolute;
+					top: 0;
+					right: 0;
+					background-color: var(--container-main-sub);
+					color: var(--text-primary);
+					font-style: italic;
+					font-weight: bold;
+					padding: 5px;
+					font-size: 0.8rem;
+				}
+
+				.book-year-img {
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					background-color: var(--container-main-sub);
+					color: var(--text-primary);
+					font-style: italic;
+					font-weight: bold;
+					padding: 5px;
+					font-size: 0.8rem;
+				}
+			}
+
+			.book-created {
+				text-align: center;
+				color: var(--text-primary-sub);
+				padding-bottom: 10px;
+			}
+
+			.book-add-chapter {
+				text-align: center;
+				padding-bottom: 10px;
+			}
+		}
+
+		.book-right {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			padding: 10px;
+
+			.book-info {
+				&__title {
+					&:after {
+						content: '';
+						display: block;
+						width: 100%;
+						height: 2px;
+						background-color: var(--container-main-sub);
+						margin: 4px 0;
+					}
+				}
+
+				&__alt-title {
+					color: var(--text-primary-sub);
+					padding-bottom: 10px;
+				}
+
+				&__description {
+					padding: 10px 0;
+				}
+			}
+		}
 	}
 
-	.manga-title-container {
-		position: relative;
-	}
+	@media only screen and (max-width: 680px) {
+		.book-container {
+			flex-direction: column;
+		}
 
-	.manga-title__main {
-		margin: 0 0 11px;
-		font-size: 30px;
-		font-weight: 400;
-	}
+		.book-left {
+			width: 100%;
+		}
 
-	.manga-title__alt {
-		color: var(--text-primaty-sub);
-		margin: 0 0 11px;
-		font-size: 25px;
-		font-weight: 400;
-	}
-
-	.manga-data__element {
-		margin: 10px 0;
-	}
-
-	.manga-data__header {
-		width: 140px;
-		font-weight: bold;
-	}
-
-	.manga-data__tag {
-		background-color: #b3b3b3;
-		padding: 5px 10px;
-		margin: 5px;
-		line-height: 14px;
+		.book-right {
+			width: 100%;
+			padding: 0 30px 30px;
+			gap: 5px;
+		}
 	}
 </style>

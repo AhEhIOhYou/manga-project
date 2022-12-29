@@ -9,9 +9,9 @@ export async function addChapter(newChapter: ChapterType) {
 			number: newChapter.number,
 			translator: newChapter.translator,
 			book_id: newChapter.book_id,
-			loader_user_id: newChapter.loader_user_id,
 			created_at: newChapter.created_at,
-			page_count: newChapter.page_count,
+			loader_user_id: newChapter.loader_user_id,
+			global_number: newChapter.global_number
 		}
 	});
 	return chapter;

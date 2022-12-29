@@ -3,15 +3,14 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ fetch, url }) => {
 
 	let bookInfo: BookType;
 	let chaptersInfo: Array<ChapterType> = [];
 
 	const linkTitle = url.pathname.replace(/\//g, '');
-	const bookApi = url.origin + '/api/method/book.get';
 
-	const responseBook = await fetch(bookApi, {
+	const responseBook = await fetch('/api/method/book.get', {
 		method: 'POST',
 		body: JSON.stringify({ linkTitle }),
 		headers: {
@@ -19,19 +18,19 @@ export const load: PageServerLoad = async ({ url }) => {
 		}
 	});
 	const dataBook = await responseBook.json();
-	if (responseBook.ok)
-		bookInfo = dataBook;
-	else
+
+	if (!responseBook.ok)
 		throw error(404, dataBook.message);
-
-	const chaptersApi = url.origin + `/api/method/chapters.get?book_id=${bookInfo.id}`;
-
-	const responseChapters = await fetch(chaptersApi);
-	const dataChapters = await responseChapters.json();
-	if (responseChapters.ok)
-		chaptersInfo = dataChapters.reverse();
 	else
+		bookInfo = dataBook;
+
+	const responseChapters = await fetch(`/api/method/chapters.get?book_id=${bookInfo.id}`);
+	const dataChapters = await responseChapters.json();
+
+	if (!responseChapters.ok)
 		throw error(404, dataChapters.message);
+	else
+		chaptersInfo = dataChapters.reverse();
 
 	return { bookInfo, chaptersInfo };
 };

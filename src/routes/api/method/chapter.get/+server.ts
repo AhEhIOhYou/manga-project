@@ -8,7 +8,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	const chapterVolume = Number(url.searchParams.get('chapter_volume'));
 	const chapterNumber = Number(url.searchParams.get('chapter_number'));
 	const bookLinkTitle = url.searchParams.get('book_link_title');
-	if (chapterVolume == 0 || chapterNumber == 0 || bookLinkTitle == null)
+	if (bookLinkTitle == null)
 		throw new Error('chapter_volume, chapter_number and book_link_title are required');
 
 	const book = await getBookByLinkTitle(bookLinkTitle);

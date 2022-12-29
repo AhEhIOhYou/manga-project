@@ -33,7 +33,7 @@
 
 <style lang="scss">
 	.footer {
-		padding: 30px 0 20px 0;
+		padding: 30px 30px 20px 30px;
 		background-color: var(--container-main);
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 

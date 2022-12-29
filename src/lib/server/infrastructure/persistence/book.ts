@@ -9,7 +9,7 @@ export async function createBook(newBook: BookType) {
 			alt_title: newBook.alt_title,
 			link_title: newBook.link_title,
 			author: newBook.author_id,
-			type: newBook.type,
+			type: newBook.type_id,
 			description: newBook.description,
 			cover: newBook.cover,
 			release_year: newBook.release_year,
@@ -24,6 +24,33 @@ export async function getBookById(bookId: number) {
 	const book = await prisma.book.findFirst({
 		where: {
 			id: bookId,
+		},
+		select: {
+			id: true,
+			title: true,
+			alt_title: true,
+			link_title: true,
+			author_book_authorToauthor: {
+				select: {
+					id: true,
+					name: true,
+				}
+			},
+			book_types: {
+				select: {
+					name: true,
+				}
+			},
+			description: true,
+			cover: true,
+			release_year: true,
+			created_at: true,
+			users: {
+				select: {
+					user_id: true,
+					username: true,
+				}
+			}
 		}
 	});
 	return book;
@@ -33,6 +60,33 @@ export async function getBookByLinkTitle(linkTitle: string) {
 	const book = await prisma.book.findFirst({
 		where: {
 			link_title: linkTitle,
+		},
+		select: {
+			id: true,
+			title: true,
+			alt_title: true,
+			link_title: true,
+			author_book_authorToauthor: {
+				select: {
+					id: true,
+					name: true,
+				}
+			},
+			book_types: {
+				select: {
+					name: true,
+				}
+			},
+			description: true,
+			cover: true,
+			release_year: true,
+			created_at: true,
+			users: {
+				select: {
+					user_id: true,
+					username: true,
+				}
+			}
 		}
 	});
 	return book;

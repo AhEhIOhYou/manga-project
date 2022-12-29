@@ -17,16 +17,18 @@ export type BookType = {
 	id?: number;
 	title: string;
 	alt_title?: string;
+	link_title: string;
 	author_id?: number;
 	author?: string;
-	type: number;
+	type_id?: number;
+	type?: string;
 	cover?: string;
 	cover_url?: string;
 	description?: string;
 	release_year?: number;
 	loader_user_id: string;
+	loader_username?: string;
 	created_at: string;
-	link_title: string;
 }
 
 export type ChapterType = {
@@ -38,7 +40,7 @@ export type ChapterType = {
 	book_id: number;
 	loader_user_id: string;
 	created_at: string;
-	page_count?:number;
+	page_count?: number;
 	global_number?: number;
 }
 

@@ -8,7 +8,6 @@
 		{ id: 1, text: 'List style' },
 		{ id: 2, text: 'Page style' }
 	];
-	console.log(readerData);
 
 	const prevChapterUrl =
 		'/' +
@@ -32,7 +31,6 @@
 		const pos: number = event.offsetX < event.target.width / 2 ? -1 : 1;
 		if (pos == 1) {
 			console.log('next page');
-
 			// goto(pagesData.pageNextUrl);
 		} else {
 			console.log('prev page');

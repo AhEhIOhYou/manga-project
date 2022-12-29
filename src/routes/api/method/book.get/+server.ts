@@ -18,14 +18,16 @@ export const POST: RequestHandler = async ({ request }) => {
 		id: rawData.id,
 		title: rawData.title,
 		alt_title: rawData.alt_title,
-		author_id: rawData.author,
-		type: rawData.type,
+		link_title: rawData.link_title,
+		author_id: rawData.author_book_authorToauthor.id,
+		author: rawData.author_book_authorToauthor.name,
+		type: rawData.book_types.name,
 		cover_url: "src/upload/" + fileCategory + "/" + rawData.cover,
 		description: rawData.description,
 		release_year: rawData.release_year,
-		loader_user_id: rawData.loader_user_id,
+		loader_user_id: rawData.users.user_id,
+		loader_username: rawData.users.username,
 		created_at: new Date(rawData.created_at).toISOString(),
-		link_title: rawData.link_title,
 	}
 	return new Response(JSON.stringify(bookData));
 };
