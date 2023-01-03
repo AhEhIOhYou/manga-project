@@ -1,7 +1,7 @@
 import type { BookType, ChapterType } from '@/lib/server/domain/entities';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-
+import { getAverageRGB } from '@/lib/utils';
 
 export const load: PageServerLoad = async ({ fetch, url }) => {
 
@@ -23,6 +23,8 @@ export const load: PageServerLoad = async ({ fetch, url }) => {
 		throw error(404, dataBook.message);
 	else
 		bookInfo = dataBook;
+		
+	bookInfo.avgColor = await getAverageRGB(bookInfo.cover_url);
 
 	const responseChapters = await fetch(`/api/method/chapters.get?book_id=${bookInfo.id}`);
 	const dataChapters = await responseChapters.json();

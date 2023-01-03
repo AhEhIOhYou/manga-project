@@ -29,6 +29,7 @@ export type BookType = {
 	loader_user_id: string;
 	loader_username?: string;
 	created_at: string;
+	avgColor?: string;
 }
 
 export type ChapterType = {

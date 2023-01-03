@@ -6,8 +6,9 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import AccordionItem from '@/lib/components/accordion/AccordionItem.svelte';
 
-	export let data: PageServerData;
+	export let data: PageServerData;	
 
 	let ready = false;
 	onMount(() => (ready = true));
@@ -25,13 +26,34 @@
 	</div>
 
 	<div
-	in:fly={{
-		y: 30,
-		delay: 70 * 2,
-		easing: cubicOut
-	}}
->
-	<ChaptersList chaptersData={data.chaptersInfo} showAll={false} />
-</div>
+		in:fly={{
+			y: 30,
+			delay: 70 * 2,
+			easing: cubicOut
+		}}
+	>
+		<div class="container">
+			<div class="accordion">
+				<AccordionItem open={true}>
+					<div slot="title">Description</div>
+					<p slot="body" class="book-description">
+						{data.bookInfo.description}
+					</p>
+				</AccordionItem>
+				<AccordionItem>
+					<div slot="title">Chapters</div>
+					<div slot="body">
+						<ChaptersList chaptersData={data.chaptersInfo} showAll={false} />
+					</div>
+				</AccordionItem>
+			</div>
+		</div>
+	</div>
 	<!-- <Comments bookId={1} /> -->
 {/if}
+
+<style lang="scss">
+	.book-description {
+		padding: 10px 30px 30px 30px;
+	}
+</style>

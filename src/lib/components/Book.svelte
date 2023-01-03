@@ -4,13 +4,14 @@
 	import Button from './Button.svelte';
 	export let bookData;
 	const createdAtString: string = DateTimeFormatter.toDateString(bookData.created_at);
+	const background =  `linear-gradient(180deg, ${bookData.avgColor} 0%, var(--background-body) 100%)`;
 </script>
 
 <svelte:head>
 	<title>{bookData.title}</title>
 </svelte:head>
 
-<div class="container-book">
+<div class="container-book" style:background>
 	<div class="wrapper">
 		<div>
 			<div class="wrapper-cover">
@@ -39,7 +40,7 @@
 <style lang="scss">
 	.container-book {
 		width: 100%;
-		background: linear-gradient(180deg, #d0b9ba 0%, var(--background-body) 100%);
+		background: linear-gradient(180deg, #ffffff 0%, var(--background-body) 100%);
 		padding: 60px;
 
 		.wrapper {

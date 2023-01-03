@@ -8,7 +8,11 @@ const config: UserConfig = {
 		alias: {
 			'@': path.resolve('/src')
 		}
+	},
+	build: {
+		sourcemap: true,
 	}
+
 };
 
 export default config;

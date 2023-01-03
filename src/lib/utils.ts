@@ -25,19 +25,11 @@ export function getBase64(image) {
 		return e.target.result;
 	};
 }
-const createImage = (url): Promise<HTMLImageElement> =>
-	new Promise((resolve, reject) => {
-		const image = new Image();
-		image.addEventListener('load', () => resolve(image));
-		image.addEventListener('error', (error) => reject(error));
-		image.setAttribute('crossOrigin', 'anonymous');
-		image.src = url;
-	});
 
 function getRadianAngle(degreeValue) {
 	return (degreeValue * Math.PI) / 180
 }
-
+/*
 export async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
 	const image = await createImage(imageSrc);
 	const canvas = document.createElement('canvas');
@@ -77,6 +69,8 @@ export async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
 
 	return canvas.toDataURL('image/jpeg');
 }
+*/
+
 /*
 	cyrb53 (c) 2018 bryc (github.com/bryc)
 	A fast and simple hash function with decent collision resistance.
@@ -126,14 +120,18 @@ export async function deleteFile(name: string, category: string = ''): Promise<s
 	}
 }
 
-export async function getAverageRGB(imgSrc: string) {
-	// Instantiate the canvas object
+const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+	const hex = x.toString(16)
+	return hex.length === 1 ? '0' + hex : hex
+}).join('')
+
+export async function getAverageRGB(imgSrc: string): Promise<string> {
 
 	let image = new Image();
 	image.src = imgSrc;
 
 	let blockSize = 5,
-		defaultRGB = { r: 0, g: 0, b: 0 },
+		defaultHEX = '#000000',
 		data,
 		width = image.width,
 		height = image.height,
@@ -142,43 +140,38 @@ export async function getAverageRGB(imgSrc: string) {
 		rgb = { r: 0, g: 0, b: 0 },
 		count = 0;
 
-
 	const canvas = createCanvas(width, height);
 	const context = canvas.getContext("2d");
 
 	if (!context) {
-		return defaultRGB;
+		return defaultHEX;
 	}
 
-	image.onload = () => {
-		context.drawImage(image, 0, 0, width, height);
+	context.drawImage(image, 0, 0, width, height);
 
-		height = canvas.height = image.height;
-		width = canvas.width = image.width;
+	height = canvas.height = image.height;
+	width = canvas.width = image.width;
 
-		context.drawImage(image, 0, 0);
+	context.drawImage(image, 0, 0);
 
-		try {
-			data = context.getImageData(0, 0, width, height);
-		} catch (e) {
-			return defaultRGB;
-		}
+	try {
+		data = context.getImageData(0, 0, width, height);
+	} catch (e) {
+		return defaultHEX;
+	}
 
-		length = data.data.length;
+	length = data.data.length;
 
-		while ((i += blockSize * 4) < length) {
-			++count;
-			rgb.r += data.data[i];
-			rgb.g += data.data[i + 1];
-			rgb.b += data.data[i + 2];
-		}
+	while ((i += blockSize * 4) < length) {
+		++count;
+		rgb.r += data.data[i];
+		rgb.g += data.data[i + 1];
+		rgb.b += data.data[i + 2];
+	}
 
-		rgb.r = ~~(rgb.r / count);
-		rgb.g = ~~(rgb.g / count);
-		rgb.b = ~~(rgb.b / count);
+	rgb.r = ~~(rgb.r / count);
+	rgb.g = ~~(rgb.g / count);
+	rgb.b = ~~(rgb.b / count);
 
-		console.log("rgbbb");
-		
-		return rgb;
-	};
+	return rgbToHex(rgb.r, rgb.g, rgb.b);
 }
