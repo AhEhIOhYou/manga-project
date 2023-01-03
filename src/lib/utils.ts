@@ -1,3 +1,5 @@
+import { createCanvas, Image } from "canvas";
+
 export const clipText = (text: string, maxlength: number = 45): string =>
 	text.length > maxlength ? text.slice(0, maxlength) + '...' : text;
 export const detectMobile = (userAgent: string): boolean => {
@@ -23,17 +25,19 @@ export function getBase64(image) {
 		return e.target.result;
 	};
 }
-const createImage = (url) =>
+const createImage = (url): Promise<HTMLImageElement> =>
 	new Promise((resolve, reject) => {
-		const image = new Image()
-		image.addEventListener('load', () => resolve(image))
-		image.addEventListener('error', (error) => reject(error))
-		image.setAttribute('crossOrigin', 'anonymous') // needed to avoid cross-origin issues on CodeSandbox
-		image.src = url
+		const image = new Image();
+		image.addEventListener('load', () => resolve(image));
+		image.addEventListener('error', (error) => reject(error));
+		image.setAttribute('crossOrigin', 'anonymous');
+		image.src = url;
 	});
+
 function getRadianAngle(degreeValue) {
 	return (degreeValue * Math.PI) / 180
 }
+
 export async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
 	const image = await createImage(imageSrc);
 	const canvas = document.createElement('canvas');
@@ -120,4 +124,61 @@ export async function deleteFile(name: string, category: string = ''): Promise<s
 	} else {
 		throw body.message;
 	}
+}
+
+export async function getAverageRGB(imgSrc: string) {
+	// Instantiate the canvas object
+
+	let image = new Image();
+	image.src = imgSrc;
+
+	let blockSize = 5,
+		defaultRGB = { r: 0, g: 0, b: 0 },
+		data,
+		width = image.width,
+		height = image.height,
+		i = -4,
+		length,
+		rgb = { r: 0, g: 0, b: 0 },
+		count = 0;
+
+
+	const canvas = createCanvas(width, height);
+	const context = canvas.getContext("2d");
+
+	if (!context) {
+		return defaultRGB;
+	}
+
+	image.onload = () => {
+		context.drawImage(image, 0, 0, width, height);
+
+		height = canvas.height = image.height;
+		width = canvas.width = image.width;
+
+		context.drawImage(image, 0, 0);
+
+		try {
+			data = context.getImageData(0, 0, width, height);
+		} catch (e) {
+			return defaultRGB;
+		}
+
+		length = data.data.length;
+
+		while ((i += blockSize * 4) < length) {
+			++count;
+			rgb.r += data.data[i];
+			rgb.g += data.data[i + 1];
+			rgb.b += data.data[i + 2];
+		}
+
+		rgb.r = ~~(rgb.r / count);
+		rgb.g = ~~(rgb.g / count);
+		rgb.b = ~~(rgb.b / count);
+
+		console.log("rgbbb");
+		
+		return rgb;
+	};
 }

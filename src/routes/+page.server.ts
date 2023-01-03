@@ -1,4 +1,5 @@
 import { getBooks } from '@/lib/server/infrastructure/persistence/book';
+import { getAverageRGB } from '@/lib/utils';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
@@ -18,6 +19,10 @@ export const load: PageServerLoad = async () => {
 	} catch (e) {
 		console.error(e);
 	}
+
+	const res =  await getAverageRGB("https://i.imgur.com/1ZQ3Z1K.jpg");
+	console.log(res);
+	
 
 	return { books };
 };
