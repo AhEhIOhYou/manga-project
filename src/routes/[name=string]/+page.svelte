@@ -16,7 +16,7 @@
 {#if ready}
 	<div
 		in:fly={{
-			y: 30,
+			y: -30,
 			delay: 70 * 1,
 			easing: cubicOut
 		}}

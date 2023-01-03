@@ -16,18 +16,8 @@
 <style lang="scss">
 	.size-ruler {
 		position: relative;
-		max-width: 1160px;
-		margin: 70px auto 60px;
+		margin: 50px auto 60px;
 		border-radius: 2px;
 		min-height: calc(100vh - 228px);
-		padding: 0 45px;
-
-		@media (max-width: 1100px) {
-			padding: 0 5px;
-		}
-
-		@media (max-width: 480px) {
-			padding: 0;
-		}
 	}
 </style>
