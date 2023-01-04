@@ -6,8 +6,8 @@
 			link: '/'
 		},
 		{
-			name: 'About',
-			link: '#'
+			name: 'Catalog',
+			link: 'catalog'
 		},
 		{
 			name: 'Create book',

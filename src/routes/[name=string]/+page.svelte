@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
-	import AccordionItem from '@/lib/components/accordion/AccordionItem.svelte';
+	import AccordionItem from '@/lib/components/Accordion/AccordionItem.svelte';
 	import BookDescription from '@/lib/components/BookDescription.svelte';
 
 	export let data: PageServerData;	

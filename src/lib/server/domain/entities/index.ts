@@ -100,3 +100,17 @@ export type BookGenreType = {
 	book_id: number;
 	genre_id: number;
 }
+
+export type OrderByItemType = {
+	by: string;
+	order: string;
+}
+
+export type FilterItemType = {
+	name: string;
+	gt?: number;
+	lt?: number;
+	gte?: number;
+	lte?: number;
+	eq?: number;
+}
