@@ -89,3 +89,14 @@ export type TranslationTeamInfoType = {
 	description?: string;
 	members: PublicUserType[];
 }
+
+export type GenreType = {
+	id?: number;
+	name: string;
+	book_count?: number;
+}
+
+export type BookGenreType = {
+	book_id: number;
+	genre_id: number;
+}

@@ -40,5 +40,11 @@
 		<Button type="btn">
 			<a href="/translation-team/list">List Translation Team</a>
 		</Button>
+		<Button type="btn">
+			<a href="/genre/create">Create Genre</a>
+		</Button>
+		<Button type="btn">
+			<a href="/genre/list">List Genre</a>
+		</Button>
 	</div>
 {/if}

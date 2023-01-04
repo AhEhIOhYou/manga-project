@@ -7,9 +7,14 @@ declare namespace App {
 			id: string
 			name: string
 			avatar: string
-		}
+		},
+		genres: [{
+			id: string
+			name: string
+			book_count: number
+		}],
 	}
-	interface PageData {}
+	interface PageData { }
 	// interface Error {}
 	// interface Platform {}
 }
