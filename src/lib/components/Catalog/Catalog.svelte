@@ -1,11 +1,9 @@
 <script lang="ts">
 	import type { FilterItemType, OrderByItemType } from '@/lib/server/domain/entities';
 	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
 	import ShowcaseTile from '../ShowcaseTile.svelte';
 	import Filter from './Filter.svelte';
 	import Search from './Search.svelte';
-	import { goto } from '$app/navigation';
 
 	let books = [];
 	let error;
@@ -17,17 +15,9 @@
 		order: 'desc'
 	};
 
-	const filter: Array<FilterItemType> = [	];
+	const filter: Array<FilterItemType> = [];
 
 	async function findBooks() {
-		if (search !== '') {
-			$page.url.searchParams.set('s', search);
-			goto(`?${$page.url.searchParams.toString()}`);
-		} else {
-			$page.url.searchParams.delete('s');
-			goto(`?${$page.url.searchParams.toString()}`);
-		}
-
 		const response = await fetch('/api/method/book.find', {
 			method: 'POST',
 			body: JSON.stringify({
@@ -47,9 +37,6 @@
 	}
 
 	onMount(async () => {
-		if ($page.url.searchParams.get('s')) {
-			search = $page.url.searchParams.get('s');
-		}
 		await findBooks();
 	});
 
