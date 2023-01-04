@@ -1,9 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { DateTimeFormatter } from '../util_classes/DateTimeFormatter';
-	import Button from './Button.svelte';
 	export let bookData;
-	const createdAtString: string = DateTimeFormatter.toDateString(bookData.created_at);
 	const background =  `linear-gradient(180deg, ${bookData.avgColor} 0%, var(--background-body) 100%)`;
 </script>
 
@@ -29,7 +25,7 @@
 				{bookData.alt_title}
 			</h2>
 			<div class="book-data__author" >
-				by <a href="/author/{bookData.author}">
+				by <a class="bold underline" href="/author/{bookData.author}">
 					{bookData.author}
 				</a>
 			</div>

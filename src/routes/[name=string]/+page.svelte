@@ -7,6 +7,7 @@
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import AccordionItem from '@/lib/components/accordion/AccordionItem.svelte';
+	import BookDescription from '@/lib/components/BookDescription.svelte';
 
 	export let data: PageServerData;	
 
@@ -36,8 +37,8 @@
 			<div class="accordion">
 				<AccordionItem open={true}>
 					<div slot="title">Description</div>
-					<p slot="body" class="book-description">
-						{data.bookInfo.description}
+					<p slot="body">
+						<BookDescription bookData={data.bookInfo} />
 					</p>
 				</AccordionItem>
 				<AccordionItem>
@@ -53,7 +54,5 @@
 {/if}
 
 <style lang="scss">
-	.book-description {
-		padding: 10px 30px 30px 30px;
-	}
+	
 </style>

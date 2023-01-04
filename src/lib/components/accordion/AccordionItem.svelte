@@ -43,6 +43,8 @@
 		}
 		&.open {
 			.accordion-item-header {
+				font-weight: bold;
+
 				.accordion-item-icon {
 					transform: rotate(180deg);
 				}
