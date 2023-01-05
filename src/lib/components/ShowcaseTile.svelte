@@ -1,31 +1,46 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import { quartIn } from 'svelte/easing';
 	import { onMount } from 'svelte';
 
 	export let items = [];
 	let ready = false;
-	onMount(() => (ready = true));
+	let showEmpty = false;
+
+	onMount(() => {
+		ready = true;
+		if (items.length === 0) showEmpty = true;
+	});
 </script>
 
 {#if ready}
 	<div class="tile-list">
 		{#each items as item, i}
-				<div
-					in:fly={{
-						y: 50,
-						delay: 70 * i,
-						easing: quartIn
-					}}
-					class="tile-list__item"
-				>
-					<a href={item.link_title}>
-						<img src={item.cover} alt="img" />
-						<div class="tile-list__item__text">{item.title}</div>
-					</a>
-				</div>
+			<div
+				in:fade={{
+					delay: 100 * i,
+					easing: quartIn
+				}}
+				class="tile-list__item"
+			>
+				<a href={item.link_title}>
+					<img src={item.cover} alt="img" />
+					<div class="tile-list__item__text">{item.title}</div>
+				</a>
+			</div>
 		{/each}
 	</div>
+	{#if showEmpty}
+		<div
+			class="info"
+			in:fade={{
+				delay: 100,
+				easing: quartIn
+			}}
+		>
+			Nothing was found
+		</div>
+	{/if}
 {/if}
 
 <style lang="scss">
@@ -59,7 +74,7 @@
 				transform: translateY(-5px);
 			}
 
-			.tile-list__item__text {
+			&__text {
 				position: absolute;
 				bottom: 0;
 				padding: 10px 10px;

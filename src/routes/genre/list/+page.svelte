@@ -22,7 +22,6 @@
 		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 		gap: 10px;
 
-		//adaptive mobile
 		@media (max-width: 600px) {
 			grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 		}

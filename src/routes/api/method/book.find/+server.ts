@@ -24,32 +24,46 @@ export const POST: RequestHandler = async ({ request }) => {
 					mode: 'insensitive',
 				}
 			},
+			{
+				description: {
+					contains: data.search,
+					mode: 'insensitive',
+				}
+			},
 		]
 	}
 
 	if (data.filter as FilterItemType[]) {
 		data.filter.forEach((item) => {
+			
+			let f = {};
+
 			if (item.gt) {
-				filter[item.name] = {
+				f[item.name] = {
 					gt: item.gt
 				}
 			} else if (item.lt) {
-				filter[item.name] = {
+				f[item.name] = {
 					lt: item.lt
 				}
-			} else if (item.eq) {
-				filter[item.name] = {
-					equals: item.eq
+			} else if (item.equals) {
+				f[item.name] = {
+					equals: item.equals
 				}
 			} else if (item.gte) {
-				filter[item.name] = {
-					lt: item.gte
+				f[item.name] = {
+					gte: item.gte
 				}
 			} else if (item.lte) {
-				filter[item.name] = {
-					eq: item.lte
+				f[item.name] = {
+					lte: item.lte
 				}
-			}
+			};
+			
+			filter[item.logic_group] = [
+				...filter[item.logic_group] || [],
+				f
+			];
 		})
 	}
 

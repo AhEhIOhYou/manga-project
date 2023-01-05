@@ -1,7 +1,7 @@
 <script>
 	export let value = '';
 	export let id;
-	export let label;
+	export let label = '';
 	export let type = 'text';
 	export let name;
 	export let required = false;
@@ -13,7 +13,9 @@
 </script>
 
 <div>
-	<label for={id} class="input-label">{label}</label>
+	{#if label}
+		<label for={id} class="input-label">{label}</label>
+	{/if}
 	<input
 		use:setType
 		{autocomplete}

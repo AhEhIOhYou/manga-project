@@ -108,9 +108,10 @@ export type OrderByItemType = {
 
 export type FilterItemType = {
 	name: string;
+	logic_group: string;
 	gt?: number;
 	lt?: number;
 	gte?: number;
 	lte?: number;
-	eq?: number;
+	equals?: number;
 }
