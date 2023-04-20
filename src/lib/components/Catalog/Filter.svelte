@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Button from '../Button.svelte';
-	import GenreCheckBoxInput from '../Input/GenreCheckBoxInput.svelte';
-	import Input from '../Input/Input.svelte';
+	import CheckBoxInput from '../Input/CheckBoxInput.svelte';
 	import InputGroup from '../Input/InputGroup.svelte';
 
 	const genres = [
@@ -40,12 +39,23 @@
 <div class="container-filter">
 	<div class="filter__item">
 		<div class="genre-list">
-			<GenreCheckBoxInput label="Genres" name="genres" id="genres" data={genres} bind:selectedGenres={selectedGenres} />
+			<CheckBoxInput
+				label="Genres"
+				name="genres"
+				id="genres"
+				data={genres}
+				bind:selected={selectedGenres}
+			/>
 		</div>
 	</div>
 	<div class="filter__item">
 		<div class="filter-range">
-			<InputGroup label="Release Year" name="release_year" id="release_year" bind:value={release_year} />
+			<InputGroup
+				label="Release Year"
+				name="release_year"
+				id="release_year"
+				bind:value={release_year}
+			/>
 		</div>
 	</div>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
