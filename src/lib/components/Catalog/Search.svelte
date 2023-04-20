@@ -20,6 +20,7 @@
 		id="search"
 		required
 		bind:value
+		autofocus
 	/>
 </div>
 
