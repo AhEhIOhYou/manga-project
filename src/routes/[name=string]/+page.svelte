@@ -9,7 +9,7 @@
 	import AccordionItem from '@/lib/components/Accordion/AccordionItem.svelte';
 	import BookDescription from '@/lib/components/BookDescription.svelte';
 
-	export let data: PageServerData;	
+	export let data: PageServerData;
 
 	let ready = false;
 	onMount(() => (ready = true));
