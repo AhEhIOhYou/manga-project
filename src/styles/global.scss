@@ -63,22 +63,21 @@ a {
 	@media (max-width: 600px) {
 		margin: 5px 0px;
 	}
+}
 
+.title {
+	font-size: 2rem;
+	font-weight: 500;
+	color: var(--black);
+	margin-bottom: 20px;
 
-	.title {
-		font-size: 2rem;
-		font-weight: 500;
-		color: var(--black);
-		margin-bottom: 20px;
-
-		&:after {
-			content: '';
-			display: block;
-			width: 100%;
-			height: 2px;
-			background-color: var(--container-main-sub);
-			margin-top: 10px;
-		}
+	&:after {
+		content: '';
+		display: block;
+		width: 100%;
+		height: 2px;
+		background-color: var(--container-main-sub);
+		margin-top: 10px;
 	}
 }
 

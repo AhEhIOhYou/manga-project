@@ -1,8 +1,12 @@
 <script lang="ts">
 	import Button from './Button.svelte';
+	import RangeInput from './Input/RangeInput.svelte';
 	import Select from './Input/Select.svelte';
 
 	export let readerData;
+
+	let containerMaxWidthDefault: number = 1160;
+	let containerMaxWidth: number = containerMaxWidthDefault;
 
 	const viewOptions = [
 		{ id: 1, text: 'List style' },
@@ -49,18 +53,43 @@
 
 <svelte:window bind:scrollY />
 
-<div class="container reader">
-	<div class="reader-menu" class:inactive>
-		<div class="reader-menu__left">
-			<Select id="view" name="view" options={viewOptions} />
+<div class="reader">
+	<div class="reader-sub">
+		<div class="title">
+			<p>Том {readerData.volume} Глава {readerData.number}</p>
+			<p>{readerData.title}</p>
 		</div>
-		<div class="reader-menu__center">
-			<div class="select-pagination">
-				{#each navItems as item}
-					<Button>
-						<a class="button" href={item.url}> {item.label} </a>
-					</Button>
-				{/each}
+		<div class="select-pagination">
+			{#each navItems as item}
+				<Button>
+					<a class="button" href={item.url}> {item.label} </a>
+				</Button>
+			{/each}
+		</div>
+	</div>
+
+	<div class="reader-main" style="max-width: {containerMaxWidth}px;">
+		{#each readerData.pages as page}
+			<div class="content-wrap">
+				<img alt="Book page" class="content-image" src={page.url} on:click={handleImgClick} />
+			</div>
+		{/each}
+	</div>
+	<div class="reader-menu" class:inactive>
+		<div class="reader-settings">
+			<div class="settings__item">
+				<RangeInput
+					id="containerMaxWidth"
+					label="Container width"
+					name="containerMaxWidth"
+					min={700}
+					max={window.innerWidth}
+					step={10}
+					bind:value={containerMaxWidth}
+				/>
+			</div>
+			<div class="settings__item">
+				<Select id="view" label="View" name="view" options={viewOptions} />
 			</div>
 		</div>
 		<div class="reader-menu__right">
@@ -69,18 +98,54 @@
 			</Button>
 		</div>
 	</div>
-	<div class="reader-content">
-		{#each readerData.pages as page}
-			<div class="content-wrap">
-				<img alt="Book page" class="content-image" src={page.url} on:click={handleImgClick} />
-			</div>
-		{/each}
+
+	<div class="reader-sub">
+		<div class="select-pagination">
+			{#each navItems as item}
+				<Button>
+					<a class="button" href={item.url}> {item.label} </a>
+				</Button>
+			{/each}
+		</div>
 	</div>
 </div>
 
 <style lang="scss">
 	.reader {
+		margin-top: 70px;
 		position: relative;
+		display: flex;
+		flex-direction: column;
+
+		.reader-sub {
+			background-color: var(--container-main);
+			border-radius: 5px;
+			margin: 10px auto;
+			max-width: 1160px;
+			width: 100%;
+			padding: 20px;
+		}
+
+		.reader-main {
+			background-color: var(--container-main);
+			border-radius: 5px;
+			margin: 0 auto;
+			max-width: 1160px;
+			padding: 20px;
+		}
+
+		.reader-settings {
+			border: 2px solid red;
+			display: flex;
+			background-color: var(--container-main-sub);
+
+			.settings__item {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				padding: 20px;
+			}
+		}
 
 		.reader-menu {
 			background-color: var(--container-main-sub);
@@ -121,10 +186,8 @@
 			}
 		}
 
-		.reader-content {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
+		.reader-main {
+
 
 			.content-wrap {
 				width: 100%;
