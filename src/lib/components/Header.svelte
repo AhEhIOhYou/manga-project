@@ -36,7 +36,9 @@
 <header class="header">
 	<div class="nav-wrapper">
 		<div class="logo">
-			<img src="/favicon.png" alt="logo" />
+			<a href="/">
+				<img src="/favicon.png" alt="logo" />
+			</a>
 		</div>
 		<nav class="nav-container">
 			<ul>
